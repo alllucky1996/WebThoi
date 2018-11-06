@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Lỗi";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<div class="col-md-12 page-404">
+    <div class="number">
+        Lỗi
+    </div>
+    <div class="details">
+        <h3>Đã xảy ra lỗi khi xử lý yêu cầu của bạn.</h3>
+        <p>
+            @if (ViewBag.Exception == null)
+            {
+                @:Chúng tôi không tìm thấy thông tin bạn yêu cầu.
+            }
+            else
+            {
+                <span>@ViewBag.Exception</span>
+            }
+            <br /><br />
+            Bấm <a href="@Url.RouteUrl("FrontEndHomeIndex")">
+                vào đây
+            </a>
+            để quay lại trang chủ!
+        </p>
+    </div>
+</div>
+

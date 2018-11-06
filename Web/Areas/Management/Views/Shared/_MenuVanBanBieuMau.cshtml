@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Entities.Models.KHCN_LoaiVanBan>
+
+@if (Model != null && Model.Any())
+{
+    
+    foreach (var item in Model)
+    {
+        
+        <li>
+            <a href="@Url.RouteUrl("VanBan_Index", new { ma = item.Ma})"><i class="fa fa-book"></i>@Html.Raw(item.Ten)</a>
+        </li>
+
+    }
+
+}

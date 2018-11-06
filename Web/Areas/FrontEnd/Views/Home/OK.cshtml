@@ -1,0 +1,22 @@
+﻿@using Entities.Enums;
+@model Entities.Models.YeuCau
+@{
+    ViewBag.Title = "Gửi yêu cầu tạo Tài khoản";
+    Layout = "~/Areas/FrontEnd/Views/Shared/_PublicLayout.cshtml";
+    string DienGiai = ViewBag.DienGiai==null?"" : ViewBag.DienGiai;
+    string HoTen = ViewBag.HoTen;
+    string DienThoai = ViewBag.DienThoai == null ? "No MobilePhome" : ViewBag.DienThoai;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+           
+            <div class="portlet-body">
+                <h2 class="color-blue">Bạn đã gửi yêu cầu thành công</h2>
+                <div><a href="Home_Index" class="btn default">Quay lại</a></div>
+
+            </div>
+        </div>
+    </div>
+</div>

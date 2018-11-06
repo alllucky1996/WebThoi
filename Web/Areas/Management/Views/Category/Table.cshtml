@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Entities.Models.Category>
+@{
+    string CName = "Category";
+    string createRoute = CName + "_Create";
+    string updateRoute = CName + "_Update";
+    string deleteRoute = CName + "_Delete";
+    string indexRoute = CName + "_Index";
+    int TotalPage = ViewBag.TotalPage == null ? 0 : (int)ViewBag.TotalPage;
+    int CurrentPage = ViewBag.CurrentPage == null ? 0 : (int)ViewBag.CurrentPage;
+    int PageSize = ViewBag.PageSize == null ? 0 : (int)ViewBag.PageSize;
+    int Total = ViewBag.Total == null ? 0 : (int)ViewBag.Total;
+    string SearchText = ViewBag.SearchText==null?"''" : ViewBag.SearchText;
+}
+<table class="table table-striped table-bordered table-hover table-checkable order-column dataTable" id="sample_1">
+    <thead>
+        <tr role="row" class="heading">
+            <th class="table-checkbox">
+                <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                    <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" />
+                    <span></span>
+                </label>
+            </th>
+            <th>Mã</th>
+            <th>Tên nhóm</th>
+            <th>Ghi chú</th>
+            <th style="text-align:center; vertical-align: middle; width:200px!important;">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model.OrderBy(o => o.Code))
+            {
+                string url = Url.RouteUrl(updateRoute, new {code=item.Code,p=CurrentPage,ps=PageSize,st=SearchText });
+                string routeData = "'{"+string.Format("\"code\":\"{0}\", \"ps\":{1}, \"p\":{2}, \"st\":\"{3}\"", item.Code, PageSize, CurrentPage, SearchText)+"}'";
+                string color = item.Disabled ? "color:#e88;font-style:italic!important;" : "";
+                string disable = item.Disabled ? " [Đã vô hiệu hóa]" : "";
+                <tr data-objectid="@item.Code" role="row" class="">
+                    <td>
+                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                            <input type="checkbox" class="checkboxes" value="@item.Code" />
+                            <span></span>
+                        </label>
+                    </td>
+                    <td style="@color">@item.Code</td>
+                    <td style="@color">@item.Name @disable</td>
+                    <td style="@color">@item.Descript</td>
+                    <td>
+                        <a route="@url" class="btn btn-small blue update" data-toggle="modal" style="width:45%!important;"> <i class="fa fa-pencil"></i>&nbsp;Sửa</a>
+
+                        <a class="btn btn-small red-soft delete" href="javascript:;" style="width:45%!important;">
+                            <i class="fa fa-trash-o"></i>&nbsp;Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<dung class="row">
+    <label>
+        Trang
+        <select class="form-control input-sm input-xsmall input-inline" id="selectPage">
+            @for (int i = 1; i <= TotalPage; ++i)
+            {
+                string selected = i == CurrentPage ? "selected" : "";
+                <option value="@i" @selected>@(i)</option>
+            }
+        </select> / @TotalPage trang
+    </label>
+    <label class="pull-right">
+        Tổng số @Total @ViewBag.CText
+    </label>
+</dung>
+<script type="text/javascript">
+    $(".update").click(function (e) {
+        var indexurl = (this).getAttribute('route');
+        loadPage(indexurl, 'mainContent');
+    })
+</script>

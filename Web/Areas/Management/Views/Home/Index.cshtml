@@ -1,0 +1,33 @@
+﻿@using Entities.Models
+@{
+    ViewBag.Title = "ItGroup Content Management";
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    
+}
+
+
+<ul class="page-breadcrumb breadcrumb ">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        @*<i class="fa fa-angle-right"></i>*@
+    </li>
+</ul>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12" id="notifDeXuatBox">
+        <div class="portlet light">
+            <div class="portlet-title tabbable-line">
+                <div class="caption caption-md">
+                    <i class="icon-globe theme-font-color hide"></i>
+                    <span class="caption-subject theme-font-color bold uppercase"><i class="fa fa-bullhorn"></i> Trang chủ</span>
+                   
+                </div>
+            </div>
+            <div class="portlet-body">
+                
+            </div>
+        </div>
+    </div>
+
+</div>

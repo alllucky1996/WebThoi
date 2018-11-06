@@ -1,0 +1,145 @@
+/* here you can put your own css to customize and override the theme */
+
+/***
+Rounded Portlets
+***/
+/*
+.portlet {
+	border-radius: 4px !important;
+}
+
+.portlet .portlet-title {
+	border-radius: 4px 4px 0px 0px !important;
+}
+
+.portlet .portlet-body,
+.portlet .portlet-body .form-actions  {
+	border-radius: 0px 0px 4px 4px !important;
+}
+*/
+.breadcrumb .fa {
+  font-size: 12px;
+  margin: 0 2px 0 4px;
+  position: relative;
+  top: -1px;
+}
+.field-validation-error {
+  color: #f3565d;
+}
+.portlet > .portlet-title > .caption > i {
+  font-size: 18px;
+  margin-top: 3px;
+}
+.navigation {
+    border: 0 none;
+    color: #666;
+    float: right;
+    margin-bottom: 2px;
+}
+.navigation a:link, .navigation a:visited, .navigation a:hover, .navigation a:active {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px solid #e6e6e6;
+    color: #636363;
+    font-size: 12px;
+    margin: 1px 2px;
+    padding: 3px 8px;
+    text-decoration: none;
+}
+.navigation a:hover {
+    background: #799ae3 none repeat scroll 0 0;
+    border-color: #e6e6e6;
+    color: #fff;
+}
+.navigation span, .navigation a.selected {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #e6e6e6;
+    color: #ccc;
+    font-size: 12px;
+    margin: 1px 2px;
+    padding: 3px 8px;
+    text-decoration: none;
+}
+.page-header.navbar .page-logo .logo-default
+{
+    margin:0;
+}
+.page-sidebar .page-sidebar-menu > li > a > .title,
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > .title {
+  font-size: 12.5px;
+  font-weight: 400;
+}
+
+.page-sidebar .page-sidebar-menu > li > a > i,
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a > i {
+  font-size: 13px;
+  text-shadow: none;
+  font-weight: 300;
+}
+
+/*Sub menu*/
+.page-sidebar .page-sidebar-menu .sub-menu li > a,
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu li > a {
+  display: block;
+  margin: 0;
+  padding: 9px 14px 9px 30px;
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 400;
+  background: none;
+}
+.page-sidebar .page-sidebar-menu .sub-menu li > a > i,
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu li > a > i {
+  font-size: 13px;
+  margin-right: 1px;
+}
+/*Tabs*/
+.nav-tabs > li > a,
+.nav-pills > li > a {
+  font-size: 12px;
+  -webkit-border-radius: 2px 2px 0 0;
+  -moz-border-radius: 2px 2px 0 0;
+  -ms-border-radius: 2px 2px 0 0;
+  -o-border-radius: 2px 2px 0 0;
+  border-radius: 2px 2px 0 0;
+}
+/*Table*/
+.table thead tr th {
+  font-size: 12px;
+  font-weight: 600;
+}
+body {
+  color: #333333;
+  font-family: "Open Sans", sans-serif;
+  padding: 0px !important;
+  margin: 0px !important;
+  font-size: 12px;
+  direction: ltr;
+}
+/***
+Extended pagination
+***/
+.paging_bootstrap_extended {
+  margin: 0 !important;
+  padding: 0 !important;
+  float: none !important;
+  font-size: 12px;
+}
+
+.dataTables_extended_wrapper div.dataTables_length label {
+  margin: 0 !important;
+  padding: 0 !important;
+  float: none !important;
+  display: inline-block !important;
+}
+/* Form inputs */
+.form-control {
+    font-size: 12px;
+}
+/* Form labels */
+label {
+  font-weight: 400;
+  font-size: 12px;
+}
+.h1, h1 {
+    font-size: 15px !important;
+}

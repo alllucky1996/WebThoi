@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "Demo";
+    Layout = "~/Views/Shared/_LayoutFrontEnd_NotSlide.cshtml";
+}
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            @*<li><a href="index.html">Home</a></li>
+            <li><a href="javascript:;">Pages</a></li>*@
+            @*<li><a>Chi tiết tuyển dụng</a></li>*@
+        </ul>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-9 col-sm-9">
+                <h1>Chi tiết tuyển dụng</h1>
+                <div class="content-page">
+                    <!-- BEGIN CAROUSEL -->
+                    <div class="front-carousel margin-bottom-20">
+                        <div id="myCarousel" class="carousel slide">
+                            <!-- Carousel items -->
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <img src="~/Theme/assets/frontend/pages/img/posts/img1.jpg" />
+                                </div>
+                                <div class="item">
+                                    <img src="~/Theme/assets/frontend/pages/img/posts/img3.jpg" alt="">
+                                </div>
+                            </div>
+                            <!-- Carousel nav -->
+                            <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END CAROUSEL -->
+                    <!-- BEGIN PAGE CONTENT-->
+                    <div class="row profile">
+                        <div class="col-md-12">
+                            <!--BEGIN TABS-->
+                            <div class="tabbable tabbable-custom tabbable-noborder ">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#tab_1_1" data-toggle="tab">
+                                            Thông tin
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab_1_3" data-toggle="tab">
+                                            Công ty
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab_1_4" data-toggle="tab">
+                                            Công việc khác
+                                        </a>
+                                    </li>
+                                   
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_1_1">
+                                        <h2>CÁC PHÚC LỢI DÀNH CHO BẠN</h2>
+                                        <!-- BEGIN LISTS -->
+                                        <div class="row front-lists-v1">
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled margin-bottom-20">
+                                                    <li><i class="fa fa-dollar"></i> Thưởng theo hiệu suất</li>
+                                                    <li><i class="fa fa-btc"></i> Tăng lương định kỳ</li>
+                                                    <li><i class="fa fa-child"></i> Bảo hiểm</li>
+                                                    @*<li><i class="fa fa-group"></i> Làm việc nhóm</li>*@
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!-- END LISTS -->
+                                        <h2>MÔ TẢ CÔNG VIỆC</h2>
+                                        <dung>
+                                            <ul class="list-unstyled margin-bottom-20">
+                                                <li>Looking for .NET(C#) Developer in HCMC/Danang. ALL Level.</li>
+                                                <li>C Sharp, ASP.NET, .NET, C# C-Sharp,C_sharp,Programmer, .NET.Core</li>
+                                                <li>
+                                                    <span>WHAT YOU’RE IN CHARGE?</span>
+                                                    <ul>
+                                                        <li> Developing, testing and debugging for ASP.NET/C# Web application/System</li>
+                                                        <li> Researching new technology & sharing your knowledge</li>
+                                                        <li> Planning and suggesting new apps and service</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </dung>
+                                        <h2>YÊU CẦU CÔNG VIỆC</h2>
+                                        <ul>
+                                            <li>PassionWeb development are must.</li>
+                                            <li>Loving Programing.</li>
+                                            <li>Enthusiasm to deliver fun to users is a mus.</li>
+                                            <li>At least 2 years experienced in development with .NET(ASP/C#) .Net MVC5, Web API, Entity Framework, JQuer.</li>
+                                            <li>English Fluently(at least reading/writing) is must.</li>
+                                            <li>Finally To be Full-Stack engineer/multi skill engineer will get higher salary.</li>
+                                            <li>Please fill down your job title which you want to apply (Ex: Junior/Middle/ Senior/Leader).</li>
+                                        </ul>
+                                    </div>
+                                    <!--tab_1_2-->
+                                    <div class="tab-pane" id="tab_1_3">
+                                       <h2>Công ty là một công ty ...........</h2>
+                                    </div>
+                                    <!--end tab-pane-->
+                                    <div class="tab-pane" id="tab_1_4">
+                                        <h2>add new job in company</h2>
+                                    </div>
+                                    <!--end tab-pane-->
+                                   
+                                </div>
+                            </div>
+                            <!--END TABS-->
+                        </div>
+                    </div>
+                    <!-- END PAGE CONTENT-->
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-3 sidebar2">
+                <h2 class="padding-top-30">Thông tin liên hệ</h2>
+                <address>
+                    <strong>Nguyễn Anh Dũng</strong><br>
+                    383 đường k1b, Phú Diễn<br>
+                    Bắc Từ Liêm, Hà Nội<br>
+                    <abbr title="Phone">Phone: </abbr>(+84) 978 132 474
+                </address>
+                <address>
+                    <strong>Email</strong><br>
+                    <a href="mailto:itfa.ahihi@gmail.com">itfa.ahihi@gmail.com</a><br>
+                    <a href="mailto:support@example.com">developer@cungcapphanmem.com</a>
+                </address>
+
+                <h3 class="padding-top-20">Để lại mail</h3>
+                <!-- BEGIN FORM-->
+                <form action="#" role="form">
+                    <div class="form-group">
+                        <label for="career-name">Mã sinh viên</label>
+                        <input type="text" class="form-control" id="career-name" placeholder="1581310016">
+                    </div>
+                    <div class="form-group">
+                        <label for="career-position">Your email</label>
+                        <input type="text" class="form-control email" id="email" placeholder="itfa.ahihi@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="career-resume">file cv</label>
+                        <input type="file" id="career-resume">
+                    </div>
+                    <div class="form-group">
+                        <p for="career-resume">Nếu bạn chưa có cv chọn <a class=" font-blue">vào đây</a> để tạo online hoặc <a class=" font-blue">vào đây</a> để xem</p>
+                        <a class="btn btn-arrow-link">hướng dẫn làm cv</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> Send</button>
+                </form>
+                <!-- END FORM-->
+            </div>
+            <!-- END CONTENT -->
+        </div>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+    </div>
+</div>

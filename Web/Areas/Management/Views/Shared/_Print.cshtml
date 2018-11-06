@@ -1,0 +1,41 @@
+﻿@{ 
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    
+}
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="ProgId" content="Word.Document">
+    <meta name="Generator" content="Microsoft Word 11">
+    <meta name="Originator" content="Microsoft Word 11">
+    <title></title>
+    <xml>
+        <w:worddocument>
+            <w:view>Print</w:view>
+        </w:worddocument>
+    </xml>
+</head>
+<body>
+    @RenderBody()
+</body>
+</html>
+@section Scripts {
+    <script src="~/mathjax-2.5-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full&locale=vi"></script>
+}
+@section Scripts2 {
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+        });
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+        MMLorHTML: { prefer: {Chrome: "MML", Firefox: "MML" } },
+        });
+    </script>
+}
+
+
+
+

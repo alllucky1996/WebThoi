@@ -1,0 +1,71 @@
+﻿@using Entities.Enums;
+@model Entities.Models.YeuCau
+@{
+    ViewBag.Title = "Gửi yêu cầu tạo Tài khoản";
+    Layout = "~/Areas/FrontEnd/Views/Shared/_PublicLayout.cshtml";
+    string DienGiai = ViewBag.DienGiai==null?"" : ViewBag.DienGiai;
+    string HoTen = ViewBag.HoTen;
+    string DienThoai = ViewBag.DienThoai == null ? "No MobilePhome" : ViewBag.DienThoai;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <h1 class="caption-subject font-green-sharp bold">Đại học Quốc gia Hà Nội</h1>
+                    <h2 class="caption-subject font-green-sharp bold margin-left-20">Đại học KH Tự nhiên</h2>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <h1 class="caption-subject bold" align="center">PHIẾU YÊU CẦU DỊCH VỤ</h1>
+
+                    <div>
+                        <h3>1. Thông tin</h3>
+                        <ul style="list-style-type:none">
+                            <li>
+                                Họ và tên: <span>@HoTen</span>
+                            </li>
+                            @*<li>
+                                Đối tượng: <span>@Html.DisplayFor(m => m.DoiTuong.Ten)</span>
+                            </li>*@
+                            <li>
+                                Đối tượng: <span>Người học</span>
+                            </li>
+                            <li>
+                                Đơn vị công tác: <span>Đại học KH Tự nhiên</span>
+                            </li>
+                            <li>
+                                Email liên lạc : <span>@Html.DisplayFor(m=>m.EmailKhac)</span>
+                            </li>
+                            <li>
+                                Số điện thoại : <span>@Html.DisplayFor(m => m.DienThoai)</span>
+                            </li>
+                        </ul>
+                        <h3>2. Nội dung yêu cầu</h3>
+                        <ul >
+                            <li><div>@DienGiai</div></li>
+                        </ul>
+                        
+                        <br />
+                        <div>
+                            <ul style="list-style-type:none">
+                                <li style="float:left" class="margin-left-20"><h4>Người duyệt</h4></li>
+                                <li style="float:right;margin-right:40px;" >
+                                <h4 >Người yêu cầu</h4>
+                                    <br /><br />
+                                    <h5>@Html.DisplayFor(m=>m.HoVaTen)</h5>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div><a href="Home_Index" class="btn default">Quay lại</a></div>

@@ -1,0 +1,53 @@
+﻿@model int
+@{ 
+    string style = "";
+    if (!(Model > 0))
+    {
+        style = "display:none";
+    }
+
+}
+<div class="page-header md-shadow-z-1-i navbar navbar-static-top">
+    <div class="page-header-inner">
+        <div class="page-logo">
+            <a href="@Url.Action("Index", "Home")">
+                <img src="~/Images/logo.png" alt="logo" class="logo-default" style="max-width:200px;" />
+            </a>
+            <div class="menu-toggler sidebar-toggler"></div>
+        </div>
+            
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+        </a>
+        <div class="page-top pull-left" style="padding-top:10px;padding-left:20px;">
+            <span style="color:#1f6e43; font-weight:bold; font-size:large;">HỆ THỐNG QUẢN LÝ gì gì đó</span><br />
+            <a href="@Url.RouteUrl("ManagementHome")"><span>Khu vực quản trị</span></a>
+        </div>
+        <div class="page-top">
+            
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                  
+                   
+                    <li class="dropdown dropdown-user dropdown-dark">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            
+                            <img alt="" class="img-circle " src="@(Session["ProfilePicture"] == null || Session["ProfilePicture"].ToString().Trim() == "" ? "https://www.facebook.com/photo.php?fbid=885126411639869&set=a.134842643334920.30216.100004275552721&type=3&theater" : Session["ProfilePicture"].ToString())" />
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                           
+                            <li>
+                                <a   data-target="#ajaxmodal" data-toggle="modal"><i class="icon-settings"></i> Đổi mật khẩu</a>
+                            </li>
+                            <li>
+                                <a href="@Url.RouteUrl("LogoutManagerment")">
+                                    <i class="icon-key"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"> </div>

@@ -1,0 +1,113 @@
+﻿@model Entities.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Đăng nhập hệ thống";
+    Layout = "~/Areas/Management/Views/Shared/_LoginLayout.cshtml";
+    var forget = "";
+    if (ViewBag.Forget != null && ViewBag.Forget == true)
+    {
+        forget = "true";
+    }
+}
+@using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "login-form" }))
+{
+    @Html.AntiForgeryToken()
+    <h3 class="form-title">Đăng nhập hệ thống</h3>
+    <div class="alert alert-danger @(ViewBag.Error == null || ViewBag.Error == "" ? "display-hide" : "")">
+        <button class="close" data-close="alert"></button>
+        <span>
+            @(ViewBag.Error == null || ViewBag.Error == "" ? "Vui lòng nhập địa chỉ email và mật khẩu!" : ViewBag.Error)
+        </span>
+    </div>
+    <div class="form-group">
+        <label class="control-label visible-ie8 visible-ie9">Địa chỉ email</label>
+        <div class="input-icon">
+            <i class="fa fa-envelope"></i>
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Địa chỉ email" name="email" id="email" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label visible-ie8 visible-ie9">Mật khẩu</label>
+        <div class="input-icon">
+            <i class="fa fa-lock"></i>
+            <input class="form-control placeholder-no-fix" type="password" placeholder="Mật khẩu" name="password" />
+        </div>
+    </div>
+    <div class="form-actions">
+        <label class="checkbox">
+
+        </label>
+        
+        <button type="submit" class="btn green-haze pull-right">
+            Đăng nhập <i class="m-icon-swapright m-icon-white"></i>
+        </button>
+    </div>
+    <div class="forget-password">
+        <h4>Quên mật khẩu?</h4>
+        <p>
+            Bấm <a href="javascript:;" id="forget-password">
+                vào đây
+            </a>
+            để khôi phục mật khẩu, hoặc <a href="@Url.RouteUrl("Register")">đăng ký tài khoản mới</a>.
+        </p>
+    </div>
+}
+@using (Html.BeginForm("ForgetPassword", "Login", FormMethod.Post, new { @class = "forget-form" }))
+{
+    
+    <h3>Quên mật khẩu?</h3>
+
+    if (ViewBag.Message == null || ViewBag.Message == "")
+    {
+        <p>
+            Vui lòng nhập địa chỉ email của bạn để khôi phục mật khẩu!
+        </p>
+        <div class="form-group @(ViewBag.Error == null || ViewBag.Error == "" ? "" : "has-error")">
+            <div class="input-icon">
+                <i class="fa fa-envelope"></i>
+                <input class="form-control placeholder-no-fix" type="text" placeholder="Địa chỉ Email" name="email_forget" />
+            </div>
+            <span id="email_forget-error" class="help-block">@ViewBag.Error</span>
+        </div>
+    }
+    else
+    {
+        <h4>@ViewBag.Message</h4>
+    }
+    <div class="form-actions">
+        <button type="button" id="back-btn" class="btn">
+            <i class="m-icon-swapleft"></i> Quay lại
+        </button>
+        @if (ViewBag.Message == null || ViewBag.Message == "")
+        {
+            <button type="submit" class="btn green-haze pull-right">
+                Gửi đi <i class="m-icon-swapright m-icon-white"></i>
+            </button>
+        }
+    </div>
+}
+@section Styles{
+    @Styles.Render("~/css/metronic/login3")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/validate")
+    @Scripts.Render("~/js/metronic/login")
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery("#email").focus();
+            if ('@forget' == 'true') {
+                jQuery('.login-form').hide();
+                jQuery('.forget-form').show();
+            }
+            $('form').submit(function () {
+                Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    target: $('.content'),
+                    overlayColor: 'none',
+                    animate: true,
+                    cenrerY: true,
+                    boxed: true
+                });
+            });
+        });
+    </script>
+}

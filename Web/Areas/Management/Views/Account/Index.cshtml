@@ -1,0 +1,214 @@
+﻿@using Entities.Enums;
+@model IEnumerable<Entities.Models.SystemManage.Account>
+@{
+    ViewBag.Title = "Danh sách tài khoản";
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    var canDelete = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Delete);
+    var canCreate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Create);
+}
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        Danh sách tài khoản
+    </li>
+</ul>
+@*Bắt đầu nội dung tùy chỉnh*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-user font-green-sharp bold"></i>
+                    <span class="caption-subject font-green-sharp bold ">Danh sách tài khoản</span>
+                </div>
+                @if (canCreate)
+                {
+                    <div class="actions">
+                        <a href="@Url.RouteUrl("AccountCreate")" class="btn btn-sm green"><i class="fa fa-plus"></i> Nhập tài khoản mới</a>
+                    </div>
+                }
+            </div>
+            <div class="portlet-body">
+                <div class="table-container">
+                    @if (canDelete)
+                    {
+                        <div class="table-actions-wrapper">
+                            <button class="btn btn-sm red-flamingo table-group-action-delete"><i class="fa fa-trash-o"></i> Xóa</button>
+                            <span>
+                            </span>
+                        </div>
+                    }
+                    @*<div class="table-actions-2-wrapper">
+                        Xem tài khoản&nbsp;&nbsp;<select class=" form-control input-inline input-small input-sm object-filter">
+                            <option value="0">Tất cả tài khoản</option>
+                            <option value="1" selected="selected">Tài khoản hệ thống</option>
+                            <option value="2">Tài khoản cựu sinh viên</option>
+                        </select>&nbsp;&nbsp;&nbsp;
+                    </div>*@
+                    <table class="table table-striped table-bordered table-hover" id="datatable_ajax_source">
+                        <thead>
+                            <tr role="row" class="heading">
+                                <th class="table-checkbox">
+                                    <input type="checkbox" class="group-checkable" />
+                                </th>
+                                <th>
+                                    Họ và tên
+                                </th>
+                                <th>
+                                    Địa chỉ E-mail
+                                </th>
+                                <th>
+                                    Điện thoại
+                                </th>
+                                <th>
+                                    Ngày tạo
+                                </th>
+                                <th>
+                                    Thao tác
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles{
+    @Styles.Render("~/css/metronic/select2", "~/css/metronic/datatable")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/select2", "~/js/metronic/datatable", "~/js/metronic/moment")
+    @Scripts.Render("~/js/metronic/datatable-ajax-source")
+}
+@section Scripts2 {
+    <script type="text/javascript">
+        var Account = function () {
+            var handleAccount = function () {
+                var grid = new DatatableAjaxSource();
+                grid.init({
+                    src: $("#datatable_ajax_source"),
+                    onSuccess: function (grid) {
+                    },
+                    onError: function (grid) {
+                    },
+                    dataTable: {
+                        "ajax": {
+                            "url": "@Url.RouteUrl("AccountGetAccountsJson", new { status = 1 })",
+                        },
+                        "columnDefs": [{
+                            "targets": -1,
+                            "data": null,
+                            "render": function (data, type, full) {
+                                if ('@canDelete' == 'true' || '@canDelete' == 'True') {
+                                    return '<a class=\"btn btn-xs default" href="' + ('@Url.RouteUrl("AccountRead", new { id="accountId"})').replace("accountId", data.Id) + '"><i class="fa fa-search"></i> Xem</a>' +
+                                               '<a class="btn default btn-xs red-flamingo Delete" data-objectid="' + data.Id + '" href="javascript:void(0);"><i class="fa fa-trash-o"></i> Xóa</a>';
+                                }
+                                else {
+                                    return '<a class=\"btn btn-xs default" href="' + ('@Url.RouteUrl("AccountRead", new { id="accountId"})').replace("accountId", data.Id) + '"><i class="fa fa-search"></i> Xem</a>';
+                                }
+                            },
+                        }],
+                        "columns": [
+                            {
+                                "searchable": false,
+                                "orderable": false,
+                                "data": "Id",
+                                "render": function (data, type, full) {
+                                    return '<input type="checkbox" value="' + data + '" class="checkboxes">';
+                                }
+                            },
+                            {
+                                "searchable": true,
+                                "orderable": true,
+                                "data": null,
+                                "render": function (data, type, full) {
+                                    return '<a  href="' + ('@Url.RouteUrl("AccountRead", new { id="accountId"})').replace("accountId", data.Id) + '">' + data.Name + '</a>';
+                                }
+                            },
+                        { data: "Email" },
+                        { data: "PhoneNumber" },
+                        { data: "CreateDate" },
+                        { data: null }
+                        ],
+                        "order": [
+                            [1, "asc"]
+                        ] // ép sắp xếp theo cột thứ 2
+                    }
+                });
+                grid.getTableWrapper().on('change', '.object-filter', function (e) {
+                    var sel = $(this).val();
+                    e.preventDefault();
+                    grid.setAjaxParam("objectStatus", $(this).val());
+                    grid.getDataTable().ajax.reload();
+                    grid.clearAjaxParams();
+                });
+                grid.getTableWrapper().find(".dataTables_length select").select2({
+                    showSearchInput: false
+                });
+                //Xóa tài khoản
+                grid.getTableWrapper().on('click', '.table-group-action-delete', function (e) {
+                    e.preventDefault();
+                    if (grid.getSelectedRowsCount() > 0) {
+                        if (confirm('Bạn có chắc chắn muốn xóa không?'))
+                            DeleteAccounts(grid.getSelectedRows());
+                    } else if (grid.getSelectedRowsCount() === 0) {
+                        showNoty('Chưa có bản ghi nào được chọn!', 'error', 'center', 5000);
+                    }
+                });
+                grid.getTableWrapper().on('click', '.Delete', function (e) {
+                    e.preventDefault();
+                    var ids = $(this).attr('data-objectid');
+                    if (confirm('Bạn có chắc chắn muốn xóa không?'))
+                        DeleteAccounts(ids);
+                });
+                var DeleteAccounts = function (ids) {
+                    Metronic.blockUI({
+                        message: 'Vui lòng đợi!',
+                        overlayColor: 'none',
+                        cenrerY: true,
+                        boxed: true
+                    });
+                    var $url = ('@Url.RouteUrl("AccountDeleteAccounts", new { ids = "objectIds"})').replace("objectIds", ids);
+                    $.ajax({
+                        type: 'POST',
+                        cache: false,
+                        async: true,
+                        url: $url,
+                        dataType: 'json',
+                        success: function (result) {
+                            if (result.success) {
+                                showNoty(result.message, 'success', 'center', 5000);
+                            }
+                            else
+                                showNoty(result.message, 'error', 'center', 5000);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            showNoty(errorThrown, 'error', 'center', 5000);
+                        },
+                        complete: function (result) {
+                            grid.getDataTable().ajax.reload();
+                            Metronic.unblockUI();
+                        }
+                    });
+                    return;
+                }
+            }
+            return {
+                init: function () {
+                    handleAccount();
+                }
+            };
+        }();
+        jQuery(document).ready(function () {
+            Account.init();
+        });
+    </script>
+}

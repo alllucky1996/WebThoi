@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.Partial("~/Areas/Management/Views/Shared/_Head.cshtml")
+    @Html.Partial("~/Areas/Management/Views/Shared/_Css1.cshtml")
+    @RenderSection("styles", required: false)
+    @Html.Partial("~/Areas/Management/Views/Shared/_Css2.cshtml")
+    @RenderSection("styles2", required: false)
+    @*<link rel="shortcut icon" href="favicon.ico" />*@
+    @Styles.Render("~/css/metronic/error")
+</head>
+<body class="page-404-full-page">
+    <div class="row">
+       @RenderBody()
+    </div>
+</body>
+</html>

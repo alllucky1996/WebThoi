@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/Images/adminfav2.png" />
+    @Html.Partial("_Head")
+    @Html.Partial("_Css3")
+    @RenderSection("styles", required: false)
+    @Html.Partial("_Css2")
+</head>
+<body class="page-md login">
+    <div class="logo">
+    </div>
+    <div class="menu-toggler sidebar-toggler">
+    </div>
+    <div class="content">
+        @RenderBody()
+    </div>
+    <div class="copyright">
+        @if (DateTime.Now.Year <= 2018)
+        {
+            <span>2018</span>
+        }
+        else
+        {
+            <span>2018-@DateTime.Now.Year</span>
+        }
+        &copy;<a title="Itgrup" target="_blank" href="https://www.facebook.com/alllucky1996/">ITGROUP - cungcapphanmem.com </a>
+    </div>
+
+    @Html.Partial("_Scripts2")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            Metronic.init();
+            Layout.init();
+            Login.init();
+            Demo.init();
+        });
+    </script>
+    @RenderSection("scripts2", required: false)
+</body>
+
+</html>

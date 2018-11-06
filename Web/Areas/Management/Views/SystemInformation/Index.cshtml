@@ -1,0 +1,241 @@
+﻿@model Entities.Models.SystemManage.SystemInformation
+@{
+    ViewBag.Title = "Tham số hệ thống";
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+}
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        Tham số hệ thống
+    </li>
+</ul>
+@*Bắt đầu nội dung tùy chỉnh*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="tabbable tabbable-custom tabbable-noborder">
+            <ul class="nav nav-tabs">
+                @*<li >
+                    <a href="#tab_1_1" data-toggle="tab">
+                        Tham số hệ thống
+                    </a>
+                </li>*@
+                <li class="active">
+                    <a href="#tab_1_2" data-toggle="tab">
+                        Tài khoản SMTP
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                @*<div class="tab-pane active fontawesome-demo" id="tab_1_1">
+                    <div class="portlet-body form">
+                        @using (Html.BeginForm("Index", "SystemInformation", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", @id = "main_form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.Id)
+                            <div class="form-body">
+                                @if (!ViewData.ModelState.IsValid)
+                                {
+                                    <div class="alert alert-danger">
+                                        <button data-close="alert" class="close"></button>
+                                        @Html.ValidationSummary(true)
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SiteName, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.SiteName, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.SiteName)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Slogan, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.Slogan, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.Slogan)
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CompanyName, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.CompanyName)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Address, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.Address)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.PhoneNumber, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.HotLine, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.HotLine, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.HotLine)
+                                    </div>
+                                </div>
+                                <div class="form-group" style="border-bottom:1px solid #efefef; padding: 15px 0;">
+                                    @Html.LabelFor(model => model.Email, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon input-circle-left">
+                                                <i class="fa fa-envelope"></i>
+                                            </span>
+                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control input-circle-right" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Email)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.WebsiteAddress, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.WebsiteAddress, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.WebsiteAddress)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FacebookPage, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.FacebookPage, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.FacebookPage)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FacebookAppId, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.FacebookAppId, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.FacebookAppId)
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Copyright, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-6">
+                                        @Html.TextAreaFor(model => model.Copyright, new { @class = "form-control input-circle" })
+                                        @Html.ValidationMessageFor(model => model.Copyright)
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button type="submit" class="btn btn-circle blue"><i class="fa fa-check"></i> Ghi nhận</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>*@
+                <div class="tab-pane active fontawesome-demo" id="tab_1_2">
+                    <div class="note note-success">
+                        <h3>Tài khoản SMTP</h3>
+                        <p>Đây là tài khoản email dùng để gửi email cho thành viên.</p>
+                    </div>
+                    <form class="form-horizontal form-smtp">
+                        <div class="form-body">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SMTPName, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.SMTPName, new { @class = "form-control input-circle" })
+                                    @Html.ValidationMessageFor(model => model.SMTPName)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SMTPEmail, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon input-circle-left">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                        @Html.TextBoxFor(model => model.SMTPEmail, new { @class = "form-control input-circle-right" })
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SMTPEmail)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.SMTPPassword, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.SMTPPassword, new { @class = "form-control input-circle-left", @type = "password" })
+                                        <span class="input-group-addon input-circle-right">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.SMTPPassword)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="button" class="btn btn-circle blue smtp-submit"><i class="fa fa-check"></i> Ghi nhận</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles{
+    @Styles.Render("~/css/metronic/select2")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/jqueryval", "~/js/metronic/select2")
+    <script type="text/javascript" src="~/Editor/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/Editor/ckfinder/ckfinder.js"></script>>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            $('#SiteName').focus();
+
+
+            $('#main_form').on('submit', function (e) {
+                
+            });
+            $(document).on('click', '.smtp-submit', function (e) {
+                e.preventDefault();
+                Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    boxed: true
+                });
+                var URL = '@Url.RouteUrl("SystemInformationSMTP")';
+                $.ajax({
+                    type: 'POST',
+                    url: URL,
+                    dataType: 'json',
+                    data: $('.form-smtp').serialize(),
+                    success: function (result) {
+                        if (result.success == true) {
+                            showNoty("Đã ghi nhận thành công!", 'success', 'center', 5000);
+                        }
+                        else {
+                            showNoty(result.message, 'error', 'center', 5000);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, error) {
+                        showNoty('Đã xảy ra lỗi khi thực hiện yêu cầu của bạn. Vui lòng kiểm tra và thử lại!', 'error', 'center', 5000);
+                    },
+                    complete: function (result) {
+                        Metronic.unblockUI();
+                    }
+                });
+            });
+        });
+    </script>
+}

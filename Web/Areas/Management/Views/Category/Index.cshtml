@@ -1,0 +1,234 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Management/Views/Shared/PublicLayout/_PublicLayout.cshtml";
+    if (ViewBag.CName == null)
+    {
+        ViewBag.CName = "Category";
+    }
+    string createRoute = ViewBag.CName + "_Create";
+    string updateRoute = ViewBag.CName + "_Update";
+    string deleteRoute = ViewBag.CName + "_Delete";
+    string indexRoute = ViewBag.CName + "_Index";
+    string tableRoute = ViewBag.CName + "_Table";
+    int TotalPage = ViewBag.TotalPage == null ? 0 : (int)ViewBag.TotalPage;
+    int CurrentPage = ViewBag.CurrentPage == null ? 0 : (int)ViewBag.CurrentPage;
+    int PageSize = ViewBag.PageSize == null ? 0 : (int)ViewBag.PageSize;
+
+    string SearchText = ViewBag.SearchText == null ? "" : ViewBag.SearchText.ToString();
+    int Total = ViewBag.Total == null ? 0 : (int)ViewBag.Total;
+    string uri = Url.RouteUrl(createRoute);
+}
+
+<div id="mainContent">
+    <script type="text/javascript">
+var cpage = @CurrentPage;var pageSize =@PageSize ;  firstTime = 1;
+    </script>
+    <div class="row" ng-app="">
+        <div class="col-md-12">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-list font-green-sharp"></i>
+                        <span class="page-title font-green-sharp uppercase">@ViewBag.CText</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-toolbar">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="btn-group pull-left">
+                                    <a try="@uri" class="btn sbold green" id="ThemBtn">Thêm @ViewBag.CText <i class="fa fa-plus"></i></a>
+                                </div>
+                                <div class="btn-group pull-left">
+                                    <button class="btn green  btn-outline dropdown-toggle" data-toggle="dropdown" style="margin-left:10%">
+                                        Tools
+                                        <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-print"></i> Print
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-file-pdf-o"></i> Save as PDF
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-file-excel-o"></i> Export to Excel
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="btn-group pull-right">
+                                    <a href="@Url.RouteUrl(deleteRoute)" class="btn red disabled" id="btnDelete">
+                                        <i class="fa fa-trash"></i>
+                                        Xóa @ViewBag.CText
+                                        <span class="checkedCount"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dataTables_wrapper no-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="btn-group pull-left">
+                                    <div id="sample_1_filter" class="dataTables_filter">
+                                        <label>
+                                            Hiển thị
+                                            <select class="form-control input-inline" id="selectPageSize">
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select> dòng/trang
+
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="btn-group pull-right">
+                                    <div id="sample_1_filter" class="dataTables_filter">
+                                        <label>
+                                            Tìm kiếm
+                                            <input type="search" class="form-control input-inline" aria-controls="sample_1" id="txtSearch" value="@SearchText">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*@{await Html.RenderPartialAsync("_TableList", Model); }*@
+                        <div id="ajaxContent"></div>
+                        @*@await Component.InvokeAsync("TableList", new { p = CurrentPage, ps = PageSize })*@
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+            firstTime=1;
+            $(document).ready(function () {
+                //TableDatatablesManaged1.init('#sample_1');
+                $('#selectPageSize').val(pageSize);
+                reloadPage2();
+                firstTime = 0;
+                $('#txtSearch').change(function (e) {
+                    reloadPage2();
+                });
+            });
+            function reloadPage2()
+            {
+                App.blockUI({
+                    target: '#ajaxContent',
+                    boxed: true,
+                    animate: true,
+                    message: 'Processing...'
+                });
+                var page;
+             //   showNoty(firstTime, 'success', 'center', 5000);
+                if (firstTime != 1) page = $('#selectPage').val();
+                else {
+                    page = cpage;
+                    firstTime = 0;
+                }
+                var pagesize = $('#selectPageSize').val();
+                var searchString = $('#txtSearch').val();
+                $.ajax({
+                    url: '@Url.RouteUrl(tableRoute)',
+                    data: { p: page, ps: pagesize, st:searchString },
+                    contentType: 'application/json',
+                    dataType: 'html',
+                    type: 'GET',
+                    cache: false,
+                    success: function (data) {
+                        $('#ajaxContent').html(data);
+                        InnitEvents();
+
+                        InnitCheckableTable('#sample_1', '.checkedCount');
+                        
+
+                    },
+                    error: function (data) {
+                        alert('Đã có lỗi xảy ra DO LOAD PAge');
+                    },
+                    complete: function (result) {
+                        App.unblockUI();
+                    }
+                });
+
+            }
+
+            $('#selectPageSize').change(function (e) {
+                reloadPage2();
+            });
+        function InnitEvents() {
+                $('.delete').on('click', function (e) {
+                    e.preventDefault();
+                    if (confirm("Bạn có chắc chắn muốn xóa bản ghi này không?") == false) {
+                        return;
+                    }
+                    var nRow = $(this).parents('tr')[0];
+                    var $code = $(nRow).attr('data-objectid');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.RouteUrl(deleteRoute)',
+                        dataType: 'json',
+                        data: { code: $code },
+                        success: function (result) {
+                            if (result.success) {
+                               // showNoty(result.message, 'success', 'center', 5000);
+                                //nRow.remove();
+                                reloadPage2();
+                                showNoty('Đã xóa thành công', 'success');
+                            }
+                            else {
+                                showNoty(result.message, 'error', 'center', 5000);
+                                reloadPage2();
+                            }
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert('Đã xảy ra lỗi khi thực hiện yêu cầu của bạn. Vui lòng kiểm tra và thử lại!<br />Lỗi: ' + errorThrown);
+                        },
+                        complete: function (result) {
+                            Metronic.unblockUI();
+                        }
+                    });
+            });
+                $('#selectPage').change(function (e) {
+                    reloadPage2();
+                });
+            }
+        $("#ThemBtn").click(function (e) {
+            var indexurl = (this).getAttribute('try');
+            loadPage(indexurl, 'ajaxContent');
+        })
+    </script>
+</div>
+@section Styles{
+
+    <link href="~/Themes/Metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/Themes/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+}
+@section Plugins
+    {
+    <script src="~/Themes/Metronic/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+
+    <script src="~/js/site.js" type="text/javascript"></script>
+    <script src="~/Themes/metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+}
+@section Scripts {
+
+    <script src="~/Themes/Metronic/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+
+    @*<script src="~/js/angular.min.js"></script>*@
+}

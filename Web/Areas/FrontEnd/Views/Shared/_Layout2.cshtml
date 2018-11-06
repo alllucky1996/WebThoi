@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+    <title>@ViewBag.Title</title>
+    @Html.Partial("_Head2")
+
+    @Html.Partial("_Css1")
+    @RenderSection("styles", required: false)
+    @Html.Partial("_Css2")
+    @RenderSection("styles2", required: false)
+</head>
+<body class="page-md page-sidebar-closed-hide-logo ">
+    @Html.Partial("_Header", 0)
+
+    <div class="page-container">
+        @Html.Partial("_Menu")
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_Footer")
+
+    <div class="modal fade" id="ajaxmodal" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content content-partial-1">
+                <div class="modal-body">
+                    <img src="~/Themes/metronic/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
+                    <span>
+                        &nbsp;&nbsp;Đang tải dữ liệu...
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-modal-lg" id="modal_large" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content content-partial-2">
+                <div class="modal-body">
+                    <img src="~/Themes/metronic/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
+                    <span>
+                        &nbsp;&nbsp;Đang tải dữ liệu...
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ajaxmodal2" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content content-partial-3">
+                <div class="modal-body">
+                    <img src="~/Themes/metronic/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
+                    <span>
+                        &nbsp;&nbsp;Đang tải dữ liệu...
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="responsive-modal" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content content-partial-4">
+                <div class="modal-body">
+                    <img src="~/Themes/metronic/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
+                    <span>
+                        &nbsp;&nbsp;Đang tải dữ liệu...
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="full-width-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content content-partial-5">
+                <div class="modal-body">
+                    <img src="~/Themes/metronic/assets/global/img/loading-spinner-grey.gif" alt="" class="loading">
+                    <span>
+                        &nbsp;&nbsp;Đang tải dữ liệu...
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_Scripts")
+    @RenderSection("scripts", required: false)
+
+
+    @*@Scripts.Render("~/js/metronic/select2", "~/js/metronic/bootbox", "~/js/metronic/datatable", "~/js/metronic/moment")
+        @Scripts.Render("~/js/metronic/datatable-ajax-source")*@
+
+    <script src="/Themes/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="/Themes/assets/global/plugins/bootbox/bootbox.min.js"></script>
+    <script src="/Themes/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/Themes/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="/Themes/assets/global/plugins/moment.min.js"></script>
+
+    <script src="/Themes/assets/global/scripts/datatable-ajax-source.js"></script>
+
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+
+            window.DVFT = "@ViewBag.IDDVFT";
+
+            Metronic.init();
+            Layout.init();
+            Demo.init();
+            showNoty('@ViewBag.Success', 'success', 'center', 5000);
+            showNoty('@ViewBag.Error', 'error', 'center', 5000);
+
+
+            window.renderNotiBy = function (data, regex) {
+                var $rd = "";
+
+                var $rdTbMoiTitle = '<li style="background:none;color:red">Thông báo mới</li>';
+
+                var $rdTbMoi = renX(data.dataCX, "label-warning", regex);
+
+                if ($rdTbMoi!="") {
+                    $rd = $rdTbMoiTitle + $rdTbMoi;
+                }
+
+                console.log($rd);
+
+                var $rdTbCuTitle = '<li style="background:none;"></li><li style="background:none;"></li><li style="background:none;">Thông báo cũ</li>';
+
+                var $rdTbCu = renX(data.dataDX, "label-default", regex);
+
+                if ($rdTbCu != "") {
+                    $rd += $rdTbCuTitle + $rdTbCu;
+                }
+
+
+                return $rd;
+
+            }
+
+
+            window.renderNoti = function (data) {
+
+                if (Object.keys(data.dataCX).length > 0) {
+                    $("#header_notif_bar").fadeIn();
+                    $("#notifCount").html(Object.keys(data.dataCX).length);
+                } else {
+                    $("#header_notif_bar").fadeOut();
+                }
+                var dx = renderNotiBy(data, "[Đề xuất]");
+                if (dx != "") {
+                    $("#notifDeXuatBox").fadeIn();
+                    $("#notifDeXuat").html(dx);
+                } else {
+                    $("#notifDeXuatBox").fadeOut();
+                }
+
+                var dt = renderNotiBy(data, "[Đề tài]");
+                if (dt != "") {
+                    $("#notifDeTaiBox").fadeIn();
+                    $("#notifDeTai").html(dt);
+                } else {
+                    $("#notifDeTaiBox").fadeOut();
+                }
+
+
+                var dadt = renderNotiBy(data, "[Dự án đầu tư]");
+                if (dadt != "") {
+                    $("#notifDuAnDauTuBox").fadeIn();
+                    $("#notifDuAnDauTu").html(dadt);
+                } else {
+                    $("#notifDuAnDauTuBox").fadeOut();
+                }
+
+                var khac = renderNotiBy(data, "[Khac]");
+                if (khac != "") {
+                    $("#notifKhacBox").fadeIn();
+                    $("#notifKhac").html(khac);
+                } else {
+                    $("#notifKhacBox").fadeOut();
+                }
+
+            }
+
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+
+            $(".modal").on("hidden.bs.modal", function () {
+
+                initNoti();
+                jQuery(".modal-content", this).empty();
+
+
+            });
+
+
+        });
+    </script>
+    @RenderSection("scripts2", required: false)
+    @Scripts.Render("~/dvft")
+    <script>
+        function ex() {
+            var val = $('option:selected', "#DonVis").attr('value');
+            if (val >= 1) {
+                $("#Excel").css({ "display": "block" });
+
+                $("#Excel").attr("href", $("#link").attr("href").replace('99999', val));
+                // var href = ""+val;
+            }
+            if ($('option:selected', "#DonVis").attr('value') < 1) {
+                $("#Excel").css({ "display": "none" });
+            }
+        }
+    </script>
+</body>
+
+</html>

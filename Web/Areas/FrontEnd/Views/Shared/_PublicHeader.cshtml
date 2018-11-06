@@ -1,0 +1,22 @@
+﻿@{
+    string style = "";
+}
+<div class="page-header md-shadow-z-1-i navbar navbar-static-top">
+    <div class="page-header-inner">
+        <div class="page-logo">
+            <a href="@Url.Action("Index", "Home")">
+                <img src="~/Images/logo.png" alt="logo" class="logo-default" style="max-width:200px;" />
+            </a>
+            <div class="menu-toggler sidebar-toggler"></div>
+        </div>
+
+        <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+        </a>
+        <div class="page-top pull-left" style="padding-top:10px;padding-left:20px;">
+            <span style="color:#1f6e43; font-weight:bold; font-size:large;">HỆ THỐNG QUẢN LÝ gì gì đó</span>
+        </div>
+        <div class="page-top pull-right">
+           <a href="@Url.RouteUrl("ManagementHome")">Khu vực quản trị</a>
+        </div>
+    </div>
+</div>

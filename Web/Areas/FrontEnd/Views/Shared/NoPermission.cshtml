@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Không có quyền truy cập";
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+}
+
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        Không có quyền truy cập
+    </li>
+</ul>
+@*Bắt đầu nội dung tùy chỉnh*@
+<div class="row">
+    <br /><br /><br /><br />
+    <div class="col-md-12 page-500">
+        <div class=" number">
+            Lỗi
+        </div>
+        <div class=" details text-red">
+            <h3>Bạn không có quyền truy cập chức năng này!</h3>
+            <p>
+                Kiểm tra quyền của bạn,<br>
+                hoặc liên hệ với quản trị hệ thống.<br><br>
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    @Styles.Render("~/css/metronic/error")
+}
