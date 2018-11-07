@@ -48,6 +48,14 @@ namespace Web.Areas.FrontEnd.Controllers
 
 
         #region Action
+        [Route("nhap-" + CRoute, Name = CName + "_MultiCreate")]
+        public async Task<ActionResult> MultiCreate()
+        {
+            ViewBag.Title = "Thêm mới " + CText;
+            ViewBag.CName = CName;
+            ViewBag.CText = CText;
+            return View();
+        }
         [Route("nhap" + CRoute, Name = CName + "_Create")]
         public async Task<ActionResult> Create()
         {
@@ -63,29 +71,21 @@ namespace Web.Areas.FrontEnd.Controllers
         {
             try
             {
-                string id;
-                try
-                {
-                    id = (_repository.GetRepository<CheckImage>().GetAll().OrderByDescending(o => o.Id).FirstOrDefault().Id + 1).ToString();
-                }
-                catch
-                {
-                    id = "BEGIN";
-                }
+                Guid id = Guid.NewGuid();
+               
                 if (file == null)
                 {
                     return Json(new { success = false, message = "Không có file gửi lên" }, JsonRequestBehavior.AllowGet);
                 }
                 var type = Path.GetExtension(file.FileName);
-                string temp = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff") /*+ (DateTime.Now.Ticks).ToString()*/ + type;
-                var fullName = Server.MapPath("~/Upload/CheckImage/") + temp;
-                file.SaveAs(fullName);
-                // FileName = Path.GetFileName(fullName);
-                model.Path = "/Upload/CheckImage/" + temp;
+                var  fileName = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff_") + Guid.NewGuid().ToString().Replace("-","_") + type;
+                var temp = Server.MapPath("~/Upload/CheckImage/") + fileName;
+                file.SaveAs(temp);
+                model.Path = "/Upload/CheckImage/" + fileName;
                 //Nhập trạng thái bài viết
                 var newItem = new CheckImage();
                 newItem.Code = StringHelper.KillChars(model.Code);
-                newItem.Name = model.Name == null ? id : model.Name;
+                newItem.Name = model.Name == null ? Path.GetFileName(fileName): model.Name;
                 newItem.Description = model.Description;
                 newItem.Path = model.Path;
                 newItem.IsChecked = model.IsChecked;
@@ -94,14 +94,14 @@ namespace Web.Areas.FrontEnd.Controllers
                 if (resul > 0)
                 {
                     TempData["Success"] = "Thêm mới thành công " + CText;
-                    return Json(new { success = true, message = TempData["Success"], result = resul }, JsonRequestBehavior.AllowGet);
-                    // return RedirectToRoute(CName + "_Index");
+                    //return Json(new { success = true, message = TempData["Success"], result = resul }, JsonRequestBehavior.AllowGet);
+                      return RedirectToRoute(CName + "_Index");
                 }
                 else
                 {
                     ViewBag.Error = "Không thêm được " + CText;
-                    return Json(new { success = false, message = "Không thêm được " + CText, result = resul }, JsonRequestBehavior.AllowGet);
-                    //return View(model);
+                    //return Json(new { success = false, message = "Không thêm được " + CText, result = resul }, JsonRequestBehavior.AllowGet);
+                    return View(model);
                 }
             }
             catch (Exception ex)

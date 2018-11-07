@@ -52,14 +52,14 @@
                                             <span class="caption-subject font-green bold uppercase">@item.Id</span>
                                         </div>
                                     </div>
-                                    <p class="caption-desc font-grey-cascade"> @item.Name</p>
+                                    <p class="caption-desc font-grey-cascade"> @Common.Helpers.StringHelper.ShorStr(item.Name,30,true)</p>
                                     <div class="portlet-body">
                                         <div class="mt-element-overlay">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="mt-overlay-1">
                                                         <center>
-                                                            <img src="@item.Path" width="150" height="150" style="margin:auto">
+                                                            <img src="@item.Path" width="150" height="150" style="margin:auto" alt="@item.Description">
                                                         </center>
                                                     </div>
                                                 </div>

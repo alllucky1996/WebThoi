@@ -57,18 +57,33 @@ namespace Web.Areas.Management.Controllers
             }
         }
         [Route("danh-sach-" + CRoute, Name = CName + "_Table")]
-        public async Task<ActionResult> Table()
+        public async Task<ActionResult> Table(bool? isCheck)
         {
             try
             {
-                var list = await GetRespository().GetAllAsync(o => o.IsDeleted != true);
-                ViewBag.Title = "Danh mục" + CText;
-                ViewBag.CanDelete = true;// RoleHelper.CheckPermission(CModule, ActionEnum.Delete);
-                ViewBag.CanCreate = true;// RoleHelper.CheckPermission(CModule, ActionEnum.Create);
-                ViewBag.CanUpdate = true;// RoleHelper.CheckPermission(CModule, ActionEnum.Update);
-                ViewBag.CName = CName;
-                ViewBag.CText = CText;
-                return View(list);
+                
+                if(isCheck== true)
+                {
+                   var list = await GetRespository().GetAllAsync(o => o.IsDeleted != true && o.IsChecked == true);
+                    ViewBag.Title = "Danh mục" + CText;
+                    ViewBag.CanDelete = true;// RoleHelper.CheckPermission(CModule, ActionEnum.Delete);
+                    ViewBag.CanCreate = true;// RoleHelper.CheckPermission(CModule, ActionEnum.Create);
+                    ViewBag.CanUpdate = true;// RoleHelper.CheckPermission(CModule, ActionEnum.Update);
+                    ViewBag.CName = CName;
+                    ViewBag.CText = CText;
+                    return View(list);
+                }
+                else
+                {
+                    var list = await GetRespository().GetAllAsync(o => o.IsDeleted != true);
+                    ViewBag.Title = "Danh mục" + CText;
+                    ViewBag.CanDelete = true;// RoleHelper.CheckPermission(CModule, ActionEnum.Delete);
+                    ViewBag.CanCreate = true;// RoleHelper.CheckPermission(CModule, ActionEnum.Create);
+                    ViewBag.CanUpdate = true;// RoleHelper.CheckPermission(CModule, ActionEnum.Update);
+                    ViewBag.CName = CName;
+                    ViewBag.CText = CText;
+                    return View(list);
+                }
             }
             catch (Exception ex)
             {
@@ -91,45 +106,37 @@ namespace Web.Areas.Management.Controllers
 
             try
             {
-                string id;
-                try
-                {
-                    id = (GetRespository().GetAll().OrderByDescending(o => o.Id).FirstOrDefault().Id+1).ToString();
-                }
-                catch 
-                {
-                    id = "BEGIN";
-                }
+                Guid id = Guid.NewGuid();
+
                 if (file == null)
                 {
                     return Json(new { success = false, message = "Không có file gửi lên" }, JsonRequestBehavior.AllowGet);
                 }
                 var type = Path.GetExtension(file.FileName);
-                string temp = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff") /*+ (DateTime.Now.Ticks).ToString()*/ + type;
-                var fullName = Server.MapPath("~/Upload/CheckImage/") + temp;
-                file.SaveAs(fullName);
-                // FileName = Path.GetFileName(fullName);
-                model.Path = "/Upload/CheckImage/" + temp;
+                var fileName = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss_fff_") + Guid.NewGuid().ToString().Replace("-", "_") + type;
+                var temp = Server.MapPath("~/Upload/CheckImage/") + fileName;
+                file.SaveAs(temp);
+                model.Path = "/Upload/CheckImage/" + fileName;
                 //Nhập trạng thái bài viết
-                var newItem = NewObject();
+                var newItem = new CheckImage();
                 newItem.Code = StringHelper.KillChars(model.Code);
-                newItem.Name = model.Name == null ? id: model.Name;
+                newItem.Name = model.Name == null ? Path.GetFileName(fileName) : model.Name;
                 newItem.Description = model.Description;
                 newItem.Path = model.Path;
                 newItem.IsChecked = model.IsChecked;
 
-                int resul = GetRespository().Create(newItem, AccountId);
+                int resul = _repository.GetRepository<CheckImage>().Create(newItem, AccountId);
                 if (resul > 0)
                 {
                     TempData["Success"] = "Thêm mới thành công " + CText;
-                    return Json(new { success = true, message = TempData["Success"], result = resul }, JsonRequestBehavior.AllowGet);
-                    // return RedirectToRoute(CName + "_Index");
+                    //return Json(new { success = true, message = TempData["Success"], result = resul }, JsonRequestBehavior.AllowGet);
+                    return RedirectToRoute(CName + "_Index");
                 }
                 else
                 {
                     ViewBag.Error = "Không thêm được " + CText;
-                    return Json(new { success = false, message = "Không thêm được " + CText, result = resul }, JsonRequestBehavior.AllowGet);
-                    //return View(model);
+                    //return Json(new { success = false, message = "Không thêm được " + CText, result = resul }, JsonRequestBehavior.AllowGet);
+                    return View(model);
                 }
             }
             catch (Exception ex)

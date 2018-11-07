@@ -813,7 +813,7 @@
     <Content Include="fonts\Simple-Line-Icons.woff" />
     <Content Include="Areas\FrontEnd\Views\AccountService\Index.cshtml" />
     <Content Include="Areas\FrontEnd\Views\Home\error.cshtml" />
-    <Content Include="Areas\FrontEnd\Views\Home\Index2.cshtml" />
+    <Content Include="Areas\FrontEnd\Views\Home\Create2.cshtml" />
     <Content Include="Areas\FrontEnd\Views\Home\OK.cshtml" />
     <Content Include="Areas\FrontEnd\Views\Home\OKCopy.cshtml" />
     <Content Include="Areas\FrontEnd\Views\Home\updaateOK.cshtml" />
@@ -887,8 +887,11 @@
     <Content Include="Areas\Management\Views\Image\Index.cshtml" />
     <Content Include="Areas\FrontEnd\Views\Home\Index.cshtml" />
     <Content Include="Areas\FrontEnd\Views\Home\Create.cshtml" />
+    <Content Include="Areas\FrontEnd\Views\Home\MultiCreate.cshtml" />
+    <Content Include="Areas\FrontEnd\Views\Shared\_UploadFile.cshtml" />
     <None Include="Properties\PublishProfiles\TaiKhoan2Cap.pubxml" />
     <None Include="Properties\PublishProfiles\ThienThanhPublish.pubxml" />
+    <Content Include="Images\noimage.png" />
     <Content Include="Images\Slider\1.jpg" />
     <Content Include="Images\Slider\2.jpg" />
     <Content Include="Images\nid.png" />

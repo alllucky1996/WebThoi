@@ -1,12 +1,12 @@
 ﻿@model Dung.Model.CheckImage
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Areas/FrontEnd/Views/Shared/_PublicLayout.cshtml";
+    Layout = "~/Areas/FrontEnd/Views/Shared/_UploadFile.cshtml";
     if (ViewBag.ActiveTabNum == null)
     {
         ViewBag.ActiveTabNum = "1";
     }
-    string CName =ViewBag.CName==null ? "Image": ViewBag.CName;
+    string CName = ViewBag.CName == null ? "Image" : ViewBag.CName;
     string indexRoute = "";
     int CurrentPage = ViewBag.CurrentPage == null ? 0 : (int)ViewBag.CurrentPage;
     int PageSize = ViewBag.PageSize == null ? 0 : (int)ViewBag.PageSize;
@@ -17,7 +17,7 @@
 <ul class="page-breadcrumb breadcrumb">
     <li>
         <i class="fa fa-home"></i>
-        <a href="@Url.RouteUrl("FrontEnd_Home_Index")"">Trang chủ</a>
+        <a href="@Url.RouteUrl("FrontEnd_Home_Index")" ">Trang chủ</a>
         <i class="fa fa-angle-right"></i>
     </li>
     <li>
@@ -37,17 +37,17 @@
         </div>
     </div>
     <div class="portlet-body" id="account_detail">
-       
+
         <div class="">
 
             <div class="row">
                 @using (Html.BeginForm("Create", "Home", FormMethod.Post, new { @class = "form -horizontal form-bordered form-row-stripped", @id = "fileupload", @enctype = "multipart/form-data" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <div class="col-md-12">
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="col-md-12">
                         <div class="form-body">
                             @if (!ViewData.ModelState.IsValid)
-                        {
+                            {
                                 <div class="alert alert-danger">
                                     <button data-close="alert" class="close"></button>
                                     @Html.ValidationSummary(true)
@@ -56,10 +56,10 @@
                             <div class="row fileupload-buttonbar">
                                 <div class="col-lg-7">
                                     <!-- The fileinput-button span is used to style the file input field as button -->
-                                    <span class="btn green fileinput-button">
+                                    <span class="btn green fileinput-button click-upfile">
                                         <i class="fa fa-plus"></i>
                                         <span> Add files... </span>
-                                        <input type="file" name="file" multiple="" id="file">
+                                        @*<input type="file" name="file" multiple="" id="file">*@
                                     </span>
                                     <button type="submit" class="btn blue start">
                                         <i class="fa fa-upload"></i>
@@ -81,100 +81,67 @@
                                     <div class="progress-extended"> &nbsp; </div>
                                 </div>
                             </div>
-                            <!-- The table listing the files available for upload/download -->
-                            <table role="presentation" class="table table-striped clearfix">
-                                <tbody class="files"> </tbody>
-                            </table>
+
+                            <div class="form-group">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                        <img src="~/Images/noimage.png" alt="ảnh upload" class="click-upfile">
+                                    </div>
+                                    <div>
+                                        @Html.CheckBoxFor(o=>o.IsChecked, new { @class= "fileinput-exists" })
+                                    </div>
+
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"> </div>
+                                    <div>
+                                        <span class="btn default btn-file">
+                                            <span class="fileinput-new">Chọn ảnh</span>
+
+                                            <span class="fileinput-exists"> Thay đổi </span>
+                                            <input type="hidden">
+                                            <input type="file" name="file" id="file">
+                                        </span>
+                                        <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Hủy bỏ </a>
+
+                                    </div>
+                                    <div class=" fileinput-exists margin-top-15 ">
+                                        @Html.LabelFor(o => o.Name)
+                                        @Html.TextBoxFor(o => o.Name)
+                                    </div>
+                                </div>
+                                <div class="clearfix margin-top-10">
+                                    <span class="label label-danger">NOTE! </span>
+                                    <span>Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only </span>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
                 }
             </div>
-            <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-            <script id="template-upload" type="text/x-tmpl">
-                {% for (var i=0, file; file=o.files[i]; i++) { %}
-                <tr class="template-upload fade">
-                    <td>
-                        @*<input name="IsChecked" id="IsChecked" type="checkbox" class="toggle">*@
-                        <input type='checkbox' id='IsChecked' name='IsChecked' value='true' @(Model == null || Model.IsChecked == true ? "checked=checked" : "" )
-                               class="make-switch"/>                                                              
-                    </td>
-                    <td>
-                        <span class="preview"></span>
-                    </td>
-                    <td>
-                        <p class="name font-red">{%=file.name%}</p>
-                        @*<input id="Name" name="Name" style="Display:none" type="text" value={%=file.name%}>*@
-                        @Html.LabelFor(o => o.Name)
-                        @Html.TextBoxFor(o=>o.Name)
-                        <strong class="error label label-danger"></strong>
-                    </td>
-                    <td>
-                        <p class="size">Processing...</p>
-                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                            <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-                        </div>
-                    </td>
-                    <td>
-                        {% if (!i && !o.options.autoUpload) { %}
-                        <button class="btn blue start" disabled>
-                            <i class="fa fa-upload"></i>
-                            <span>Start</span>
-                        </button> {% } %} {% if (!i) { %}
-                        <button class="btn red cancel">
-                            <i class="fa fa-ban"></i>
-                            <span>Cancel</span>
-                        </button> {% } %}
-                    </td>
-                </tr> {% } %}
-            </script>
-            <!-- The template to display files available for download -->
-            <script id="template-download" type="text/x-tmpl">
-                {% for (var i=0, file; file=o.files[i]; i++) { %}
-                <tr class="template-download fade">
-                    @*<td>
-                        <span class="preview">
-                            {% if (file.thumbnailUrl) { %}
-                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery>
-                                <img src="{%=file.thumbnailUrl%}">
-                            </a> {% } %}
-                        </span>
-                    </td>
-                    <td>
-                        <p class="name">
-                            {% if (file.url) { %}
-                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl? 'data-gallery' : '' %}>{%=file.name%}</a> {% } else { %}
-                            <span>{%=file.name%}</span> {% } %}
-                        </p> {% if (file.error) { %}
-                        <div>
-                            <span class="label label-danger">Error</span> {%=file.error%}
-                        </div> {% } %}
-                    </td>
-                    <td>
-                        <span class="size">{%=o.formatFileSize(file.size)%}</span>
-                    </td>
-                    <td>
-                        {% if (file.deleteUrl) { %}
-                        <button class="btn red delete btn-sm" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}" {% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}' {% } %}>
-                            <i class="fa fa-trash-o"></i>
-                            <span>Delete</span>
-                        </button>
-                        <input type="checkbox" name="delete" value="1" class="toggle"> {% } else { %}
-                        <button class="btn yellow cancel btn-sm">
-                            <i class="fa fa-ban"></i>
-                            <span>Cancel</span>
-                        </button> {% } %}
-                    </td>*@
-                </tr> {% } %}
-            </script>
-            <!-- END PAGE BASE CONTENT -->
+
         </div>
     </div>
-    <script src="~/Scripts/CustTomScripts.js"></script>
     <script type='text/javascript'>
-
-                //$("#cancelBtn").click(function (e) {
-                //    var indexurl = (this).getAttribute('route');
-                //    loadPage(indexurl, 'document');
-                //})
+        //$("#cancelBtn").click(function (e) {
+        //    var indexurl = (this).getAttribute('route');
+        //    loadPage(indexurl, 'document');
+        //})
+    </script>
+    <script>
+        $("#file").change(function () {
+            readURL(this);
+        });
+        $(".click-upfile").click(function () {
+            $("#file").click();
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.imageUpload').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>

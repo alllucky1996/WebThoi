@@ -38,9 +38,14 @@
                         <span class="caption-subject font-green-sharp bold ">danh sách @ViewBag.CText</span>
                     </div>
                     <div class="actions col-md-4">
-                        <a href="@Url.RouteUrl(ViewBag.CName+"_Index")" class="btn btn-sm blue"><i class="fa fa-table"></i>Xem dạng list</a>
+                        <span>
+                            <a href="@Url.RouteUrl(ViewBag.CName+"_Index")" class="btn btn-sm blue"><i class="fa fa-table"></i>Xem dạng list</a>
+                        </span>
+                        <span>
+                            <a href="@(Url.RouteUrl(ViewBag.CName+"_Table")+"?isCheck= true")" class="btn btn-sm default"><i class="fa fa-check"></i>Xem các hình đã check</a>
+                        </span>
                     </div>
-
+                   
                 </div>
                 @if (canCreate)
                 {
@@ -53,10 +58,11 @@
                 <table class="table table-striped table-hover table-bordered" id="datatable_none_ajax_source">
                     <thead>
                         <tr>
-                            <th>Tên </th>
-                            <th>Tên trong db</th>
-                            <th>Hình ảnh </th>
-                            <th style="width:153px">Thao tác</th>
+                            <th class="col-md-1">Tên </th>
+                            <th class="col-md-4">Tên trong db</th>
+                            <th class="col-md-3">Hình ảnh </th>
+                            <th class="col-md-1">trạng thái</th>
+                            <th class="col-md-1" style="min-width:120px">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,9 +71,10 @@
                             foreach (var item in Model.OrderBy(o => o.CreateDate))
                             {
                                 <tr data-objectid="@item.Id">
-                                    <td>@item.Name</td>
-                                    <td>@Path.GetFileName(item.Path)</td>
-                                    <td><img src="@Url.Content(item.Path)" alt="@item.Description"  height="100"/></td>
+                                    <td>@Common.Helpers.StringHelper.ShorStr(item.Name, 28, true)</td>
+                                    <td>@Common.Helpers.StringHelper.ShorStr(Path.GetFileName(item.Path), 40, true)</td>
+                                    <td><img src="@Url.Content(item.Path)" alt="@item.Description"  height="100" /></td>
+                                    <td>@(item.IsChecked==true?"Đã check":"")</td>
                                     <td>
                                         @if (canUpdate)
                                         {

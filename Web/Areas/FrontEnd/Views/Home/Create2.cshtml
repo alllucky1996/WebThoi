@@ -1,0 +1,159 @@
+﻿@model Dung.Model.CheckImage
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/FrontEnd/Views/Shared/_PublicLayout.cshtml";
+    var canCreate = (bool)ViewBag.CanCreate;
+    //    string tableRoute = ViewBag.CName + "_Table";
+    string NoImage = "";
+}
+
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        @ViewBag.Title
+    </li>
+</ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-flag-o font-green-sharp bold"></i>
+                    <span class="caption-subject font-green-sharp bold ">danh sách @ViewBag.CText</span>
+                </div>
+
+                @if (canCreate)
+                {
+                    <div class="actions">
+                        <a href="@Url.RouteUrl(ViewBag.CName+"_Create")" class="btn btn-sm green"><i class="fa fa-plus"></i> Thêm @ViewBag.CText</a>
+                    </div>
+                }
+            </div>
+            <div class="portlet-body">
+                <div class="">
+
+                    <div class="row">
+                        @using (Html.BeginForm("Create", "Home", FormMethod.Post, new { @class = "form -horizontal form-bordered form-row-stripped", @id = "fileupload", @enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                        <div class="col-md-12">
+                            <div class="form-body">
+                                @if (!ViewData.ModelState.IsValid)
+                                {
+                                    <div class="alert alert-danger">
+                                        <button data-close="alert" class="close"></button>
+                                        @Html.ValidationSummary(true)
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <label class="control-label ">Chọn file ảnh từ máy tính của quý vị</label>
+                                    <div class="row fileupload-buttonbar">
+                                        <div class="col-lg-7">
+                                            <!-- The fileinput-button span is used to style the file input field as button -->
+                                            <span class="btn green fileinput-button">
+                                                <i class="fa fa-plus"></i> <span> Upload hình ảnh... </span>
+                                                <input type="file" name="file" id="file">
+                                            </span>
+                                        </div>
+                                        <!-- The global progress information -->
+                                        <div class="col-lg-5 fileupload-progress fade">
+                                            <!-- The global progress bar -->
+                                            <div class="progress progress-striped active"
+                                                 role="progressbar" aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                                <div class="progress-bar progress-bar-success"
+                                                     style="width: 0%;"></div>
+                                            </div>
+                                            <!-- The extended global progress information -->
+                                            <div class="progress-extended">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <!-- The table listing the files available for upload/download -->
+                                    <table role="presentation"
+                                           class="table table-striped clearfix">
+                                        <tbody class="files"></tbody>
+                                    </table>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <img id="click-upfile" class="imageUpload path-image " alt="image upload" src="@NoImage" />
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                          
+                        }
+                    </div>
+                    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+                    <script id="template-upload" type="text/x-tmpl">
+                        {% for (var i=0, file; file=o.files[i]; i++) { %}
+                        <tr class="template-upload fade">
+                            <td>
+                                @*<input name="IsChecked" id="IsChecked" type="checkbox" class="toggle">*@
+                                <input type='checkbox' id='IsChecked' name='IsChecked' value='true' @(Model == null || Model.IsChecked == true ? "checked=checked" : "" )
+                                       class="make-switch" />
+                            </td>
+                            <td>
+                                <span class="preview"></span>
+                            </td>
+                            <td>
+                                <p class="name font-red">{%=file.name%}</p>
+                                @*<input id="Name" name="Name" style="Display:none" type="text" value={%=file.name%}>*@
+                                @Html.LabelFor(o => o.Name)
+                                @Html.TextBoxFor(o => o.Name)
+                                <strong class="error label label-danger"></strong>
+                            </td>
+                            <td>
+                                <p class="size">Processing...</p>
+                                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                                </div>
+                            </td>
+                            <td>
+                                {% if (!i && !o.options.autoUpload) { %}
+                                <button class="btn blue start" disabled>
+                                    <i class="fa fa-upload"></i>
+                                    <span>Start</span>
+                                </button> {% } %} {% if (!i) { %}
+                                <button class="btn red cancel">
+                                    <i class="fa fa-ban"></i>
+                                    <span>Cancel</span>
+                                </button> {% } %}
+                            </td>
+                        </tr> {% } %}
+                    </script>
+                    <!-- The template to display files available for download -->
+                    <script id="template-download" type="text/x-tmpl">
+                        {% for (var i=0, file; file=o.files[i]; i++) { %}
+                        <tr class="template-download fade"></tr> {% } %}
+                    </script>
+                    <!-- END PAGE BASE CONTENT -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script>
+    $("#file").change(function () {
+        readURL(this);
+    });
+    $("#click-upfile").click(function () {
+        $("#file").click();
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.imageUpload').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
