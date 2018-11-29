@@ -33,9 +33,6 @@
     <Reference Include="Common">
       <HintPath>..\Web\Dll\Common.dll</HintPath>
     </Reference>
-    <Reference Include="Entities">
-      <HintPath>..\Web\Dll\Entities.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -58,7 +55,6 @@
     <Compile Include="DungEntity.cs" />
     <Compile Include="Enums\TrangThaiKhachHangEnum.cs" />
     <Compile Include="Model\CheckImage.cs" />
-    <Compile Include="Model\KhachHang.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +63,15 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entities\CoreEntities.csproj">
+      <Project>{e0448b4d-6a1a-465b-ae71-7a0d7e53c0ca}</Project>
+      <Name>CoreEntities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

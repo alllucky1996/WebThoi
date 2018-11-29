@@ -101,7 +101,7 @@ namespace Web.Areas.Management.Controllers
         }
         [Route("nhap" + CRoute)]
         [HttpPost, ValidateInput(false)]
-        public ActionResult Create(CheckImage model, HttpPostedFileBase file)
+        public async Task<ActionResult> Create(CheckImage model, HttpPostedFileBase file)
         {
 
             try
@@ -125,7 +125,7 @@ namespace Web.Areas.Management.Controllers
                 newItem.Path = model.Path;
                 newItem.IsChecked = model.IsChecked;
 
-                int resul = _repository.GetRepository<CheckImage>().Create(newItem, AccountId);
+                int resul = await _repository.GetRepository<CheckImage>().CreateAsync(newItem, AccountId);
                 if (resul > 0)
                 {
                     TempData["Success"] = "Thêm mới thành công " + CText;

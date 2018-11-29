@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E0448B4D-6A1A-465B-AE71-7A0D7E53C0CA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Entities</RootNamespace>
+    <AssemblyName>Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Enums\LoaiYeuCau.cs" />
+    <Compile Include="Enums\ActionEnum.cs" />
+    <Compile Include="Enums\ModuleEnum.cs" />
+    <Compile Include="Enums\ModuleGroupEnum.cs" />
+    <Compile Include="Enums\VaiTroDeTaiEnum.cs" />
+    <Compile Include="Models\DanhMuc\Template.cs" />
+    <Compile Include="Models\DanhMuc\Mail.cs" />
+    <Compile Include="Models\SystemManage\Excel.cs" />
+    <Compile Include="Models\SystemManage\ThongBao.cs" />
+    <Compile Include="Models\SystemManage\Account.cs" />
+    <Compile Include="Models\SystemManage\AccountUngDung.cs" />
+    <Compile Include="Models\SystemManage\AuditLog.cs" />
+    <Compile Include="Models\SystemManage\ForgetPassword.cs" />
+    <Compile Include="Models\SystemManage\AccountRole.cs" />
+    <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\SystemManage\Role.cs" />
+    <Compile Include="Models\SystemManage\ModuleRole.cs" />
+    <Compile Include="Models\SystemManage\SystemInformation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\AuditLogViewModel.cs" />
+    <Compile Include="ViewModels\CategoryViewModels.cs" />
+    <Compile Include="ViewModels\CheckableTable.cs" />
+    <Compile Include="ViewModels\HomeModel.cs" />
+    <Compile Include="ViewModels\FILE.cs" />
+    <Compile Include="ViewModels\FOLDER.cs" />
+    <Compile Include="ViewModels\CheckableRow.cs" />
+    <Compile Include="ViewModels\ThongKeYeCau.cs" />
+    <Compile Include="ViewModels\MucTinViewModels.cs" />
+    <Compile Include="ViewModels\System\MenuGroup_Static.cs" />
+    <Compile Include="ViewModels\System\MenuItem_Static.cs" />
+    <Compile Include="ViewModels\System\SystemConfig.cs" />
+    <Compile Include="ViewModels\System\MenuItem.cs" />
+    <Compile Include="ViewModels\System\MenuGroup.cs" />
+    <Compile Include="ViewModels\TreeNode.cs" />
+    <Compile Include="ViewModels\UploadReturn.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{f3edef19-ec3c-4029-8f19-bd39c89dbf0f}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

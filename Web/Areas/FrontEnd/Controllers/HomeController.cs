@@ -5,7 +5,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using Entities.Models.ThongKe;
 using System.Threading.Tasks;
 using Entities.Enums;
 using Web.Areas.Management.Filters;
