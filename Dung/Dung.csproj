@@ -54,6 +54,9 @@
     <Compile Include="BaseEntity.cs" />
     <Compile Include="DungEntity.cs" />
     <Compile Include="Enums\TrangThaiKhachHangEnum.cs" />
+    <Compile Include="Model\KetQuaThucHien.cs" />
+    <Compile Include="Model\dmKPI.cs" />
+    <Compile Include="Model\dmDonVis.cs" />
     <Compile Include="Model\CheckImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

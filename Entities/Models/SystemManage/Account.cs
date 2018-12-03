@@ -38,19 +38,12 @@ namespace Entities.Models.SystemManage
 
         //Là tài khoản quản trị nội dung
         public bool IsManageAccount { get; set; }
-        //Là tài khoản trang ngoài
+        //Là tài khoản trang ngoài (quản trị danh mục)
         public bool IsNormalAccount { get; set; }
         //Là tài khoản chuyên gia
         [Display(Name = "Là chuyên gia")]
         public bool IsExpertsAccount { get; set; }
-
-       
-        /// <summary>
-        /// Cấp quản lý: ĐHQG- Đại học Quốc gia, ĐV- Cấp đơn vị, K- Không
-        /// </summary>
-        /// 
-        [Display(Name = "Cấp quản lý")]
-        public string CapQuanLy { get; set; }
+        
         //Ngày tạo
         public DateTime CreateDate { get; set; }
 
@@ -76,7 +69,16 @@ namespace Entities.Models.SystemManage
         [Display(Name = "Địa chỉ")]
         [StringLength(250, ErrorMessage = "Địa chỉ không được vượt quá 250 ký tự!")]
         public string Address { get; set; }
-        
+
+        /// <summary>
+        /// Cấp quản lý
+        /// </summary>
+        /// 
+        [Display(Name = "Cấp quản lý")]
+        public int? IDCapQuanLy { get; set; }
+        [ForeignKey("IDCapQuanLy")]
+        public virtual CapQuanLy CapQuanLy { get; set; }
+
         public string Describe()
         {
             return "{ AccountId : \"" + Id + "\", Name : \"" + Name + "\", { Email : \"" + Email + "\" }";

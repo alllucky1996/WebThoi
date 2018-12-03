@@ -25,11 +25,11 @@ namespace Web.Areas.FrontEnd.Controllers
         public const string CText = " Hình ảnh";
         #region index
         [Route(Name = "FrontEnd_Home_Index")]
-        public  ActionResult Index()
+        public  async Task<ActionResult> Index()
         {
             try
             {
-                var list = _repository.GetRepository<CheckImage>().GetAll(o=>o.IsDeleted!= true);
+                var list = await _repository.GetRepository<CheckImage>().GetAllAsync(o=>o.IsDeleted!= true);
                 ViewBag.Title = "Danh mục" + CText;
                 
                 ViewBag.CanCreate= true;

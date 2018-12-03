@@ -95,27 +95,6 @@ namespace Entities.Models.SystemManage
         //Album để hiển thị slide show ở trang chủ
         public long? AlbumSlide { get; set; }
 
-        //Album hiển thị 4 box con ở trang chủ bên cạnh slide
-        public long? RightAlbum { get; set; }
-
-        //Khối tin chính ở bên trái, trang chủ
-        public long? LeftArticle1 { get; set; }
-
-        //Khối tin chính thứ 2 ở bên trái, trang chủ
-        public long? LeftArticle2 { get; set; }
-
-        //Khối tin chính thứ 3 ở bên trái, trang chủ
-        public long? LeftArticle3 { get; set; }
-
-        //Khối tin bên phải thứ nhất
-        public long? RightArticle1 { get; set; }
-
-        //Khối tin bên phải thứ hai
-        public long? RightArticle2 { get; set; }
-
-        //Khối tin bên phải thứ ba
-        public long? RightArticle3 { get; set; }
-
         //Album ảnh các đối tác
         public long? BottomAlbum { get; set; }
 

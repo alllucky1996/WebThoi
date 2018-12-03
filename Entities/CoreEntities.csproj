@@ -64,6 +64,7 @@
     <Compile Include="Models\DanhMuc\Template.cs" />
     <Compile Include="Models\DanhMuc\Mail.cs" />
     <Compile Include="Models\SystemManage\Excel.cs" />
+    <Compile Include="Models\SystemManage\CapQuanLy.cs" />
     <Compile Include="Models\SystemManage\ThongBao.cs" />
     <Compile Include="Models\SystemManage\Account.cs" />
     <Compile Include="Models\SystemManage\AccountUngDung.cs" />

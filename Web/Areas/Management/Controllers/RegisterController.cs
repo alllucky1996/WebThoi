@@ -101,7 +101,7 @@ namespace Web.Areas.Management.Controllers
                     account.IsManageAccount = false;
                     account.IsNormalAccount = true;
                     account.Email = email;
-                    account.CapQuanLy = "K";
+                   // account.IDCapQuanLy = 1;
                     account.Name = StringHelper.KillChars(model.Name);
                     //account.Code = StringHelper.KillChars(model.Code);
                     account.PhoneNumber = StringHelper.KillChars(model.PhoneNumber);
