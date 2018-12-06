@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Dung.Model
 {
-    //[Table("dmDonVi")]
+    //[Table("DonVi")]
     [DropDown(ValueField = "Id", TextField = "Name")]
     public class dmDonVi : Dung
     {
@@ -33,7 +33,7 @@ namespace Dung.Model
         public string DienThoai { get; set; }
 
         [RegularExpression(@"^([\w\!\#$\%\&\'*\+\-\/\=\?\^`{\|\}\~]+\.)*[\w\!\#$\%\&\'‌​*\+\-\/\=\?\^`{\|\}\~]+@((((([a-zA-Z0-9]{1}[a-zA-Z0-9\-]{0,62}[a-zA-Z0-9]{1})|[‌​a-zA-Z])\.)+[a-zA-Z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$", ErrorMessage = "Địa chỉ E-mail không hợp lệ!")]
-        [StringLength(50, ErrorMessage = "Điện thoại không được vượt quá 50 ký tự!")]
+        [StringLength(20, ErrorMessage = "Điện thoại không được vượt quá 20 ký tự!")]
         public string Email { get; set; }
         
 

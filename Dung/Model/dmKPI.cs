@@ -35,6 +35,9 @@ namespace Dung.Model
 
         public long? IdCha { get; set; }
         [ForeignKey("IdCha")]
+        public virtual dmKPI DmKPI { get; set; }
+        public long? IdDonVi { get; set; }
+        [ForeignKey("IdDonVi")]
         public virtual dmDonVi DonVi { get; set; }
         public dmKPI()
         {
