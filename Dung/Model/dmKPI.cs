@@ -40,7 +40,8 @@ namespace Dung.Model
     [ForeignKey("IdDonVi")]
     public virtual dmDonVi DonVi { get; set; }
 
-		[ForeignKey("Id")]
+		public int? IdUnit { get; set; }
+		[ForeignKey("IdUnit")]
 		public virtual unit Unit { get; set; }
 
 		public dmKPI()

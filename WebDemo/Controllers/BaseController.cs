@@ -10,7 +10,7 @@ namespace WebDemo.Controllers
 {
     public class BaseController : Controller
     {
-        protected readonly IRepository _repository = DependencyResolver.Current.GetService<IRepository>();
-        protected readonly CacheFactory _cacheFactory = new CacheFactory();
+        //protected readonly IRepository _repository = DependencyResolver.Current.GetService<IRepository>();
+        //protected readonly CacheFactory _cacheFactory = new CacheFactory();
     }
 }

@@ -9,7 +9,8 @@ namespace Dung.Model
 {
 	class user : Entities.Models.SystemManage.Account
 	{
-		[ForeignKey("Id")]
+		public int? IdNational { get; set; }
+		[ForeignKey("IdNational")]
 		public virtual national National { get; set; }
 	}
 }
