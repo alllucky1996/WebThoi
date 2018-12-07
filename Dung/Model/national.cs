@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Dung.Model
 {
 	[DropDown(ValueField = "Id", TextField = "Name")]
-	public class national
+	public class national : Dung
 	{
 		[Key]
 		public int Id { get; set; }
@@ -26,5 +26,10 @@ namespace Dung.Model
 		[Display(Name = "Ngày sửa")]	
 		public DateTime Updated_at { get; set; }
 		public bool is_deleted { get; set; }
+
+		public string Describe()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

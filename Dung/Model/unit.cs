@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dung.Model
 {
-	public class unit
+	public class unit :Dung
 	{
 		[Key]
 		public int Id { get; set; }
@@ -24,5 +24,10 @@ namespace Dung.Model
 		[Display(Name = "Ngày sửa")]
 		public DateTime Updated_at { get; set; }
 		public bool is_deleted { get; set; }
+
+		public string Describe()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
