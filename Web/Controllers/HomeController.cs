@@ -6,8 +6,8 @@ namespace Web.Controllers
         [Route(Name = "FrontEndHomeIndex")]
         public ActionResult Index()
         {
-            //return View();
-            return RedirectToAction("Index", "Home", new { area = "FrontEnd" });
+            return View();
+            //return RedirectToAction("Index", "Home", new { area = "FrontEnd" });
             //return RedirectToRoute("Images_Index");
         }
 

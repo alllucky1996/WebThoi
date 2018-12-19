@@ -29,5 +29,10 @@ namespace Dung.Model
 		{
 			throw new NotImplementedException();
 		}
+
+		public unit()
+		{
+			Created_at = DateTime.Now;
+		}
 	}
 }

@@ -14,11 +14,6 @@ namespace Entities.Models.SystemManage
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập mã cấp quản lý!")]
-        [Display(Name = "Mã cấp quản lý")]
-        [StringLength(20, ErrorMessage = "Mã cấp quản lý không được vượt quá 20 ký tự!")]
-        public string Code { get; set; }
-
         [Required(ErrorMessage = "Vui lòng nhập tên cấp quản lý!")]
         [Display(Name = "Tên cấp quản lý")]
         [StringLength(100, ErrorMessage = "Tên cấp quản lý không được vượt quá 100 ký tự!")]

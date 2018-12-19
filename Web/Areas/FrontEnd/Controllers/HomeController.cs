@@ -42,7 +42,7 @@ namespace Web.Areas.FrontEnd.Controllers
 				ViewBag.CText = CText;
 				if (flag == 0)
 				{
-					flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
+					//flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
 					flag++;
 				}
 				 
@@ -135,15 +135,45 @@ namespace Web.Areas.FrontEnd.Controllers
 			int rowCount = xlRange.Rows.Count;
 			int colCount = xlRange.Columns.Count;
 			//add parent don vi
-			//var a = await read_parent_donvi(rowCount, xlRange);
+			var a = await read_parent_donvi(rowCount, xlRange);
+
 			//add child don vi
-			//var child_dv = await read_child_donvi(rowCount, xlRange);
+			var child_dv = await read_child_donvi(rowCount, xlRange);
 
 			//Don vi to nhom
-			//add child don vi
-			//var child1_dv = await read_child1_donvi(rowCount, xlRange);
+			var child1_dv = await read_child1_donvi(rowCount, xlRange);
+			
 			//add chuc danh
 			var ChucVu = await Read_chucVu(rowCount, xlRange);
+
+			// add national
+			//var national = await Read_national(rowCount, xlRange);
+			DateTime d = new DateTime(1977, 5, 9);
+			try
+			{
+				result = await _repository.GetRepository<Account>().CreateAsync(new Account()
+				{
+					code = 270800,
+					Name = "Ma Thị Hồng Vân",
+					Sex = false,
+					Email = "XXX@gmail.com",
+					IsExpertsAccount = true,
+					IsManageAccount = true,
+					IsNormalAccount = true,
+					PhoneNumber = "0000000000",
+					Password = "123123",
+					Address = "XXX",
+					CreateDate = DateTime.Now,
+					ProfilePicture = "XXX",
+					DateOfBirth = d,
+				}, 0);
+			}
+			catch (Exception ex)
+			{
+
+				throw;
+			}
+		
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
 			Marshal.ReleaseComObject(xlRange);
@@ -256,10 +286,33 @@ namespace Web.Areas.FrontEnd.Controllers
 			{
 				if (!string.IsNullOrEmpty(value))
 				{
-					result = await _repository.GetRepository<CapQuanLy>().CreateAsync(new CapQuanLy() { Code = "xxxxx", Name = value }, 0);
-					Debug.WriteLine("\n" + value + "=======" + index);
+					result = await _repository.GetRepository<CapQuanLy>().CreateAsync(new CapQuanLy() { Name = value }, 0);
+					Debug.WriteLine(value + "=======" + index);
 					index++;
 				}
+			}
+			return result;
+		}
+
+		async Task<int> Read_national(int rowCount, Microsoft.Office.Interop.Excel.Range xlRange)
+		{
+			int result = 0;
+			List<string> lst = new List<string>();
+			List<string> lstdonvi = new List<string>();
+			for (int i = 5; i <= rowCount; i++)
+			{
+				if (xlRange.Cells[i, 10] != null && xlRange.Cells[i, 10].value2 != null)
+				{
+					lst.Add(xlRange.Cells[i, 10].value2.ToString());
+				}
+			}
+			lstdonvi = lst.Distinct().ToList();
+			int index = 0;
+			foreach (var value in lstdonvi)
+			{
+				result = await _repository.GetRepository<national>().CreateAsync(new national() { Name = value }, 0);
+				Debug.WriteLine(value + "=======" + index);
+				index++;
 			}
 			return result;
 		}

@@ -14,11 +14,13 @@ namespace Entities.Models.SystemManage
     {
         [Key]
         //[Column(Order = 0), Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập họ và tên!")]
-        [Display(Name = "Họ và tên")]
+				[Required]
+				public int code { get; set; }
+
+				[Required(ErrorMessage = "Vui lòng nhập họ và tên!")]
+				[Display(Name = "Họ và tên")]
         [StringLength(50, ErrorMessage = "Họ và tên không được vượt quá 50 ký tự!")]
         public string Name { get; set; }
 
@@ -83,5 +85,10 @@ namespace Entities.Models.SystemManage
         {
             return "{ AccountId : \"" + Id + "\", Name : \"" + Name + "\", { Email : \"" + Email + "\" }";
         }
+
+				public Account()
+				{
+					CreateDate = DateTime.Now;
+				}
     }
 }

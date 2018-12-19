@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,14 @@ namespace Dung.Model
 		public int? IdNational { get; set; }
 		[ForeignKey("IdNational")]
 		public virtual national National { get; set; }
+
+		public long? IdDonVi { get; set; }
+		[ForeignKey("IdDonVi")]
+		public virtual dmDonVi DonVi { get; set; }
+
+		public user()
+		{
+			CreateDate = DateTime.Now;
+		}
 	}
 }

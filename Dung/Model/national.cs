@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Dung.Model
 	public class national : Dung
 	{
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
 		[Display(Name = "Dân tộc")]
@@ -21,7 +23,7 @@ namespace Dung.Model
 		public string Description { get; set; }
 
 		[Display(Name = "Ngày tạo")]
-		public DateTime Created_at { get; set; }
+		public DateTime? Created_at { get; set; }
 
 		[Display(Name = "Ngày sửa")]	
 		public DateTime Updated_at { get; set; }
@@ -30,6 +32,11 @@ namespace Dung.Model
 		public string Describe()
 		{
 			throw new NotImplementedException();
+		}
+
+		public national()
+		{
+			Created_at = DateTime.Now;
 		}
 	}
 }

@@ -11,27 +11,28 @@ using System.Web.Mvc;
 
 namespace Web.Areas.Management.Controllers
 {
-    [RouteArea("Management", AreaPrefix = "quan-ly")]
-    public class HomeController : BaseController
+  [RouteArea("Management", AreaPrefix = "quan-ly")]
+  public class HomeController : BaseController
+  {
+		[Route(Name = "ManagementHome")]
+		public async Task<ActionResult> Index(String Code)
+		{
+			int flag = 0;
+			if (Code == "dung")
+			{
+				InitDB();
+				return Json(new { success = true, message = "Khỏi tạo 'Images' thành công!" }, JsonRequestBehavior.AllowGet);
+			}
+			return View();
+    }
+    void InitDB()
     {
-        [Route(Name = "ManagementHome")]
-        public async Task<ActionResult> Index(String Code)
-        {
-            if (Code == "dung")
-            {
-                InitDB();
-                return Json(new { success = true, message = "Khỏi tạo 'Images' thành công!" }, JsonRequestBehavior.AllowGet);
-            }
-            return View();
-        }
-        void InitDB()
-        {
-            for (int i = 1; i < 100; i++)
-            {
-                var ni = new CheckImage() {Code= i.ToString(),Name="Hình 001",Path="#",Description= "Mô tả hình Hình 001" ,IsChecked=(i%2==0?true:false) };
-                _repository.GetRepository<CheckImage>().Create(ni, 0);
-            }
-        }
+        //for (int i = 1; i < 100; i++)
+        //{
+        //    var ni = new CheckImage() {Code= i.ToString(),Name="Hình 001",Path="#",Description= "Mô tả hình Hình 001" ,IsChecked=(i%2==0?true:false) };
+        //    _repository.GetRepository<CheckImage>().Create(ni, 0);
+        //}
+    }
 
 		async Task<int> run(string fname)
 		{
@@ -56,6 +57,9 @@ namespace Web.Areas.Management.Controllers
 			//var child1_dv = await read_child1_donvi(rowCount, xlRange);
 			//add chuc danh
 			var ChucVu = await Read_chucVu(rowCount, xlRange);
+
+			//add national
+			//var nation = Read_national(rowCount, xlRange);
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
 			Marshal.ReleaseComObject(xlRange);
@@ -168,13 +172,12 @@ namespace Web.Areas.Management.Controllers
 			{
 				if (!string.IsNullOrEmpty(value))
 				{
-					result = await _repository.GetRepository<CapQuanLy>().CreateAsync(new CapQuanLy() { Code = "xxxxx", Name = value }, 0);
-					Debug.WriteLine("\n" + value + "=======" + index);
+					result = await _repository.GetRepository<CapQuanLy>().CreateAsync(new CapQuanLy() { Name = value }, 0);
+					Debug.WriteLine(value + "=======" + index);
 					index++;
 				}
 			}
 			return result;
 		}
-
 	}
 }
