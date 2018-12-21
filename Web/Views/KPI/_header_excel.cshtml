@@ -1,0 +1,197 @@
+﻿@{ 
+	string day = DateTime.Now.Day.ToString();
+	string month = DateTime.Now.Month.ToString();
+	string year = DateTime.Now.Year.ToString();
+}
+<thead id="myHeader">
+	<tr class=xl19616220>
+		<td colspan=7 rowspan=2 class=xl19216220 style='width:400px'>
+			CÔNG TY ĐIỆN LỰC YÊN BÁI
+		</td>
+		<td class=xl36816220 width=0 style='border-left:none; width: 270px;'>Phòng: VĂN PHÒNG</td>
+		<td colspan=10 class=xl18416220 style='width:600px'>CHÁNH VĂN PHÒNG</td>
+		<td colspan=5 class=xl35516220 style='border-right:.5pt solid black; width:500px;'>
+			Ngày @day tháng @month năm @year
+		</td>
+	</tr>
+	<tr class=xl19616220>
+		<td class=xl18616220 style='border-top:none; border-left:none'>
+			Bộ phận: CVP
+		</td>
+		<td colspan=4 class=xl18416220 style='border-left:none;'>
+			MA THỊ HỒNG VÂN
+		</td>
+		<td colspan=6 class=xl36916220 style='border-right:.5pt solid black; border-left:none'>
+			Mã chức danh:
+		</td>
+		<td colspan=4 class=xl35416220 style='border-left:none'>VP01</td>
+		<td class=xl27316220 style='border-top:none'>C</td>
+	</tr>
+	<tr class=xl18716220>
+		<td rowspan=4 class=xl35916220 style='border-top:none;'>
+			Trọng số cấp 1
+		</td>
+		<td rowspan=4 class=xl35916220 style='border-top:none;'>
+			Trọng số câp 2
+		</td>
+		<td rowspan=4 class=xl35916220 style='border-top:none;'>
+			Trọng số cấp 3
+		</td>
+		<td rowspan=4 class=xl35916220 style='border-top:none;'>
+			Trọng số cấp 4
+		</td>
+		<td colspan=2 rowspan=2 class=xl33616220>
+			KPI cấp công ty
+		</td>
+		<td colspan=2 rowspan=2 class=xl33616220>
+			KPI của Phòng
+		</td>
+		<td colspan=2 rowspan=2 class=xl33616220>
+			KPI cá nhân
+		</td>
+		<td colspan=2  class=xl33616220 style='border-left:none;'>
+			Mục tiêu trong kỳ
+		</td>
+		<td rowspan=4 class=xl33616220 style='border-top:none;'>
+			Tần suất
+		</td>
+		<td rowspan=4 class=xl33616220 style='border-top:none;'>
+			Trọng số chỉ tiêu
+		</td>
+		<td rowspan=4 class=xl29116220 style='border-top:none;'>
+			Trọng	số chung (a)
+		</td>
+		<td colspan=8 rowspan=2 class=xl33616220>
+			Kết quả thực hiện
+		</td>
+		<td class=xl18716220></td>
+		<td class=xl18716220></td>
+		<td class=xl18716220></td>
+	</tr>
+	<tr class=xl18816220>
+		<td rowspan=3 height=158 class=xl33616220 style='border-top:none;'>
+			Đơn vị đo
+		</td>
+		<td rowspan=3 class=xl36016220 style='border-top:none;'>
+			Chỉ tiêu kế hoạch
+		</td>
+		<td class=xl18816220></td>
+		<td class=xl18816220></td>
+		<td class=xl18816220></td>
+	</tr>
+	<tr class=xl18716220>
+		<td rowspan=2 class=xl33616220 style='border-top:none;'>
+			Mã cấp 1
+		</td>
+		<td rowspan=2 class=xl33616220 style='border-top:none'>KPI</td>
+		<td rowspan=2 class=xl33616220 style='border-top:none'>Mã cấp 2</td>
+		<td rowspan=2 class=xl33616220 style='border-top:none'>KPI</td>
+		<td rowspan=2 class=xl33616220 style='border-top:none;'>
+			Mã cấp 3
+		</td>
+		<td rowspan=2 class=xl33616220 style='border-top:none;'>KPI</td>
+		<td colspan=5 class=xl33616220 style='border-left:none;'>
+			Cá nhân tự chấm
+		</td>
+		<td colspan=4 class=xl33616220 style='border-left:none;'>
+			Ban Giám đốc chấm
+		</td>
+		<td class=xl18716220></td>
+		<td class=xl18716220></td>
+		<td class=xl18716220></td>
+	</tr>
+	<tr class=xl18716220>
+		<td class=xl33616220 style='border-top:none; border-left:none;'>
+			Kết quả
+		</td>
+		<td class=xl33616220 style='border-top:none;border-left:none;'>
+			Tỷ lệ TH
+		</td>
+		<td class=xl18916220 style='border-top:none;border-left:none;'>
+			Điểm chấm
+		</td>
+		<td class=xl18916220 style='border-top:none;border-left:none;'>
+			Điểm qui đổi
+		</td>
+		<td class=xl18916220 style='border-top:none;border-left:none;'>
+			Kết quả
+		</td>
+		<td class=xl33616220 style='border-top:none;border-left:none;'>
+			Tỷ lệ TH
+		</td>
+		<td class=xl18916220 style='border-top:none;border-left:none;'>
+			Điểm chấm
+		</td>
+		<td class=xl18916220 style='border-top:none;border-left:none;'>
+			Điểm qui đổi
+		</td>
+		<td class=xl18716220></td>
+		<td class=xl18716220></td>
+		<td class=xl18716220></td>
+	</tr>
+	<tr class=xl18816220>
+		@{
+			for (int index = 1; index <= 23; index++)
+			{
+				string class_border = null;
+				if (index != 1)
+				{
+					class_border = "border-left: none";
+				}
+				<td class=xl35916220 style='border-top: none;'+ @class_border >@index</td>
+			}
+		}
+	</tr>
+	<tr class=xl18816220>
+		<td class=xl26916220 style='border-top:none'>a1</td>
+		<td class=xl26916220 style='border-top:none;border-left:none'>a2</td>
+		<td class=xl26916220 style='border-top:none;border-left:none'>a3</td>
+		<td class=xl26916220 style='border-top:none;border-left:none'>a4</td>
+		<td class=xl27016220 style='border-top:none;border-left:none'>&nbsp;</td>
+		<td class=xl27016220 style='border-top:none;border-left:none'>&nbsp;</td>
+		<td class=xl27016220 style='border-top:none;border-left:none'>&nbsp;</td>
+		<td class=xl27016220 style='border-top:none;border-left:none'>&nbsp;</td>
+		<td class=xl27016220 style='border-top:none;border-left:none'>&nbsp;</td>
+		<td class=xl27016220 style='border-top:none;border-left:none'>&nbsp;</td>
+		<td class=xl27116220 style='border-top:none;border-left:none;'>
+			ĐVT
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none'>
+			KH
+		</td>
+		<td class=xl27116220 style='border-top:none;border-left:none;'>
+			TS
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;'>
+			a5
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;'>
+			a=a1*<br />a2*a3<br />*a4*a5
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;'>
+			KQ
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;font-size: 10px;'>
+			TL=TH/KH; TH-KH; Hệ số
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;'>
+			G
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;'>
+			Gqđ=G*a
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;'>
+			KQ
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;font-size: 13px;'>
+			TL=TH/KH; TH-KH; Hệ số
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;'>
+			G
+		</td>
+		<td class=xl27216220 style='border-top:none;border-left:none;'>
+			Gqđ=G*a
+		</td>
+	</tr>
+</thead>
+

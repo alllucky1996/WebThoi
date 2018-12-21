@@ -1,0 +1,29 @@
+﻿@using Entities.Enums;
+
+@{
+    bool isActiveController = false;
+    bool isActive = false;
+}
+<div class="page-sidebar-wrapper">
+    <div class="page-sidebar md-shadow-z-2-i  navbar-collapse collapse">
+        <ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+
+            <li class="@(isActiveController ? "active open " : "") ">
+                <a href="javascript:;">
+                    <i class="fa  fa-list-ul"></i>
+                    <span class="title">DANH MỤC</span>
+                    <span class="@(isActiveController ? "arrow open " : "arrow") "></span>
+                </a>
+                <ul class="sub-menu">
+                    
+                    <li class="@(isActive ? "active" : "")">
+                        <a href="@Url.RouteUrl("Image_Index")"><i class="fa fa-book"></i> check hình ảnh </a>
+                        
+                    </li>
+                   
+ 
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
