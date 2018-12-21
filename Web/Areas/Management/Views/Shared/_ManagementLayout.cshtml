@@ -6,6 +6,7 @@
 <!--<![endif]-->
 <head>
     <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" href="~/Images/adminfav2.png" />
     @Html.Partial("_Head")
     @Html.Partial("_Css1")
     @RenderSection("styles", required: false)
@@ -111,7 +112,42 @@
             Demo.init();
             showNoty('@ViewBag.Success', 'success', 'center', 5000);
             showNoty('@ViewBag.Error', 'error', 'center', 5000);
-             
+
+
+
+            window.renX = function (data, label, reg) {
+                var $rd = "";
+                $.each(data, function (i, item) {
+                    if (reg && item.TieuDe.indexOf(reg) != -1) {
+                        $rd += '<li>';
+                        $rd += ('<a href="@Url.RouteUrl("ManagementNotifView", new { id = "TranVuTienGGG"})" data-target="#ajaxmodal" data-toggle="modal">').replace("TranVuTienGGG", item.Id);
+                        $rd += '<div class="col1">';
+                        $rd += '<div class="cont">';
+                        $rd += '<div class="cont-col1">';
+                        $rd += '<div class="label label-sm ' + label + '">';
+                        $rd += '<i class="fa fa-bell-o"></i>';
+                        $rd += '</div>';
+                        $rd += '</div>';
+                        $rd += '<div class="cont-col2">';
+                        $rd += '<div class="desc">';
+                        $rd += item.TieuDe;
+                        $rd += '<br/>';
+                        $rd += '<i>' + item.NoiDung + '</i>';
+                        $rd += '</div>';
+                        $rd += '</div>';
+                        $rd += '</div>';
+                        $rd += '</div>';
+                        $rd += '<div class="col2">';
+                        $rd += '<div class="date">';
+                        $rd += item.ThoiGianGui;
+                        $rd += '</div>';
+                        $rd += '</div>';
+                        $rd += '</a>';
+                        $rd += '</li>';
+                    }
+                });
+                return $rd;
+            }
 
             window.renderNotiBy = function (data, regex) {
                 var $rd = "";
@@ -183,7 +219,28 @@
 
             }
 
- 
+
+            window.initNoti = function () {
+
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    async: true,
+                    url: "@Url.RouteUrl("ManagementNotif")",
+                    dataType: 'json',
+                    enctype: 'multipart/form-data',
+                    contentType: false,
+                    processData: false,
+
+                    success: function (result) {
+                        renderNoti(result);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        showNoty(errorThrown, 'error', 'center', 5000);
+                    }
+                });
+            }
+
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             });
@@ -196,7 +253,40 @@
 
             });
 
-           
+            $(document).on('click', '.btn-change-password', function (e) {
+                e.preventDefault();
+                Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    boxed: true
+                });
+                var $url = '@Url.RouteUrl("AccountChangePasswordPost")';
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    async: true,
+                    url: $url,
+                    data: $('.form-change-password').serialize(),
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.success) {
+                            showNoty(result.message, 'success', 'center', 5000);
+                            $('.modal-header .close').click();
+                        }
+                        else
+                            showNoty(result.message, 'error', 'center', 5000);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        showNoty(errorThrown, 'error', 'center', 5000);
+                    },
+                    complete: function (result) {
+                        Metronic.unblockUI();
+                    }
+                });
+            });
+
+
         });
     </script>
     @RenderSection("scripts2", required: false)

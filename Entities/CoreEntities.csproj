@@ -61,6 +61,7 @@
     <Compile Include="Enums\ModuleEnum.cs" />
     <Compile Include="Enums\ModuleGroupEnum.cs" />
     <Compile Include="Enums\VaiTroDeTaiEnum.cs" />
+    <Compile Include="Models\DanhMuc\dmDonVis.cs" />
     <Compile Include="Models\DanhMuc\Template.cs" />
     <Compile Include="Models\DanhMuc\Mail.cs" />
     <Compile Include="Models\SystemManage\Excel.cs" />

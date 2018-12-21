@@ -20,7 +20,7 @@ namespace Entities.Models.SystemManage
         [Required(ErrorMessage = "Vui lòng nhập họ và tên!")]
         [Display(Name = "Họ và tên")]
         [StringLength(50, ErrorMessage = "Họ và tên không được vượt quá 50 ký tự!")]
-        public string Name { get; set; }
+        public string FullName { get; set; }
 
       
         [RegularExpression(@"^([\w\!\#$\%\&\'*\+\-\/\=\?\^`{\|\}\~]+\.)*[\w\!\#$\%\&\'‌​*\+\-\/\=\?\^`{\|\}\~]+@((((([a-zA-Z0-9]{1}[a-zA-Z0-9\-]{0,62}[a-zA-Z0-9]{1})|[‌​a-zA-Z])\.)+[a-zA-Z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$", ErrorMessage = "Địa chỉ E-mail không hợp lệ!")]
@@ -70,18 +70,23 @@ namespace Entities.Models.SystemManage
         [StringLength(250, ErrorMessage = "Địa chỉ không được vượt quá 250 ký tự!")]
         public string Address { get; set; }
 
+        [Display(Name = "Đơn vị")]
+        public long? IdDonVi { get; set; }
+        [ForeignKey("IdDonVi")]
+        public virtual dmDonVi DonVi { get; set; }
         /// <summary>
         /// Cấp quản lý
         /// </summary>
         /// 
         [Display(Name = "Cấp quản lý")]
-        public int? IDCapQuanLy { get; set; }
-        [ForeignKey("IDCapQuanLy")]
-        public virtual CapQuanLy CapQuanLy { get; set; }
+        public string CapQuanLy { get; set; }
+
+        public DateTime? UpdateDate { get; set; }
+        public bool IsDeleted { get; set; }
 
         public string Describe()
         {
-            return "{ AccountId : \"" + Id + "\", Name : \"" + Name + "\", { Email : \"" + Email + "\" }";
+            return "{ AccountId : \"" + Id + "\", Name : \"" + FullName + "\", { Email : \"" + Email + "\" }";
         }
     }
 }

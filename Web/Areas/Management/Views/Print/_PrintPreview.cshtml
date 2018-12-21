@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Areas/Management/Views/Shared/_Print.cshtml";
+    ViewBag.Title = "Intset";
+    string Action = ViewBag.Action;
+    string Controller = ViewBag.Controller;
+    if (Action!=null && Controller!=null)
+    {
+        Html.RenderAction(Action, Controller);
+    }
+}

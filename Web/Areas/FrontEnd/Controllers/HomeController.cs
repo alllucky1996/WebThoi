@@ -42,7 +42,7 @@ namespace Web.Areas.FrontEnd.Controllers
 				ViewBag.CText = CText;
 				if (flag == 0)
 				{
-					flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
+					//flag = await run(@"F:\Thay Dung\KPI-Trung P10\DSNS.xls");
 					flag++;
 				}
 				 

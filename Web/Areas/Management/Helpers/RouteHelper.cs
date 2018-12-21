@@ -25,16 +25,17 @@ namespace Web.Areas.Management.Helpers
         }
         public static bool IsCurrentController(string controllerName, ViewContext viewContext)
         {
-            //bool result = false;
-            //string normalizedControllerName = controllerName.EndsWith("Controller") ? controllerName : String.Format("{0}Controller", controllerName);
+            bool result = false;
+            string normalizedControllerName = controllerName.EndsWith("Controller") ? controllerName : String.Format("{0}Controller", controllerName);
 
-            //if (viewContext == null) return false;
+            if (viewContext == null) return false;
+           
+            if (viewContext.Controller.GetType().Name.Equals(normalizedControllerName, StringComparison.InvariantCultureIgnoreCase))
+            {
+                result = true;
+            }
 
-            //if (viewContext.Controller.GetType().Name.Equals(normalizedControllerName, StringComparison.InvariantCultureIgnoreCase))
-            //{
-            //    result = true;
-            //}
-            return true;
+            return result;
         }
         public static RouteData GetRouteDataByUrl(string url)
         {

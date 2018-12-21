@@ -1,0 +1,334 @@
+﻿@using Entities.Enums;
+@model IEnumerable<Entities.Models.SystemManage.Role>
+@{
+    ViewBag.Title = "Quản lý vai trò người dùng";
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    var canDelete = RoleHelper.CheckPermission(ModuleEnum.Role, ActionEnum.Delete);
+    var canCreate = RoleHelper.CheckPermission(ModuleEnum.Role, ActionEnum.Create);
+    var canUpdate = RoleHelper.CheckPermission(ModuleEnum.Role, ActionEnum.Update);
+}
+    <ul class="page-breadcrumb breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="active">
+            Quản lý vai trò người dùng
+        </li>
+    </ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-users font-green-sharp bold"></i>
+                    <span class="caption-subject font-green-sharp bold ">Quản lý vai trò người dùng</span>
+                </div>
+                @if (canCreate)
+                {
+                    <div class="actions">
+                        <button id="sample_editable_1_new" class="btn green">
+                            <i class="fa fa-plus"></i> Nhập vai trò người dùng mới
+                        </button>
+                    </div>
+                }
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                    <thead>
+                        <tr>
+                            <th>Tên vai trò người dùng</th>
+                            <th>Mô tả</th>
+                            <th>Cập nhật</th>
+                            <th>Xóa</th>
+                            <th>Cập nhật chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr data-objectid="@item.Id">
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        @item.Description
+                                    </td>
+                                    <td>
+                                        @if (canUpdate)
+                                        {
+                                            <a class="edit" href="javascript:;">
+                                                Cập nhật
+                                            </a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (canDelete)
+                                        {
+                                            <a class="delete" href="javascript:;">
+                                                Xóa
+                                            </a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (canUpdate)
+                                        {
+                                            <a class="module" href="@Url.RouteUrl("RoleModuleRole", new { id = item.Id })">
+                                                Cập nhật chức năng
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Styles{
+    @Styles.Render("~/css/metronic/select2", "~/css/metronic/datatable")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/select2", "~/js/metronic/datatable")
+}
+@section Scripts2 {
+    <script type="text/javascript">
+        var TableEditable = function () {
+
+            var handleTable = function () {
+
+                function restoreRow(oTable, nRow) {
+                    var aData = oTable.fnGetData(nRow);
+                    var jqTds = $('>td', nRow);
+
+                    for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
+                        oTable.fnUpdate(aData[i], nRow, i, false);
+                    }
+
+                    oTable.fnDraw();
+                }
+
+                function editRow(oTable, nRow) {
+                    var aData = oTable.fnGetData(nRow);
+                    var jqTds = $('>td', nRow);
+                    jqTds[0].innerHTML = '<input type="text" class="form-control" value="' + aData[0] + '">';
+                    jqTds[1].innerHTML = '<input type="text" class="form-control" value="' + aData[1] + '">';
+                    jqTds[2].innerHTML = '<a class="edit" href="javascript:;">Ghi nhận</a>';
+                    jqTds[3].innerHTML = '<a class="cancel" href="javascript:;">Hủy bỏ</a>';
+                    jqTds[4].innerHTML = '';
+                    $(jqTds[0]).find('input').focus();
+                }
+
+                function saveRow(oTable, nRow) {
+                    var jqInputs = $('input', nRow);
+                    oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                    oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+                    if ('@canUpdate' == 'true' || '@canUpdate' == 'True') {
+                        oTable.fnUpdate('<a class="edit" href="javascript:;">Cập nhật</a>', nRow, 2, false);
+                    }
+                    else {
+                        oTable.fnUpdate('', nRow, 2, false);
+                    }
+                    if ('@canDelete' == 'true' || '@canDelete' == 'True') {
+                        oTable.fnUpdate('<a class="delete" href="javascript:;">Xóa</a>', nRow, 3, false);
+                    }
+                    else {
+                        oTable.fnUpdate('', nRow, 3, false);
+                    }
+                    if ('@canUpdate' == 'true' || '@canUpdate' == 'True') {
+                        oTable.fnUpdate('<a class="module" href="javascript:;">Cập nhật chức năng</a>', nRow, 4, false);
+                    }
+                    else {
+                        oTable.fnUpdate('', nRow, 4, false);
+                    }
+                    oTable.fnDraw();
+                }
+                //Nếu 1 dòng được thêm mới hoặc cập nhật thì cập nhật thẻ tr để gán giá trị id trong CSDL cho tr
+                //Mục đích để tìm cái tr này khi bấm nút cập nhật
+                function updateRowId(oTable, nRow, id) {
+                    $(nRow).attr('data-objectid', id);
+                    if ('@canUpdate' == 'true' || '@canUpdate' == 'True') {
+                        $(nRow).find('a.module').attr('href', ('@Url.RouteUrl("RoleModuleRole", new { id = "roleId" })').replace("roleId", id));
+                    }
+                    oTable.fnDraw();
+                }
+                var table = $('#sample_editable_1');
+                var oTable = table.dataTable({
+                    "lengthMenu": [
+                        [10, 15, 20, -1],
+                        [10, 15, 20, "All"]
+                    ],
+                    "pageLength": 10,
+                    "language": {
+                        "search": "Tìm kiếm: ",
+                        "lengthMenu": "Hiển thị _MENU_ bản ghi mỗi trang",
+                        "info": "Tổng số _TOTAL_ bản ghi",
+                        "infoFiltered": "(tìm trong tổng số _MAX_ bản ghi)",
+                        "infoEmpty": "Không tìm thấy bản ghi nào",
+                        "emptyTable": "Không có dữ liệu",
+                        "zeroRecords": "Không tìm thấy dữ liệu",
+                        "paginate": {
+                            "previous": "Trang trước",
+                            "next": "Trang sau",
+                            "last": "Trang cuối",
+                            "first": "Trang đầu",
+                            "page": "Trang",
+                            "pageOf": " trong tổng số"
+                        }
+                    },
+                    "columnDefs": [{
+                        'orderable': true,
+                        'targets': [0]
+                    }, {
+                        "searchable": true,
+                        "targets": [0]
+                    }],
+                    "order": [
+                        [0, "asc"]
+                    ]
+                });
+
+                var tableWrapper = $("#sample_editable_1_wrapper");
+
+                tableWrapper.find(".dataTables_length select").select2({
+                    showSearchInput: false
+                });
+
+                var nEditing = null;
+                var nNew = false;
+
+                $('#sample_editable_1_new').click(function (e) {
+                    e.preventDefault();
+                    if (nNew && nEditing) {
+                        oTable.fnDeleteRow(nEditing); // cancel
+                        nEditing = null;
+                        nNew = false;
+                        return;
+                    }
+                    if (nEditing) {
+                        restoreRow(oTable, nEditing);
+                        nEditing = null;
+                    }
+                    var aiNew = oTable.fnAddData(['', '', '', '', '']);
+                    var nRow = oTable.fnGetNodes(aiNew[0]);
+                    editRow(oTable, nRow);
+                    nEditing = nRow;
+                    nNew = true;
+                });
+
+                table.on('click', '.delete', function (e) {
+                    e.preventDefault();
+                    if (confirm("Bạn có chắc chắn muốn xóa vai trò người dùng này không?") == false) {
+                        return;
+                    }
+                    var nRow = $(this).parents('tr')[0];
+                    var $id = $(nRow).attr('data-objectid');
+                    oTable.fnDeleteRow(nRow);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.RouteUrl("RoleDelete")',
+                        dataType: 'json',
+                        data: { id: $id },
+                        success: function (result) {
+                            if (result.success == true) {
+                                showNoty('Đã xóa vai trò người dùng thành công!', 'success', 'center', 5000);
+                            }
+                            else {
+                                showNoty(result.message, 'error', 'center', 5000);
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, error) {
+                            showNoty('Đã xảy ra lỗi khi thực hiện yêu cầu của bạn. Vui lòng kiểm tra và thử lại!', 'error', 'center', 5000);
+                            location.reload(true);
+                        }
+                    });
+                });
+
+                table.on('click', '.cancel', function (e) {
+                    e.preventDefault();
+                    if (nNew) {
+                        oTable.fnDeleteRow(nEditing);
+                        nEditing = null;
+                        nNew = false;
+                    } else {
+                        restoreRow(oTable, nEditing);
+                        nEditing = null;
+                    }
+                });
+
+                table.on('click', '.edit', function (e) {
+                    e.preventDefault();
+                    if (nNew && nEditing && this.innerHTML != "Ghi nhận") {
+                        oTable.fnDeleteRow(nEditing); // cancel
+                        nEditing = null;
+                        nNew = false;
+                    }
+                    var nRow = $(this).parents('tr')[0];
+                    if (nEditing !== null && nEditing != nRow) {
+                        restoreRow(oTable, nEditing);
+                        editRow(oTable, nRow);
+                        nEditing = nRow;
+                    } else if (nEditing == nRow && this.innerHTML == "Ghi nhận") {
+                        if ($($(nRow).find('input')[0]).val() == '') {
+                            showNoty('Vui lòng nhập tên!', 'error', 'center', 5000);
+                            return false;
+                        }
+                        saveRow(oTable, nEditing);
+                        //nEditing = null;
+                        var $id = $(nEditing).attr('data-objectid');
+                        $id = !isNaN($id) ? $id : 0;
+                        var data2submit = JSON.stringify({
+                            'Id': $id,
+                            'Name': $(nRow).find('td')[0].innerHTML,
+                            'Description': $(nRow).find('td')[1].innerHTML
+                        });
+                        var URL = $id == 0 ? '@Url.RouteUrl("RoleCreate")' : '@Url.RouteUrl("RoleUpdate")';
+                        $.ajax({
+                            type: 'POST',
+                            url: URL,
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            data: data2submit,
+                            success: function (result) {
+                                if (result.success == true) {
+                                    updateRowId(oTable, nEditing, result.id);
+                                    showNoty('Đã ghi nhận thành công!', 'success', 'center', 5000);
+                                }
+                                else {
+                                    showNoty(result.message, 'error', 'center', 5000);
+                                }
+                            },
+                            error: function (xhr, ajaxOptions, error) {
+                                showNoty('Đã xảy ra lỗi khi thực hiện yêu cầu của bạn. Vui lòng kiểm tra và thử lại!', 'error', 'center', 5000);
+                                //alert(xhr.status);
+                                //alert('Error: ' + xhr.responseText);
+                                location.reload(true);
+                            },
+                            complete: function (result) {
+                                nEditing = null;
+                                nNew = false;
+                            }
+                        });
+                    } else {
+                        editRow(oTable, nRow);
+                        nEditing = nRow;
+                    }
+                });
+            }
+            return {
+                init: function () {
+                    handleTable();
+                }
+            };
+        }();
+        jQuery(document).ready(function () {
+            TableEditable.init();
+        });
+    </script>
+}

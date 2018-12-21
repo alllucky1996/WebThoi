@@ -1,0 +1,104 @@
+﻿@{
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    ViewBag.Title = "Nhật ký hệ thống";
+    ViewBag.CText = "Nhật ký";
+    string CName = "NhatKy";
+    bool CapDHQGHN = ViewBag.CapDHQGHN==null?true:(bool)ViewBag.CapDHQGHN;
+}
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        @ViewBag.Title
+    </li>
+</ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-flag-o font-green-sharp bold"></i>
+                    <span class="caption-subject font-green-sharp bold ">@ViewBag.Title</span>
+                </div>
+            </div>
+            <div id="list" class="row">
+
+            </div>
+
+        </div>
+        
+    </div>
+</div>
+@section Styles{
+    @Styles.Render("~/css/metronic/datatable")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/datatable")
+    @Scripts.Render("~/js/metronic/datatable-none-ajax-source")
+}
+@section Scripts2 {
+    <script type="text/javascript">
+        var ThaoTac = function () {
+            var handleThaoTac = function () {
+                var grid = new DatatableNoneAjaxSource();
+                grid.init({
+                    src: $("#datatable_none_ajax_source"),
+                    onSuccess: function (grid) {
+                        // hành động khi tải xong dữ liệu
+                    },
+                    onError: function (grid) {
+                        // hành động khi tải dữ liệu bị lỗi
+                    },
+                    loadingMessage: 'Đang tải dữ liệu...',
+                    dataTable: {
+                        "lengthMenu": [
+                            [10, 20, 50, 100, 150, -1],
+                            [10, 20, 50, 100, 150, "Tất cả"]//Ô chọn hiển thị số bản ghi mỗi trang
+                        ],
+                        "pageLength": 10, // mặc định số bản ghi mỗi trang
+                        "bSort": false,
+                        "order": [
+                            [0, "asc"]
+                        ]
+                    }
+                });
+            }
+            return {
+                init: function () {
+                    handleThaoTac();
+                }
+            };
+        }();
+        jQuery(document).ready(function () {
+            ThaoTac.init();
+            
+        });
+
+
+    </script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            window.loadAjax = function () {
+                $.ajax({
+                    method: "post",
+                    data: {textSearch:''},
+                    url: '@Url.Action("ListData")',
+                    success: function (result) {
+                        $("#list").html(result);
+                    }
+                });
+            }
+            loadAjax();
+        });
+        $(document).ajaxStart(function () { $.blockUI({ message: "Vui lòng đợi...", animate: true, overlayColor: 'none' }) }).ajaxStop($.unblockUI);
+       
+        //Nó nằm trong cái này rồi
+</script>
+}
+
+
+
+

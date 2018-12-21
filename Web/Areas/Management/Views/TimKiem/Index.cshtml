@@ -1,0 +1,127 @@
+﻿@{
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    ViewBag.Title = "Tìm kiếm tài khoản cán bộ";
+    ViewBag.CText = "Yêu cầu";
+    string CName = "TimKiem";
+    bool CapDHQGHN = ViewBag.CapDHQGHN==null?true:(bool)ViewBag.CapDHQGHN;
+}
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        @ViewBag.Title
+    </li>
+</ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-flag-o font-green-sharp bold"></i>
+                    <span class="caption-subject font-green-sharp bold ">@ViewBag.Title</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row" style="margin:5px">
+                    <span class="control-label col-sm-2 bold">Tên đăng nhập</span>
+                    <input type="text" id="txtSearch" name="txtSearch" class="form-control search-box" style="width:300px;"/>
+                    <span class="control-label col-sm-2 bold">Chọn đơn vị</span>
+                    @if (CapDHQGHN)
+                    {
+                        @Html.DropDownList("DonVis", null, "--Đại học Quốc gia HN--", new { @class = "form-control selectUnit", style="width:300px;" })
+                        <br />
+                    }
+                    else
+                    {
+                        @Html.DropDownList("DonVis", null, "--Chọn đơn vị--", new { @class = "form-control cgtbg selectUnit", style = "width:300px;" })
+                        <br />
+                    }
+                </div>
+                <div id="list" class="row">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Styles{
+    @Styles.Render("~/css/metronic/datatable")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/datatable")
+    @Scripts.Render("~/js/metronic/datatable-none-ajax-source")
+}
+@section Scripts2 {
+    <script type="text/javascript">
+        var ThaoTac = function () {
+            var handleThaoTac = function () {
+                var grid = new DatatableNoneAjaxSource();
+                grid.init({
+                    src: $("#datatable_none_ajax_source"),
+                    onSuccess: function (grid) {
+                        // hành động khi tải xong dữ liệu
+                    },
+                    onError: function (grid) {
+                        // hành động khi tải dữ liệu bị lỗi
+                    },
+                    loadingMessage: 'Đang tải dữ liệu...',
+                    dataTable: {
+                        "lengthMenu": [
+                            [10, 20, 50, 100, 150, -1],
+                            [10, 20, 50, 100, 150, "Tất cả"]//Ô chọn hiển thị số bản ghi mỗi trang
+                        ],
+                        "pageLength": 10, // mặc định số bản ghi mỗi trang
+                        "bSort": false,
+                        "order": [
+                            [0, "asc"]
+                        ]
+                    }
+                });
+            }
+            return {
+                init: function () {
+                    handleThaoTac();
+                }
+            };
+        }();
+        jQuery(document).ready(function () {
+            ThaoTac.init();
+            
+        });
+
+
+    </script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            window.loadAjax = function () {
+                $.ajax({
+                    method: "post",
+                    data: { idDonVi: $("#DonVis").val(), textSearch:$('#txtSearch').val(),type:'canbo'},
+                    url: '@Url.Action("ListData")',
+                    success: function (result) {
+                        $("#list").html(result);
+                    }
+
+                });
+            }
+            $("#DonVis").val('@ViewBag.IdDonVi');
+            loadAjax();
+            $("#DonVis").on('change', function () {
+                loadAjax();
+            });
+            $("#txtSearch").change(function () {
+                loadAjax();
+            });
+        });
+        $(document).ajaxStart(function () { $.blockUI({ message: "Vui lòng đợi...", animate: true, overlayColor: 'none' }) }).ajaxStop($.unblockUI);
+        //Nó nằm trong cái này rồi
+</script>
+}
+
+
+
+

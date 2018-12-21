@@ -1,5 +1,4 @@
 ﻿using Common.CustomAttributes;
-using Dung.Enums;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -9,18 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dung.Model
+namespace Entities.Models
 {
     //[Table("DonVi")]
     [DropDown(ValueField = "Id", TextField = "Name")]
-    public class dmDonVi : Dung
+    public class dmDonVi : Entity
     {
         [Key]
         public long Id { get; set; }
         [Display(Name ="Mã")]
         public string Code { get; set; }
         #region const
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public bool? IsDeleted { get; set; }
         [Display(Name="Tên")]
@@ -35,7 +34,12 @@ namespace Dung.Model
         [RegularExpression(@"^([\w\!\#$\%\&\'*\+\-\/\=\?\^`{\|\}\~]+\.)*[\w\!\#$\%\&\'‌​*\+\-\/\=\?\^`{\|\}\~]+@((((([a-zA-Z0-9]{1}[a-zA-Z0-9\-]{0,62}[a-zA-Z0-9]{1})|[‌​a-zA-Z])\.)+[a-zA-Z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$", ErrorMessage = "Địa chỉ E-mail không hợp lệ!")]
         [StringLength(20, ErrorMessage = "Điện thoại không được vượt quá 20 ký tự!")]
         public string Email { get; set; }
-        
+
+        [Display(Name = "Mô tả")]
+        public string Description { get; set; }
+
+        [Display(Name = "Cấp đơn vị")]
+        public int CapDV { get; set; }
 
         public long? IdCha { get; set; }
         [ForeignKey("IdCha")]

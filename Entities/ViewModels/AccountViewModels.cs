@@ -24,7 +24,7 @@ namespace Entities.ViewModels
         [Required(ErrorMessage = "Vui lòng nhập họ và tên!")]
         [Display(Name = "Họ và tên")]
         [StringLength(50, ErrorMessage = "Họ và tên không được vượt quá 50 ký tự!")]
-        public string Name { get; set; }
+        public string FullName { get; set; }
         
         [Display(Name = "Ngày sinh")]
         [RegularExpression(@"^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$", ErrorMessage = "Ngày không hợp lệ!")]
@@ -53,7 +53,9 @@ namespace Entities.ViewModels
         [StringLength(20, ErrorMessage = "Điện thoại không được vượt quá 20 ký tự!")]
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
-       
+        [Display(Name = "Đơn vị")]
+        public long? IdDonVi { get; set; }
+
     }
     public class ChangePasswordViewModel
     {

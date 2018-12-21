@@ -1,7 +1,10 @@
 ﻿@using Entities.Enums;
-@model IEnumerable<Entities.Models.SystemManage.Account>
+@model IEnumerable<Entities.Models.dmDonVi>
 @{
-    ViewBag.Title = "Danh sách tài khoản";
+    ViewBag.Title = "Danh sách "+ ViewBag.CText;
+    string CName = ViewBag.CName;
+    string CRoute = ViewBag.CRoute;
+    string CText= ViewBag.CText;
     Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
     var canDelete = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Delete);
     var canCreate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Create);
@@ -13,7 +16,7 @@
         <i class="fa fa-angle-right"></i>
     </li>
     <li class="active">
-        Danh sách tài khoản
+        Danh sách @CText
     </li>
 </ul>
 @*Bắt đầu nội dung tùy chỉnh*@
@@ -28,7 +31,7 @@
                 @if (canCreate)
                 {
                     <div class="actions">
-                        <a href="@Url.RouteUrl("AccountCreate")" class="btn btn-sm green"><i class="fa fa-plus"></i> Nhập tài khoản mới</a>
+                        <a href="@Url.RouteUrl("AccountCreate")" class="btn btn-sm green"><i class="fa fa-plus"></i> Nhập @CText mới</a>
                     </div>
                 }
             </div>
@@ -56,16 +59,16 @@
                                     <input type="checkbox" class="group-checkable" />
                                 </th>
                                 <th>
-                                    Họ và tên
+                                    Mã đơn vị 
                                 </th>
                                 <th>
-                                    Địa chỉ E-mail
+                                    Tên đơn vị
+                                </th>
+                                <th>
+                                    Đơn vị cha
                                 </th>
                                 <th>
                                     Điện thoại
-                                </th>
-                                <th>
-                                    Ngày tạo
                                 </th>
                                 <th>
                                     Thao tác
@@ -101,7 +104,7 @@
                     },
                     dataTable: {
                         "ajax": {
-                            "url": "@Url.RouteUrl("AccountGetAccountsJson", new { status = 1 })",
+                            "url": "@Url.RouteUrl(CName + "GetJson", new { status = 1 })",
                         },
                         "columnDefs": [{
                             "targets": -1,
@@ -130,12 +133,12 @@
                                 "orderable": true,
                                 "data": null,
                                 "render": function (data, type, full) {
-                                    return '<a  href="' + ('@Url.RouteUrl("AccountRead", new { id="accountId"})').replace("accountId", data.Id) + '">' + data.FullName + '</a>';
+                                    return '<a  href="' + ('@Url.RouteUrl("AccountRead", new { id="accountId"})').replace("accountId", data.Id) + '">' + data.Code + '</a>';
                                 }
                             },
-                        { data: "Email" },
-                        { data: "PhoneNumber" },
-                        { data: "CreateDate" },
+                        { data: "Name" },
+                            { data: "DonViCha" },
+                            { data: "PhoneNumber" },
                         { data: null }
                         ],
                         "order": [
