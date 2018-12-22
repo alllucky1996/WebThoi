@@ -19,24 +19,44 @@
         <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
         </a>
         <div class="page-top pull-left" style="padding-top:10px;padding-left:20px;">
-            <span style="color:#1f6e43; font-weight:bold; font-size:large;">HỆ THỐNG QUẢN LÝ gì gì đó</span><br />
-            <a href="@Url.RouteUrl("FrontEnd_Home_Index")"><span>Fornt end vẫn thế thôi</span></a>
+            <span style="color:#1f6e43; font-weight:bold; font-size:large;">HỆ THỐNG QUẢN LÝ KPI</span><br />
+            <span>Khu vực quản trị</span>
         </div>
         <div class="page-top">
             
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
-                  
-                   
+                    @if (Session["IsExpertsAccount"] != null && Session["IsExpertsAccount"].ToString().ToLower() == "true")
+                    {
+                        //Html.RenderAction("ThongBao4", "Shared");
+                        //Html.RenderAction("ThongBao2", "Shared");
+                    }
+                    <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" style="@style" id="header_notif_bar">
+                        <a href="@Url.RouteUrl("ManagementHome")" class="dropdown-toggle" data-hover="dropdown">
+                            <i class="icon-bell"></i>
+                            <span class="badge badge-danger" id="notifCount">
+                                @Model
+                            </span>
+                        </a>
+                    </li>
                     <li class="dropdown dropdown-user dropdown-dark">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            
-                            <img alt="" class="img-circle " src="@(Session["ProfilePicture"] == null || Session["ProfilePicture"].ToString().Trim() == "" ? "https://www.facebook.com/photo.php?fbid=885126411639869&set=a.134842643334920.30216.100004275552721&type=3&theater" : Session["ProfilePicture"].ToString())" />
+                            <span class="username username-hide-on-mobile">
+                                @(Session["AccountName"] == null || Session["AccountName"].ToString().Trim() == "Admin" ? "" : Session["AccountName"].ToString())
+                            </span>
+                            <img alt="" class="img-circle " src="@(Session["ProfilePicture"] == null || Session["ProfilePicture"].ToString().Trim() == "" ? "https://placeholdit.imgix.net/~text?txtsize=33&txt=Admin&w=120&h=120" : Session["ProfilePicture"].ToString())" />
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
-                           
                             <li>
-                                <a   data-target="#ajaxmodal" data-toggle="modal"><i class="icon-settings"></i> Đổi mật khẩu</a>
+                                <a href="@Url.RouteUrl("AccountRead", new { id = Session["AccountId"] })">
+                                    <i class="icon-user"></i> Cập nhật hồ sơ
+                                </a>
+                            </li>
+                            <li>
+                                @*<a href="@Url.RouteUrl("AccountRead", new { id = Session["AccountId"] })#tab_1_2">
+                                        <i class="icon-settings"></i> Đổi mật khẩu ww
+                                    </a>*@
+                                <a href="@Url.RouteUrl("AccountChangePassword")" data-target="#ajaxmodal" data-toggle="modal"><i class="icon-settings"></i> Đổi mật khẩu</a>
                             </li>
                             <li>
                                 <a href="@Url.RouteUrl("LogoutManagerment")">

@@ -78,14 +78,7 @@ namespace Web.Areas.Management.Controllers
 
                 string email = StringHelper.KillChars(model.Email);
                 //Kiểm tra trùng email
-
-                if (email.EndsWith("@vnu.edu.vn"))
-                {
-                    ModelState.AddModelError(string.Empty, "Nếu quí vị là cán bộ của ĐHQG, vui lòng sử dụng tài khoản email để đăng nhập.");
-                    ModelState.AddModelError("Email", "Nếu quí vị là cán bộ của ĐHQG, vui lòng sử dụng tài khoản email để đăng nhập.");
-                    return View(model);
-                }
-
+                
                 bool exists = await _repository.GetRepository<Account>().AnyAsync(o => o.Email == email);
 
                 if (exists)
@@ -96,20 +89,20 @@ namespace Web.Areas.Management.Controllers
                 }
                 else
                 {
-                    string password = StringHelper.StringToMd5(StringHelper.KillChars(model.Password)).ToLower();
+                    string password =  StringHelper.KillChars(model.Password).ToLower();
                     Account account = new Account();
                     account.IsManageAccount = false;
                     account.IsNormalAccount = true;
                     account.Email = email;
-                   // account.IDCapQuanLy = 1;
-                    account.Name = StringHelper.KillChars(model.Name);
+                    //account.CapQuanLy = "K";
+                    account.FullName = StringHelper.KillChars(model.FullName);
                     //account.Code = StringHelper.KillChars(model.Code);
                     account.PhoneNumber = StringHelper.KillChars(model.PhoneNumber);
                     //account.IsExpertsAccount = model.IsExpertsAccount;
                     if (!string.IsNullOrEmpty(photo))
                         account.ProfilePicture = photo;// StringHelper.KillChars(model.ProfilePicture); ;
                     account.CreateDate = DateTime.Now;
-                    account.Password = StringHelper.StringToMd5(password);
+                    account.Password = StringHelper.stringToSHA512(password);
                     int result = await _repository.GetRepository<Account>().CreateAsync(account, 1);
                     if (result > 0)
                     {

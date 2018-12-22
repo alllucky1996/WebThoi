@@ -15,19 +15,18 @@ namespace Entities.Models.SystemManage
   public class dmKPI : Entity
 	{
     [Key]
-    public int Id { get; set; }
+    public long Id { get; set; }
     [Display(Name ="Mã")]
     public string Code { get; set; }
-    #region const
+
     public DateTime CreateDate { get; set; }
     public DateTime? UpdateDate { get; set; }
     public bool IsDeleted { get; set; }
-		#endregion
 
 		[Display(Name = "Tên")]
 		public string Name { get; set; }
 
-    public int? IdCha { get; set; }
+    public long? IdCha { get; set; }
     [ForeignKey("IdCha")]
     public virtual dmKPI DmKPI { get; set; }
 
@@ -35,12 +34,10 @@ namespace Entities.Models.SystemManage
 		[ForeignKey("IdUnit")]
 		public virtual unit Unit { get; set; }
 
-		public  int? IdWeight { get; set; }
-		[ForeignKey("IdWeight")]
-		public virtual Weight Weight { get; set; }
 		public dmKPI()
     {
       CreateDate = DateTime.Now;
+			IsDeleted = false;
     }
     public string Describe()
     {

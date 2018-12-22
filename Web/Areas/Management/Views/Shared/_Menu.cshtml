@@ -8,22 +8,84 @@
     <div class="page-sidebar md-shadow-z-2-i  navbar-collapse collapse">
         <ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 
-            <li class="@(isActiveController ? "active open " : "") ">
-                <a href="javascript:;">
-                    <i class="fa  fa-list-ul"></i>
-                    <span class="title">DANH MỤC</span>
-                    <span class="@(isActiveController ? "arrow open " : "arrow") "></span>
-                </a>
-                <ul class="sub-menu">
-                    
-                    <li class="@(isActive ? "active" : "")">
-                        <a href="@Url.RouteUrl("Image_Index")"><i class="fa fa-book"></i> check hình ảnh </a>
-                        
-                    </li>
-                   
- 
-                </ul>
-            </li>
+            @{isActiveController = RouteHelper.IsCurrentController("Account", ViewContext) ||
+        RouteHelper.IsCurrentController("SystemInformation", ViewContext) ||
+        RouteHelper.IsCurrentController("Role", ViewContext) ||
+         RouteHelper.IsCurrentController("NhatKy", ViewContext) ||
+                      RouteHelper.IsCurrentController("Template", ViewContext);}
+
+            @if (RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Read) ||
+               RoleHelper.CheckPermission(ModuleEnum.Role, ActionEnum.Read) ||
+               RoleHelper.CheckPermission(ModuleEnum.SystemInformation, ActionEnum.Read) ||
+               RoleHelper.CheckPermission(ModuleEnum.MauVanBan, ActionEnum.Read) ||
+                RoleHelper.CheckPermission(ModuleEnum.NhatKy, ActionEnum.Read)
+               )
+            {
+                <li class="@(isActiveController ? "active open " : "") ">
+                    <a href="javascript:;">
+                        <i class="icon-settings"></i>
+                        <span class="title">QUẢN TRỊ HỆ THỐNG</span>
+                        <span class="@(isActiveController ? "arrow open " : "arrow") "></span>
+                    </a>
+                    <ul class="sub-menu">
+
+                        @if (RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Read))
+                        {
+                            isActive =
+                                RouteHelper.IsCurrentControllerAndAction("Account", "Index", ViewContext) ||
+                                RouteHelper.IsCurrentControllerAndAction("Account", "Create", ViewContext)
+                            ;
+                            <li class="@(isActive ? "active" : "") ">
+                                <a href="@Url.RouteUrl("AccountIndex")"><i class="fa fa-user"></i> Quản lý người dùng</a>
+                            </li>
+                        }
+                        @if (RoleHelper.CheckPermission(ModuleEnum.Role, ActionEnum.Read))
+                        {
+                            isActive =
+                                RouteHelper.IsCurrentControllerAndAction("Role", "Index", ViewContext) || RouteHelper.IsCurrentControllerAndAction("Role", "ModuleRole", ViewContext)
+                            ;
+                            <li class="@(isActive ? "active" : "") ">
+                                <a href="@Url.RouteUrl("RoleIndex")"><i class="fa fa-users"></i> Vai trò người dùng</a>
+                            </li>
+                        }
+                        @if (RoleHelper.CheckPermission(ModuleEnum.DonVi, ActionEnum.Read))
+                        {
+                            isActive =
+                                RouteHelper.IsCurrentControllerAndAction("DonVi", "Index", ViewContext) ||
+                                RouteHelper.IsCurrentControllerAndAction("DonVi", "Create", ViewContext)
+                            ;
+                            <li class="@(isActive ? "active" : "") ">
+                                <a href="@Url.RouteUrl("DonVi_Index")"><i class="fa fa-user"></i>Đơn vị</a>
+                            </li>
+                        }
+                        @if (RoleHelper.CheckPermission(ModuleEnum.SystemInformation, ActionEnum.Read))
+                        {
+                            isActive = RouteHelper.IsCurrentControllerAndAction("SystemInformation", "Index", ViewContext);
+                            <li class="@(isActive ? "active" : "") ">
+                                <a href="@Url.RouteUrl("SystemInformationIndex")"><i class="icon-equalizer"></i> Tham số hệ thống</a>
+                            </li>
+                        }
+
+                        @if (RoleHelper.CheckPermission(ModuleEnum.MauVanBan, ActionEnum.Read))
+                        {
+                            isActive = RouteHelper.IsCurrentControllerAndAction("Template", "Index", ViewContext);
+                            <li class="@(isActive ? "active" : "") ">
+                                <a href="@Url.RouteUrl("Template_Index")"><i class="icon-equalizer"></i>Mẫu văn bản</a>
+                            </li>
+                        }
+                        @if (RoleHelper.CheckPermission(ModuleEnum.NhatKy, ActionEnum.Read))
+                        {
+                            isActive =
+                                RouteHelper.IsCurrentControllerAndAction("NhatKy", "Index", ViewContext)
+                            ;
+                            <li class="@(isActive ? "active" : "") ">
+                                <a href="@Url.RouteUrl("NhatKy_Index")"><i class="fa fa-user"></i>Nhật ký hệ thống</a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+
         </ul>
     </div>
 </div>

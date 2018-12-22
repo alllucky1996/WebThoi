@@ -22,90 +22,39 @@ namespace Entities.Enums
         SystemInformation = 102,
 
         [ModuleGroupAttribute(ModuleGroupCode = 1, ModuleGroupName = "Quản trị hệ thống")]
-        [Description("Mẫu văn bản")]
+        [Description("Đơn vị")]
         [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        MauVanBan = 103,
+        DonVi = 103,
 
         //Các chức năng Quản trị danh mục
         [ModuleGroupAttribute(ModuleGroupCode = 2, ModuleGroupName = "Quản trị danh mục")]
-        [Description(" mục tin")]
+        [Description("Mẫu văn bản")]
         [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        MucTin = 200,
+        MauVanBan = 200,
 
+        // quản trị KPI
+        [ModuleGroupAttribute(ModuleGroupCode = 2, ModuleGroupName = "Quản trị danh mục")]
+        [Description("KPI cá nhân")]
+        [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
+        KPI = 300,
 
         [ModuleGroupAttribute(ModuleGroupCode = 2, ModuleGroupName = "Quản trị danh mục")]
-        [Description("Trạng thái bài viết")]
+        [Description("KPI DonVi")]
         [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        TrangThaiBaiViet = 201,
-
-        [ModuleGroupAttribute(ModuleGroupCode = 2, ModuleGroupName = "Quản trị danh mục")]
-        [Description("Thao tác chuyển trạng thái ")]
-        [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        ThaoTacChuyenTrangThai = 202,
-        // Văn bản biểu mẫu
-        [ModuleGroupAttribute(ModuleGroupCode = 3, ModuleGroupName = "Tài khoản cán bộ")]
-        [Description("Tạo bài viết")]
-        [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        TaoBaiViet = 300,
-
-        [ModuleGroupAttribute(ModuleGroupCode = 3, ModuleGroupName = "Tài khoản cán bộ")]
-        [Description("Duyệt bài viết")]
-        [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        DuyetBaiViet= 301,
-
-        [ModuleGroupAttribute(ModuleGroupCode = 3, ModuleGroupName = "Tài khoản cán bộ")]
-        [Description("Xử lý bài viết")]
-        [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        XuLyBaiViet = 302,
-
+        KPIDonVi = 300,
         
-
-        //[ModuleGroupAttribute(ModuleGroupCode = 4, ModuleGroupName = "Tài khoản cán bộ")]
-        //[Description("Tạo yêu cầu tài khoản sinh viên")]
-        //[ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        //TaoYeuCauSV= 403,
-
-        //[ModuleGroupAttribute(ModuleGroupCode = 4, ModuleGroupName = "Tài khoản cán bộ")]
-        //[Description("Duyệt yêu cầu tài khoản sinh viên")]
-        //[ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        //DuyetYeuCauSV = 404,
-
-        //[ModuleGroupAttribute(ModuleGroupCode = 4, ModuleGroupName = "Tài khoản cán bộ")]
-        //[Description("Xử lý yêu cầu tài khoản sinh viên")]
-        //[ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        //XuLyYeuCauSV = 405,
-
-        [ModuleGroupAttribute(ModuleGroupCode = 5, ModuleGroupName = "Thống kê")]
-        [Description("Thống kê bài viết")]
+        [ModuleGroupAttribute(ModuleGroupCode = 3, ModuleGroupName = "Thống kê")]
+        [Description("Thống kê")]
         [ActionAttribute(ActionType.Read)]
-        ThongKeBaiViet = 501,
-        [ModuleGroupAttribute(ModuleGroupCode = 5, ModuleGroupName = "Thống kê")]
+        ThongKe = 501,
+
+        [ModuleGroupAttribute(ModuleGroupCode = 3, ModuleGroupName = "Thống kê")]
         [Description("Tìm kiếm")]
         [ActionAttribute(ActionType.Read)]
         TimKiem = 502,
-        [ModuleGroupAttribute(ModuleGroupCode = 5, ModuleGroupName = "Thống kê")]
+        [ModuleGroupAttribute(ModuleGroupCode = 3, ModuleGroupName = "Thống kê")]
         [Description("Nhật ký")]
         [ActionAttribute(ActionType.Read)]
-        NhatKy = 503,
-        // đến đây không phải sửa 
-        [ModuleGroupAttribute(ModuleGroupCode = 6, ModuleGroupName = "Khách hàng")]
-        [Description("Khách hàng")]
-        [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        KhachHang = 601,
-
-        // trạng thái theo cách mới
-        [ModuleGroupAttribute(ModuleGroupCode = 2, ModuleGroupName = "Quản trị danh mục")]
-        [Description("Trạng thái bài viết")]
-        [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        TrangThai = 701,
-
-        [ModuleGroupAttribute(ModuleGroupCode = 2, ModuleGroupName = "Quản trị danh mục")]
-        [Description("Chuyển trạng thái ")]
-        [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        ChuyenTrangThai = 702,
-        [ModuleGroupAttribute(ModuleGroupCode = 2, ModuleGroupName = "Quản trị danh mục")]
-        [Description("Trạng thái bài viết")]
-        [ActionAttribute(ActionType.Read, ActionType.Create, ActionType.Update, ActionType.Delete)]
-        LoaiTrangThai = 703,
+        NhatKy = 503
     }
 }

@@ -30,10 +30,5 @@ namespace Entities.Models.SystemManage
 		{
 			throw new NotImplementedException();
 		}
-
-		public unit()
-		{
-			Created_at = DateTime.Now;
-		}
 	}
 }

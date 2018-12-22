@@ -6,25 +6,24 @@
 <!--<![endif]-->
 <head>
 	<title>@ViewBag.Title</title>
-	@Html.Partial("_Head2")
-
-	@Html.Partial("_Css1")
-	@RenderSection("styles", required: false)
-	@Html.Partial("_Css2")
-	@RenderSection("styles2", required: false)
+		@Html.Partial("~/Views/Shared/_Head2.cshtml")
+		@Html.Partial("~/Views/Shared/_Css1.cshtml")
+		@RenderSection("styles", required: false)
+		@Html.Partial("~/Views/Shared/_Css2.cshtml")
+		@RenderSection("styles2", required: false)
 </head>
 <body class="page-md page-sidebar-closed-hide-logo ">
-	@Html.Partial("_Header", 0)
+	@Html.Partial("~/Views/Shared/_Header.cshtml", 0)
 
 	<div class="page-container">
-		@Html.Partial("_Menu")
+		@Html.Partial("~/Views/Shared/_Menu.cshtml")
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				@RenderBody()
 			</div>
 		</div>
 	</div>
-	@Html.Partial("_Footer")
+	@Html.Partial("~/Views/Shared/_Footer.cshtml")
 
 
 	@Html.Partial("~/Views/Shared/_Scripts.cshtml")

@@ -23,14 +23,14 @@ namespace Entities.Models.SystemManage
         [StringLength(200, ErrorMessage = "Mô tả nhóm quyền không được vượt quá 200 ký tự!")]
         public string Description { get; set; }
         public bool IsDefault { get; set; }
-        
-        //[Display(Name="Cấp Cty")]
-        //public bool IsLevel1 { get; set; }
-        //[Display(Name = "Cấp Admin đơn vị")]
-        //public bool IsLevel2 { get; set; }
 
-        //[Display(Name = "Cấp người dùng bình thường")]
-        //public bool IsLevel3 { get; set; }
+        [Display(Name = "Cấp Cty")]
+        public bool IsLevel1 { get; set; }
+        [Display(Name = "Cấp Admin đơn vị")]
+        public bool IsLevel2 { get; set; }
+
+        [Display(Name = "Cấp người dùng ")]
+        public bool IsLevel3 { get; set; }
         public virtual ICollection<AccountRole> AccountRoles { get; set; }
         public virtual ICollection<ModuleRole> RoleModules { get; set; }
 

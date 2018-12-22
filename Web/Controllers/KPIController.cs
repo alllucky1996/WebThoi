@@ -1,4 +1,5 @@
-﻿using Entities.Models.SystemManage;
+﻿using Entities.Models;
+using Entities.Models.SystemManage;
 using Interface;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Web.Controllers
 									where ac.Id == 1
 									select new
 									{
-										user_name = ac.Name,
+										user_name = ac.FullName,
 										user_phone = ac.PhoneNumber,
 										user_cap = cap.Name,
 										user_dv = dv.Name,

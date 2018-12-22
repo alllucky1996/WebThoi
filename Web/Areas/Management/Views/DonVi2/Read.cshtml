@@ -1,0 +1,463 @@
+﻿@using Entities.Enums;
+@using Entities.Models
+@using Entities.Models.SystemManage
+
+@model Entities.Models.SystemManage.Account
+
+@{
+    ViewBag.Title = "Cập nhật tài khoản";
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    var roles = (List<Role>)ViewBag.Roles ?? new List<Role>();
+    var accountRoles = (List<AccountRole>)ViewBag.AccountRoles ?? new List<AccountRole>();
+    //var ungDungs = (List<UngDung>)ViewBag.UngDungs ?? new List<UngDung>();
+    //var accountUngDungs = (List<AccountUngDung>)ViewBag.AccountUngDungs ?? new List<AccountUngDung>();
+
+    var canDelete = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Delete);
+    var canCreate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Create);
+    var canUpdate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Update);
+    var dob = "";
+    if (Model.DateOfBirth.HasValue)
+    {
+        dob = Model.DateOfBirth.Value.ToString("dd/MM/yyyy");
+    }
+}
+
+
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+        <a href="@Url.RouteUrl("AccountIndex")">Danh sách tài khoản</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        Cập nhật tài khoản
+    </li>
+</ul>
+@*Bắt đầu nội dung tùy chỉnh*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="profile-sidebar" style="width:250px;">
+            <div class="portlet light profile-sidebar-portlet">
+                <div class="profile-userpic">
+                    <img src="@(string.IsNullOrEmpty(Model.ProfilePicture) ? "http://www.placehold.it/200x200/EFEFEF/AAAAAA&text=No+image" :  Model.ProfilePicture)" class="img-responsive" alt="">
+                </div>
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        @Model.Name
+                    </div>
+                    <div class="profile-usertitle-job">
+                        @Model.Email
+                    </div>
+                </div>
+                @if (canDelete)
+                {
+                    <div class="profile-userbuttons">
+                        <a class="btn btn-circle btn-danger btn-sm" href="@Url.RouteUrl("AccountDelete", new { id = Model.Id })" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')"><i class="fa fa-trash-o"></i> Xóa tài khoản</a>
+                    </div>
+                }
+                <div class="profile-usermenu">
+
+                </div>
+            </div>
+        </div>
+        <div class="profile-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light" id="account_detail">
+                        <div class="portlet-title tabbable-line">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold uppercase">@Model.Name</span>
+                            </div>
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#tab_1_1" data-toggle="tab">Thông tin cơ bản</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_1_2" data-toggle="tab">Đổi mật khẩu</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_1_3" data-toggle="tab">Phân quyền</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1_1">
+                                    @using (Html.BeginForm("Read", "Account", FormMethod.Post, new { @class = "form-update-account", @enctype = "multipart/form-data", @id = "main_form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(model => model.Id)
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Name)
+                                        </div>
+                                        @*<div class="form-group">
+                                            @Html.LabelFor(model => model.Code, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Code)
+                                        </div>*@
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-envelope"></i>
+                                                </span>
+                                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Email)
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PhoneNumber, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.PhoneNumber)
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Ngày sinh</label>
+
+                                            <div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
+                                                <input type="text" name="DateOfBirth" id="DateOfBirth" value="@dob" class="form-control" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">
+                                                Giới tính
+                                            </label>
+                                            <div class="radio-list">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="Sex" value="false" data-title="Nam" @(Model.Sex.HasValue ? Model.Sex.Value == false ? " checked" : "" : "") />
+                                                    Nam
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="Sex" value="true" data-title="Nữ" @(Model.Sex.HasValue ? Model.Sex.Value == true ? " checked" : "" : "") />
+                                                    Nữ
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Address, new { @class = "control-label" })
+                                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Address)
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.IdDonVi, new { @class = "control-label" })
+             
+                                                @Html.DropDownList("IdDonVi", null, "---Chọn đơn vị---", new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.IdDonVi)
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.CapQuanLy, new { @class = "control-label" })
+                                            <select class="form-control" data-val="true" id="CapQuanLy" name="CapQuanLy">
+                                                <option></option>
+                                                <option value="ĐHQG" @(Model.CapQuanLy == "ĐHQG" ? " selected" : "")>Cấp ĐHQG</option>
+                                                <option value="ĐV" @(Model.CapQuanLy == "ĐV" ? " selected" : "")>Cấp đơn vị</option>
+                                                <option value="K" @(Model.CapQuanLy == "K" ? " selected" : "")>Không</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ProfilePicture, new { @class = "control-label" })
+                                            @Html.HiddenFor(model => model.ProfilePicture)
+                                            <div>
+                                                <div class="col-md-3 thumbnail" style="height:150px;">
+                                                    <img id="Image_Preview" src="@(string.IsNullOrEmpty(Model.ProfilePicture) ? "http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=No+image" : Model.ProfilePicture)" alt="" style="height:100%;" />
+                                                </div>
+                                                <div class="col-md-9" style="line-height:150px;">
+                                                    <input type="file" name="file" id="file" style="width:0; height:0;" />
+                                                    <input type="hidden" id="CheckValidFileType" value="" />
+                                                    <button type="button" class="btn btn-default select-image"><i class="fa fa-sm"></i> Chọn ảnh</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="clear:both;"></div>
+                                        if (canUpdate)
+                                        {
+                                            <div class="margiv-top-10" style="background-color:#f5f5f5; border-top: 1px solid #e5e5e5;padding: 20px 10px; clear:both;">
+                                                <button type="button" class="btn green btn-update"><i class="fa fa-check"></i> Ghi nhận</button>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="tab-pane" id="tab_1_2">
+                                    <form action="#" class="form-change-member-password">
+                                        @Html.AntiForgeryToken()
+                                        <div class="form-group">
+                                            <label class="control-label">Mật khẩu mới</label>
+                                            <input type="password" class="form-control" name="NewPassword" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Nhập lại mật khẩu mới</label>
+                                            <input type="password" class="form-control" name="ConfirmPassword" />
+                                        </div>
+                                        @if (canUpdate)
+                                        {
+                                            <div class="margin-top-10">
+                                                <button type="button" class="btn green btn-change-pw"><i class="fa fa-check"></i> Ghi nhận</button>
+                                            </div>
+                                        }
+                                    </form>
+                                </div>
+                                <div class="tab-pane" id="tab_1_3">
+                                    <form action="#" class="form-account-mapping-role">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="accountId" id="accountId" value="@Model.Id">
+                                        <table class="table table-light table-hover">
+                                            @foreach (var role in roles)
+                                            {
+                                                var account = accountRoles.FirstOrDefault(a => a.RoleId == role.Id);
+                                                <tr>
+                                                    <td style="color:#000;">
+                                                        @role.Name
+                                                    </td>
+                                                    <td>
+                                                        <label class="uniform-inline">
+                                                            <input type="checkbox" data-roleid="@role.Id" @(account != null ? " checked=checked" : "") />
+                                                        </label>
+                                                    </td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                            }
+                                        </table>
+                                        @if (canUpdate)
+                                        {
+                                            <div class="margin-top-10">
+                                                <button type="button" class="btn green btn-account-mapping-role"><i class="fa fa-check"></i> Ghi nhận</button>
+                                            </div>
+                                        }
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    @Styles.Render("~/css/metronic/profile")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/jqueryval")
+    @Scripts.Render("~/js/metronic/datepicker")
+    <script type="text/javascript" src="~/Editor/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript">
+        var myWindow;
+        function showFileManagerPage(url) {
+            myWindow = window.open(url, "_blank", "toolbar=no, scrollbars=no, resizable=no, top=0, left=0, width=1000, height=500");    // Opens a new window
+        }
+        function choseFile(id, url) {
+            $('#ProfilePicture').val(url);
+            $('#Image_Preview').attr('src', url);
+            myWindow.close();
+        }
+        jQuery(document).ready(function () {
+            //initialize datepicker
+            $('.date-picker').datepicker({
+                autoclose: true
+            });
+            $('#CapQuanLy').select2();
+            $('.date-picker .form-control').change(function () {
+                form.validate().element($(this));
+            })
+            $(document).on('click', '.select-image', function () {
+                //var finder = new CKFinder();
+                //finder.startupPath = 'Images:/tai-khoan-nguoi-dung/';
+                //finder.selectActionFunction = function (fileUrl) {
+                //    $('#ProfilePicture').val(fileUrl);
+                //    $('#Image_Preview').attr('src', fileUrl);
+                //};
+                //finder.popup();
+                @*//showFileManagerPage('@Url.Action("Index", "FileManager", new {id="dont-nead" })');*@
+                $('#file').click();
+            });
+            $('input:file').change(function (e) {
+                $('#CheckValidFileType').val('');
+                var files = e.originalEvent.target.files;
+                for (var i = 0, len = files.length; i < len; i++) {
+                    var n = files[i].name,
+                        s = files[i].size,
+                        t = files[i].type;
+                    var ext = n.split('.').pop().toLowerCase();
+                    if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'bmp']) == -1) {
+                        var msg1 = 'Ảnh không hợp lệ! \nChỉ chấp nhận các loại tệp tin ảnh: gif, png, jpg, jpeg, bmp\nVui lòng chọn ảnh khác!';
+                        $('#CheckValidFileType').val(msg1);
+                        alert(msg1);
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#Image_Preview').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(files[i]);
+                }
+            });
+            $('#main_form').on('submit', function (e) {
+                if ($('#CheckValidFileType').val() != '') {
+                    alert($('#CheckValidFileType').val());
+                    e.preventDefault();
+                }
+            });
+            //Cập nhật thông tin tài khoản
+            $(document).on('click', '.btn-update', function () {
+                Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    target: $('#account_detail'),
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    boxed: true
+                });
+                var $url = '@Url.RouteUrl("AccountRead")';
+                var formData = new FormData($('.form-update-account')[0]);
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    async: true,
+                    url: $url,
+                    data: { id: '@Model.Id' },
+                    //data: $('.form-update-account').serialize(),//Dùng cách này thì không upload file được
+                    data: formData,
+                    dataType: 'json',
+                    enctype: 'multipart/form-data',
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.success) {
+                            showNoty(result.message, 'success', 'center', 5000);
+                            setTimeout("location.reload(true);", 5000);
+                        }
+                        else
+                            showNoty(result.message, 'error', 'center', 5000);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        showNoty(errorThrown, 'error', 'center', 5000);
+                    },
+                    complete: function (result) {
+                        Metronic.unblockUI($('#account_detail'));
+                    }
+                });
+                return;
+            });
+            //Đổi mật khẩu cho thành viên
+            $(document).on('click', '.btn-change-pw', function () {
+                Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    target: $('#account_detail'),
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    boxed: true
+                });
+
+                var $url = '@Url.RouteUrl("AccountChangeMemberPassword")';
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    async: true,
+                    url: $url,
+                    data: { id: '@Model.Id' },
+                    data: $('.form-change-member-password').serialize(),
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.success) {
+                            showNoty(result.message, 'success', 'center', 5000);
+                        }
+                        else
+                            showNoty(result.message, 'error', 'center', 5000);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        showNoty(errorThrown, 'error', 'center', 5000);
+                    },
+                    complete: function (result) {
+                        Metronic.unblockUI($('#account_detail'));
+                    }
+                });
+                return;
+            });
+            //Phân quyền
+            $(document).on('click', '.btn-account-mapping-role', function () {
+                Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    target: $('#account_detail'),
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    boxed: true
+                });
+                var roles = $('#tab_1_3 input:checkbox:checked').map(function () {
+                    return $(this).attr('data-roleid');
+                }).get();
+                var accountId = $('#accountId').val();
+                var $url = ('@Url.RouteUrl("AccountMappingRole", new {roles = "rolesReplace" })').replace("rolesReplace", roles);
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    async: true,
+                    url: $url,
+                    data: { accountId: accountId },
+                    data: $('.form-account-mapping-role').serialize(),
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.success) {
+                            showNoty(result.message, 'success', 'center', 5000);
+                        }
+                        else
+                            showNoty(result.message, 'error', 'center', 5000);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        showNoty(errorThrown, 'error', 'center', 5000);
+                    },
+                    complete: function (result) {
+                        Metronic.unblockUI($('#account_detail'));
+                    }
+                });
+                return;
+            });
+            //Phân quyền ứng dụng
+            $(document).on('click', '.btn-account-mapping-ung-dung', function () {
+                Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    target: $('#account_detail'),
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    boxed: true
+                });
+                var maUngDungs = $('#tab_1_4 input:checkbox:checked').map(function () {
+                    return $(this).attr('data-maungdung');
+                }).get();
+                var accountId = $('#hiddenAccountId').val();
+                var $url = '/quan-ly/tai-khoan/phan-quyen-truy-cap-ung-dung-cho-tai-khoan/' + accountId + '/' + maUngDungs;
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    async: true,
+                    url: $url,
+                    data: $('.form-account-mapping-ung-dung').serialize(),
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.success) {
+                            showNoty(result.message, 'success', 'center', 5000);
+                        }
+                        else
+                            showNoty(result.message, 'error', 'center', 5000);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        showNoty(errorThrown, 'error', 'center', 5000);
+                    },
+                    complete: function (result) {
+                        Metronic.unblockUI($('#account_detail'));
+                    }
+                });
+                return;
+            });
+        });
+    </script>
+}

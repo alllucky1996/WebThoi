@@ -130,7 +130,7 @@
                                 "orderable": true,
                                 "data": null,
                                 "render": function (data, type, full) {
-                                    return '<a  href="' + ('@Url.RouteUrl("AccountRead", new { id="accountId"})').replace("accountId", data.Id) + '">' + data.Name + '</a>';
+                                    return '<a  href="' + ('@Url.RouteUrl("AccountRead", new { id="accountId"})').replace("accountId", data.Id) + '">' + data.FullName + '</a>';
                                 }
                             },
                         { data: "Email" },

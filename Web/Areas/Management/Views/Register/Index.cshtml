@@ -1,0 +1,203 @@
+﻿@model Entities.Models.SystemManage.Account
+@{
+    ViewBag.Title = "Đăng ký tài khoản";
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+}
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css">
+<script src='https://www.google.com/recaptcha/api.js'></script>
+@*Bắt đầu nội dung tùy chỉnh*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="tab-pane" id="tab_6">
+            <div class="portlet box grey-cascade">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-user"></i>Đăng ký tài khoản
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm("Index", "Register", FormMethod.Post, new { @class = "form-horizontal form-bordered form-row-stripped", @enctype = "multipart/form-data", @id = "fm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-body">
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger">
+                                    <button data-close="alert" class="close"></button>
+                                    @Html.ValidationSummary(true)
+                                </div>
+                            }
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Email, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                    <div id="valid_email" style="color:red">
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Password, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @type = "password" })
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="password_cf">Nhập lại mật khẩu</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" id="password_cf" name="password_cf" type="password" value="" />
+                                    <span id="password_cf_valid" class="field-validation-valid" data-valmsg-for="password_cf" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.PhoneNumber, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PhoneNumber)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.TenDonVi, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.TenDonVi, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TenDonVi)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DiaChiLienLac, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.DiaChiLienLac, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DiaChiLienLac)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ProfilePicture, new { @class = "col-md-3 control-label" })
+                                @Html.HiddenFor(model => model.ProfilePicture)
+                                <div class="col-md-9">
+
+                                    <div>
+                                        <div class="col-md-3 thumbnail" style="height:150px;">
+                                            <img id="Image_Preview" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=No+image" alt="" style="height:100%;" />
+                                        </div>
+                                        <div class="col-md-4" style="line-height:150px;">
+                                            <input type="file" name="file" id="file" style="width:0; height:0;" />
+                                            <input type="hidden" id="CheckValidFileType" value="" />
+                                            <button type="button" class="btn btn-default select-image"><i class="fa fa-sm"></i> Chọn ảnh</button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group last">
+                                <label class="control-label col-md-3">Google reCaptcha</label>
+                                <div class="col-md-9">
+                                    <!-- BEGIN REPCAPTCHA -->
+                                    <div class="g-recaptcha" data-sitekey="6LerRBoTAAAAAFmQS5MaYO0FDNxoyTqpe_kv8kKN"></div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" class="btn green"><i class="fa fa-check"></i> Ghi nhận</button>
+                                    <a href="@Url.RouteUrl("AccountIndex")" class="btn default">Hủy bỏ</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/js/metronic/jqueryval")
+    <script type="text/javascript" src="~/Editor/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript">
+        //var RecaptchaOptions = {
+        //    theme: 'custom',
+        //    custom_theme_widget: 'recaptcha_widget'
+        //};
+        jQuery(document).ready(function () {
+            
+
+            $('#Name').focus();
+            $(document).on('click', '.select-image', function () {
+                $('#file').click();
+            });
+            $('input:file').change(function (e) {
+                $('#CheckValidFileType').val('');
+                var files = e.originalEvent.target.files;
+                for (var i = 0, len = files.length; i < len; i++) {
+                    var n = files[i].name,
+                        s = files[i].size,
+                        t = files[i].type;
+                    var ext = n.split('.').pop().toLowerCase();
+                    if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg', 'bmp']) == -1) {
+                        var msg1 = 'Ảnh không hợp lệ! \nChỉ chấp nhận các loại tệp tin ảnh: gif, png, jpg, jpeg, bmp\nVui lòng chọn ảnh khác!';
+                        $('#CheckValidFileType').val(msg1);
+                        alert(msg1);
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#Image_Preview').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(files[i]);
+                }
+            });
+            
+            $('#password_cf').keyup(function (e) {
+                if ($('#password_cf').val() != $('#Password').val()) {
+                    $('#password_cf_valid').attr("class", "field-validation-error");
+                    $('#password_cf_valid').html('<span for="password_cf" generated="true" class="">Mật khẩu không khớp!</span>');
+                    
+                } else {
+                    $('#password_cf_valid').attr("class", "field-validation-valid");
+                    $('#password_cf_valid').html("");
+                }
+            });
+            $('#Email').keyup(function (e) {
+                if ($("#Email").val().split("@@").pop() == "vnu.edu.vn") {
+                    $("#valid_email").html('Nếu quý vị là cán bộ của ĐHQG, vui lòng sử dụng tài khoản email để đăng nhập!');
+
+                } else {
+                    $("#valid_email").html("");
+                }
+            });
+            $('form').on('submit', function (e) {
+                if ($('#CheckValidFileType').val() != '') {
+                    alert($('#CheckValidFileType').val());
+                    e.preventDefault();
+                }
+                if ($('#password_cf').val() != $('#Password').val()) {
+                    $('#password_cf_valid').attr("class", "field-validation-error");
+                    $('#password_cf_valid').html('<span for="password_cf" generated="true" class="">Mật khẩu không khớp!</span>');
+                    e.preventDefault();
+                }
+                if ($("#Email").val().split("@@").pop() == "vnu.edu.vn") {
+                    $("#valid_email").html('Nếu quý vị là cán bộ của ĐHQG, vui lòng sử dụng tài khoản email để đăng nhập!');
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

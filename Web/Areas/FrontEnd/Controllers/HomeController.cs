@@ -32,7 +32,7 @@ namespace Web.Areas.FrontEnd.Controllers
 		{
 			try
 			{
-				var list = await _repository.GetRepository<CheckImage>().GetAllAsync(o => o.IsDeleted != true);
+				//var list = await _repository.GetRepository<CheckImage>().GetAllAsync(o => o.IsDeleted != true);
 
 
 				ViewBag.Title = "Danh mục" + CText;
@@ -42,11 +42,11 @@ namespace Web.Areas.FrontEnd.Controllers
 				ViewBag.CText = CText;
 				if (flag == 0)
 				{
-					flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
+					//flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
 					flag++;
 				}
 				 
-				return View(list);
+				return View();
 			}
 			catch (Exception ex)
 			{
@@ -154,7 +154,7 @@ namespace Web.Areas.FrontEnd.Controllers
 				result = await _repository.GetRepository<Account>().CreateAsync(new Account()
 				{
 					code = 270800,
-					Name = "Ma Thị Hồng Vân",
+					FullName = "Ma Thị Hồng Vân",
 					Sex = false,
 					Email = "XXX@gmail.com",
 					IsExpertsAccount = true,

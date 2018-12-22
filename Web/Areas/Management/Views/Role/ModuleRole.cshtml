@@ -1,0 +1,235 @@
+﻿@using Web.Helpers;
+@using System.Reflection;
+@using Entities.Enums;
+@using Common.CustomAttributes;
+@using Common.Enums
+@using Entities.Models.SystemManage
+
+@{
+
+    ViewBag.Title = "Cập nhật chức năng cho vai trò người dùng";
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    var moduleRoles = (List<ModuleRole>)ViewBag.ModuleRoles;
+    var roleId = (long)ViewBag.RoleId;
+
+    var roleCt = (Role)ViewBag.RoleContent;
+
+    var moduleGroupEnum = ModuleGroupEnum.QuanTriHeThong.ToSelectListEnum();
+    foreach (var item in moduleGroupEnum)
+    {
+        var moduleEnum = (
+    from f in typeof(Entities.Enums.ModuleEnum).GetFields()
+    let attr = f.GetCustomAttributes(typeof(ModuleGroupAttribute))
+                .Cast<ModuleGroupAttribute>()
+                .FirstOrDefault()
+    where attr != null && attr.ModuleGroupCode == Convert.ToInt16(item.Value)
+    select new { Text = ((ModuleEnum)f.GetValue(null)).GetDescription(), Value = (int)f.GetValue(null) }).ToList();
+    }
+}
+    <ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+        <a href="@Url.RouteUrl("RoleIndex")">Quản lý vai trò người dùng</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        Cập nhật chức năng cho vai trò người dùng
+    </li>
+</ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-users font-green-sharp bold"></i>
+                    <span class="caption-subject font-green-sharp bold ">Cập nhật chức năng cho vai trò người dùng: @ViewBag.RoleName</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @using (Html.BeginForm("ModuleRole", "Role", FormMethod.Post, new { @class = "form-horizontal form-bordered form-row-stripped" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-md-checkboxes">
+                        <div class="md-checkbox-inline">
+                            <div class="md-checkbox">
+                                <input type="checkbox" id="IsLevel1" name="IsLevel1" class="md-check" @(roleCt.IsLevel1 == true ? " checked" : "")>
+                                <label for="IsLevel1">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>
+                                    Là vai trò hệ thống
+                                </label>
+                            </div>
+                            <div class="md-checkbox">
+                                <input type="checkbox" id="IsLevel2" name="IsLevel2" class="md-check" @(roleCt.IsLevel2 == true ? " checked" : "")>
+                                <label for="IsLevel2">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>
+                                    Là vai trò đơn vị
+                                </label>
+                            </div>
+                            <div class="md-checkbox">
+                                <input type="checkbox" id="IsLevel3" name="IsLevel3" class="md-check" @(roleCt.IsLevel3 == true ? " checked" : "")>
+                                <label for="IsLevel3">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>
+                                    Là vai trò bình thường
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br/>
+
+                    <input type="checkbox" name="checkAll" id="checkAll" class="check-all" /><label for="checkAll">&nbsp;Chọn tất cả</label>
+                    <input type="text" style="display: none;" value="@roleId" name="roleId" id="roleId" />
+                    <table class="table table-bordered table-hover" cellpadding="0" cellspacing="1" border="0" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th width="5%" style="text-align: center;">STT</th>
+                                <th>Tên chức năng</th>
+                                @*<th width="15%">Mã</th>*@
+                                <th width="5%" style="text-align: center;">Xem</th>
+                                <th width="5%" style="text-align: center;">Thêm</th>
+                                <th width="5%" style="text-align: center;">Sửa</th>
+                                <th width="5%" style="text-align: center;">Xóa</th>
+                                <th width="5%" style="text-align: center;">Quản lý</th>
+                                @*<th width="5%" style="text-align: center; white-space:nowrap;">Xuất bản</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (moduleGroupEnum != null && moduleGroupEnum.Any())
+                            {
+                                int i = 1;
+                                foreach (var g in moduleGroupEnum)
+                                {
+                                    var moduleEnum = (
+                                from f in typeof(Entities.Enums.ModuleEnum).GetFields()
+                                let attr = f.GetCustomAttributes(typeof(ModuleGroupAttribute))
+                                            .Cast<ModuleGroupAttribute>()
+                                            .FirstOrDefault()
+                                where attr != null && attr.ModuleGroupCode == Convert.ToInt16(g.Value)
+                                select new { Text = ((ModuleEnum)f.GetValue(null)).GetDescription(), Value = (ModuleEnum)f.GetValue(null) }).ToList();
+
+                                    <tr class="active" style="font-weight:bold;">
+                                        <td>@i</td>
+                                        <td colspan="8">Module: @g.Text</td>
+                                    </tr>
+                                    if (moduleEnum != null && moduleEnum.Any())
+                                    {
+                                        var stt = 1;
+                                        foreach (var item in moduleEnum)
+                                        {
+
+                                            ModuleEnum tmp = (ModuleEnum)(Convert.ToInt16(item.Value));
+                                            Type t = tmp.GetType();
+                                            FieldInfo f = t.GetField(tmp.ToString());
+                                            object[] attribs = f.GetCustomAttributes(false);
+                                            var da = attribs.FirstOrDefault(a => a is ActionAttribute) as ActionAttribute;
+                                            int[] action = da.Actions;
+
+                                            var details = moduleRoles.FirstOrDefault(a => a.ModuleCode == item.Value.ToString() && a.RoleId == roleId);
+                                            if (details == null) { details = new ModuleRole(); }
+
+                                            var idRead = item.Value + "_Read";
+                                            var idCreate = item.Value + "_Create";
+                                            var idUpdate = item.Value + "_Update";
+                                            var idDelete = item.Value + "_Delete";
+                                            var idVerify = item.Value + "_Verify";
+                                            //var idPublish = item.Value + "_Publish";
+                                            <tr>
+                                                <td style="text-align: center;">@i.@stt</td>
+                                                <td style="text-align: left;">@item.Text</td>
+                                                @*<td style="text-align: left;padding: 2px;">@item.Value</td>*@
+                                                <td style="text-align: center;">
+                                                    @if (action.Contains(1))
+                                                    {
+                                                        <input class="checkpermission" type="checkbox" name="@idRead" id="@idRead"
+                                                               @(details.Read == 1 ? " checked=checked" : "") />
+                                                    }
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    @if (action.Contains(2))
+                                                    {
+                                                        <input class="checkpermission" type="checkbox" name="@idCreate" id="@idCreate"
+                                                               @(details.Create == 1 ? " checked=checked" : "") />
+                                                    }
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    @if (action.Contains(3))
+                                                    {
+                                                        <input class="checkpermission" type="checkbox" name="@idUpdate" id="@idUpdate"
+                                                               @(details.Update == 1 ? " checked=checked" : "") />
+                                                    }
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    @if (action.Contains(4))
+                                                    {
+                                                        <input class="checkpermission" type="checkbox" name="@idDelete" id="@idDelete"
+                                                               @(details.Delete == 1 ? " checked=checked" : "") />
+                                                    }
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    @if (action.Contains(5))
+                                                    {
+                                                        <input class="checkpermission" type="checkbox" name="@idVerify" id="@idVerify"
+                                                               @(details.Verify == 1 ? " checked=checked" : "") />
+                                                    }
+                                                </td>
+                                                @*<td style="text-align: center;">
+                                                    @if (action.Contains(6))
+                                                    {
+                                                        <input class="checkpermission" type="checkbox" name="@idPublish" id="@idPublish"
+                                                               @(details.Publish == 1 ? " checked=checked" : "") />
+                                                    }
+                                                </td>*@
+                                            </tr>
+                                                    stt++;
+                                        }
+                                    }
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <div>
+                        @if (RoleHelper.CheckPermission(ModuleEnum.Role, ActionEnum.Update))
+                        {
+                            <button type="submit" class="btn green btn-update"><i class="fa fa-check"></i> Ghi nhận</button>
+                        }
+                        <a href="@Url.RouteUrl("RoleIndex")" class="btn default">Quay lại</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts2 {
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery(document).on('change', '.check-all', function () {
+                //if ($(this).is(':checked')) $('.checkpermission').prop('checked', true);
+                //else $('.checkpermission').prop('checked', false);
+                
+                //if ($(this).attr("checked")) $('tbody input:checkbox').attr('checked', 'checked');
+                //else $('tbody input:checkbox').removeAttr('checked');
+
+                if ($(this).attr("checked")) {
+                    $("tbody").find("div.checker span").addClass('checked');
+                    $("tbody").find("div.checker input:checkbox").attr('checked', 'checked');
+                }
+                else {
+                    $("tbody").find("div.checker span").removeClass('checked');
+                    $("tbody").find("div.checker input:checkbox").removeAttr('checked');
+                }
+            });
+        });
+    </script>
+}

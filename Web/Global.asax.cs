@@ -44,7 +44,6 @@ namespace Web
             {
                 HttpContext.Current.Session["__ControllerTempData"] = TempData;
                 HttpContext.Current.Response.RedirectToRoute("FrontEnd_Home_Index");
-                //HttpContext.Current.Response.RedirectToRoute("Images_Index");
                 HttpContext.Current.ApplicationInstance.CompleteRequest();
             }
         }

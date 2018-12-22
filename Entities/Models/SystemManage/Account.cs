@@ -14,15 +14,16 @@ namespace Entities.Models.SystemManage
     {
     [Key]
     //[Column(Order = 0), Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
-
 		[Required]
+		[Display(Name ="Mã nhân viên")]
 		public int code { get; set; }
 
 		[Required(ErrorMessage = "Vui lòng nhập họ và tên!")]
-		[Display(Name = "Họ và tên")]
+    [Display(Name = "Họ và tên")]
     [StringLength(50, ErrorMessage = "Họ và tên không được vượt quá 50 ký tự!")]
-    public string Name { get; set; }
+    public string FullName { get; set; }
 
       
     [RegularExpression(@"^([\w\!\#$\%\&\'*\+\-\/\=\?\^`{\|\}\~]+\.)*[\w\!\#$\%\&\'‌​*\+\-\/\=\?\^`{\|\}\~]+@((((([a-zA-Z0-9]{1}[a-zA-Z0-9\-]{0,62}[a-zA-Z0-9]{1})|[‌​a-zA-Z])\.)+[a-zA-Z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$", ErrorMessage = "Địa chỉ E-mail không hợp lệ!")]
@@ -89,14 +90,17 @@ namespace Entities.Models.SystemManage
 		[ForeignKey("IdDonVi")]
 		public virtual dmDonVi DonVi { get; set; }
 
+		public Boolean? is_deleted { get; set; }
+
 		public string Describe()
     {
-        return "{ AccountId : \"" + Id + "\", Name : \"" + Name + "\", { Email : \"" + Email + "\" }";
+        return "{ AccountId : \"" + Id + "\", Name : \"" + FullName + "\", { Email : \"" + Email + "\" }";
     }
 
 		public Account()
 		{
 			CreateDate = DateTime.Now;
+			is_deleted = false;
 		}
   }
 }

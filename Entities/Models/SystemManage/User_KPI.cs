@@ -13,14 +13,28 @@ namespace Entities.Models.SystemManage
 	public class User_KPI : Entity
 	{
 		[Key]
-		public int ID { get; set; }
-		public int? IdKPI { get; set; }
+		public long ID { get; set; }
+		public long? IdKPI { get; set; }
 		[ForeignKey("IdKPI")]
 		public virtual dmKPI KPIs { get; set; }
 
 		public long? IdUser { get; set; }
 		[ForeignKey("IdUser")]
 		public virtual Account User { get; set; }
+
+		public long? IdWeight { get; set; }
+		[ForeignKey("IdWeight")]
+		public virtual Weight Weight { get; set; }
+
+		[Display(Name ="Kết quả")]
+		public string result { get; set; }
+
+		public DateTime create_at { get; set; }
+		public DateTime? updated_at { get; set; }
+		public User_KPI()
+		{
+			create_at = DateTime.Now;
+		}
 		public string Describe()
 		{
 			throw new NotImplementedException();

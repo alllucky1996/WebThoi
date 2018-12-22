@@ -11,12 +11,14 @@ namespace Entities.Models.SystemManage
 	public class Weight : Entity
 	{
 		[Key]
-		public int id { get; set; }
+		public long id { get; set; }
 
 		[Required]
 		public int code { get; set; }
 
 		public DateTime created_at { get; set; }
+
+		public DateTime? updated_at { get; set; }
 
 		public Boolean? is_delete { get; set; }
 		public string Describe()

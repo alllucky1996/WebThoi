@@ -21,31 +21,5 @@
         public const int Verify = 5;
         public const int Publish = 6;
     }
-    public enum PhamViDuLieuEnum
-    {
-        /// <summary>
-        /// Quyền Quản lý văn bản tài liệu đề tài
-        /// </summary>
-        UpoadVanBanTaiLieu = 1,
-        /// <summary>
-        /// Quyền quản lý Lý lịch khoa học của thành viên
-        /// </summary>
-        LLKHThanhVien = 2,
-        /// <summary>
-        /// Quyền quản lý Tình hình giải ngân
-        /// </summary>
-        TinhHinhGiaiNgan = 3,
-        /// <summary>
-        /// Quyền quản lý Tiến độ thực hiện đề tài
-        /// </summary>
-        TienDoThucHien = 4,
-        /// <summary>
-        /// Quyền quản lý Danh sách thành viên tham gia đề tài
-        /// </summary>
-        DSThanhVien = 5,
-        /// <summary>
-        /// Quyền quản lý Kinh phí thực hiện
-        /// </summary>
-        KinhPhiThuHien = 6
-    }
+   
 }
