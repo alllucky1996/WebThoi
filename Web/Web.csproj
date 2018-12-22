@@ -76,10 +76,6 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="C1.C1Excel.4, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>F:\WORKING\CAIT\Projects\PMTaiChinh\Dll\C1.C1Excel.4.dll</HintPath>
-    </Reference>
     <Reference Include="CaptchaMvc, Version=2.5.0.0, Culture=neutral, PublicKeyToken=fe46ad421dd3b0e6, processorArchitecture=MSIL">
       <HintPath>..\packages\CaptchaMvc.Mvc5.1.5.0\lib\net45-full\CaptchaMvc.dll</HintPath>
       <Private>True</Private>
@@ -264,12 +260,14 @@
     <Compile Include="Areas\SessionEnum.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KPIController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handler\obj.cs" />
+    <Compile Include="Handler\obj_kpi.cs" />
     <Compile Include="Helpers\DropDownHelper.cs" />
     <Compile Include="Helpers\ExcelResult.cs" />
     <Compile Include="Helpers\PageInfo.cs" />
@@ -10360,6 +10358,21 @@
     <Content Include="Themes\NewCongThongTin\font-awesome\scss\_variables.scss" />
     <Content Include="Views\Shared\UploadFile\_Layout.cshtml" />
     <Content Include="Views\Shared\UploadFile\_ManagementLayout.cshtml" />
+    <Content Include="Views\Shared\_Css1.cshtml" />
+    <Content Include="Views\Shared\_Css2.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Head2.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Shared\_Scripts.cshtml" />
+    <Content Include="Views\Shared\_style_exel.cshtml" />
+    <Content Include="Views\KPI\Index.cshtml" />
+    <Content Include="Views\KPI\_body_excel.cshtml" />
+    <Content Include="Views\KPI\_Footer_excel.cshtml" />
+    <Content Include="Views\KPI\_header_excel.cshtml" />
+    <Content Include="Views\KPI\_score_KPI.cshtml" />
+    <Content Include="Views\KPI\_sum_value_excel.cshtml" />
+    <Content Include="Views\KPI\kpi_level_2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

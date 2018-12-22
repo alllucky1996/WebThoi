@@ -1,5 +1,4 @@
 ﻿using Common.CustomAttributes;
-using Dung.Enums;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -13,8 +12,8 @@ namespace Dung.Model
 {
     [Table("CheckImage")]
     [DropDown(ValueField = "Id", TextField = "Name")]
-    public class CheckImage : Dung
-    {
+    public class CheckImage : Entity
+	{
         [Key]
         public long Id { get; set; }
         [Display(Name ="Mã")]

@@ -2,14 +2,17 @@
 	string day = DateTime.Now.Day.ToString();
 	string month = DateTime.Now.Month.ToString();
 	string year = DateTime.Now.Year.ToString();
+	var user_name = ViewData["user_name"];
+	var user_cap = ViewData["user_cap"];
+	var user_donvi = ViewData["user_donvi"];
 }
 <thead id="myHeader">
 	<tr class=xl19616220>
 		<td colspan=7 rowspan=2 class=xl19216220 style='width:400px'>
-			CÔNG TY ĐIỆN LỰC YÊN BÁI
+			@user_donvi
 		</td>
 		<td class=xl36816220 width=0 style='border-left:none; width: 270px;'>Phòng: VĂN PHÒNG</td>
-		<td colspan=10 class=xl18416220 style='width:600px'>CHÁNH VĂN PHÒNG</td>
+		<td colspan=10 class=xl18416220 style='width:600px'>@user_cap</td>
 		<td colspan=5 class=xl35516220 style='border-right:.5pt solid black; width:500px;'>
 			Ngày @day tháng @month năm @year
 		</td>
@@ -19,7 +22,7 @@
 			Bộ phận: CVP
 		</td>
 		<td colspan=4 class=xl18416220 style='border-left:none;'>
-			MA THỊ HỒNG VÂN
+			@user_name
 		</td>
 		<td colspan=6 class=xl36916220 style='border-right:.5pt solid black; border-left:none'>
 			Mã chức danh:
