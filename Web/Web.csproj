@@ -10379,10 +10379,6 @@
       <Project>{f3edef19-ec3c-4029-8f19-bd39c89dbf0f}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Dung\Dung.csproj">
-      <Project>{07EA3AFE-BFB8-45A9-8CB2-CAEB8FFB0E96}</Project>
-      <Name>Dung</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entities\CoreEntities.csproj">
       <Project>{e0448b4d-6a1a-465b-ae71-7a0d7e53c0ca}</Project>
       <Name>CoreEntities</Name>

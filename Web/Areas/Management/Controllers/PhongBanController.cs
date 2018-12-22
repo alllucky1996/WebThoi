@@ -1,4 +1,5 @@
 ﻿using Common.Helpers;
+using Dung.Model;
 using Entities.Enums;
 using Entities.Models;
 using Interface;
@@ -14,12 +15,12 @@ using Web.Areas.Management.Helpers;
 namespace Web.Areas.Management.Controllers
 {
     [RouteArea("Management", AreaPrefix = "quan-ly")]
-    public class DonViController : BaseController
+    public class PhongBanController : BaseController
     {
-        public const string CName = "DonVi";
+        public const string CName = "PhongBan";
         public const ModuleEnum CModule = ModuleEnum.DonVi;
-        public const string CRoute = "don-vi";
-        public const string CText = "Đơn vị";
+        public const string CRoute = "phong-ban";
+        public const string CText = "Phòng ban";
 
         public IGenericRepository<dmDonVi> GetRespository()
         {
@@ -42,8 +43,8 @@ namespace Web.Areas.Management.Controllers
         [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
         public async Task<ActionResult> Index()
         {
-            var list = await GetRespository().GetAllAsync();
-            ViewBag.Title = "Danh mục" + CText;
+            var list = await GetRespository().GetAllAsync(o => o.IdCha != null);
+            ViewBag.Title = "Danh mục " + CText;
             ViewBag.CanDelete = RoleHelper.CheckPermission(CModule, ActionEnum.Delete);
             ViewBag.CanCreate = RoleHelper.CheckPermission(CModule, ActionEnum.Create);
             ViewBag.CanUpdate = RoleHelper.CheckPermission(CModule, ActionEnum.Update);
@@ -108,6 +109,13 @@ namespace Web.Areas.Management.Controllers
                 return View(model);
             }
         }
+
+        
+        /// <summary>
+        /// bên dưới chưa sửa
+        /// </summary>
+        /// <param name="ma"></param>
+        /// <returns></returns>
         [Route("cap-nhat-" + CRoute + "/{ma}", Name = CName + "_Update")]
         [ValidationPermission(Action = ActionEnum.Update, Module = CModule)]
         public async Task<ActionResult> Update(string ma)

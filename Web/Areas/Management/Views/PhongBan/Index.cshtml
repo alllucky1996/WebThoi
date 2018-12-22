@@ -1,0 +1,174 @@
+﻿@using Entities.Enums;
+@model IEnumerable<Entities.Models.dmDonVi>
+@{
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    ViewBag.Title = "Danh sách " + ViewBag.CText;
+    string CName = ViewBag.CName;
+    string CRoute = ViewBag.CRoute;
+    string CText = ViewBag.CText;
+    var canDelete = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Delete);
+    var canCreate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Create);
+    var canUpdate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Update);
+}
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        @ViewBag.Title
+    </li>
+</ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="row">
+                    <div class="caption col-md-4">
+                        <i class="fa fa-flag-o font-green-sharp bold"></i>
+                        <span class="caption-subject font-green-sharp bold ">Cập nhật @ViewBag.CText</span>
+                    </div>
+                    <div class="caption col-md-4">
+                       <section>
+                           cho một commobx ở đây
+                       </section>
+                    </div>
+                    @if (canCreate)
+                    {
+                        <div class="actions col-md-4">
+                            <a href="@Url.RouteUrl(ViewBag.CName+"_Create")" class="btn btn-sm green"><i class="fa fa-plus"></i> Thêm @ViewBag.CText</a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-hover table-bordered" id="datatable_none_ajax_source">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã</th>
+                            <th style="width:40%">Tên đơn vị</th>
+                            <th style="width:150px"> Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            int i = 0;
+                            foreach (var item in Model.OrderBy(o => o.Id))
+                            {
+                                i++;
+                                <tr data-objectid="@item.Id">
+                                    <td>@i</td>
+                                    <td>@item.Id</td>
+                                    <td>@item.Name</td>
+                                    
+                                    <td>
+                                        @if (canUpdate)
+                                        {
+                                            <a href="@Url.RouteUrl(ViewBag.CName+"_Update", new { ma = item.Id })" class="edit btn btn-xs blue"><i class="fa fa-edit"></i> Sửa</a>
+                                        }
+                                        @if (canDelete)
+                                        {
+                                            <a class="delete btn default btn-xs red-flamingo" href="javascript:;">
+                                                <i class="fa fa-trash-o"></i> Xóa
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Styles{
+    @Styles.Render("~/css/metronic/datatable")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/datatable")
+    @Scripts.Render("~/js/metronic/datatable-none-ajax-source")
+}
+@section Scripts2 {
+    <script type="text/javascript">
+        var DanhSach= function () {
+            var handleDanhSach = function () {
+                var grid = new DatatableNoneAjaxSource();
+                grid.init({
+                    src: $("#datatable_none_ajax_source"),
+                    onSuccess: function (grid) {
+                        // hành động khi tải xong dữ liệu
+                    },
+                    onError: function (grid) {
+                        // hành động khi tải dữ liệu bị lỗi
+                    },
+                    loadingMessage: 'Đang tải dữ liệu...',
+                    dataTable: {
+                        "lengthMenu": [
+                            [10, 20, 50, 100, 150, -1],
+                            [10, 20, 50, 100, 150, "Tất cả"]//Ô chọn hiển thị số bản ghi mỗi trang
+                        ],
+                        "pageLength": 10, // mặc định số bản ghi mỗi trang
+                        "bSort": false,
+                        "order": [
+                            [2, "asc"]
+                        ]
+                    }
+                });
+            }
+            return {
+                init: function () {
+                    handleDanhSach();
+                }
+            };
+        }();
+        jQuery(document).ready(function () {
+            DanhSach.init();
+            $('.delete').on('click', function (e) {
+                e.preventDefault();
+                if (confirm("Bạn có chắc chắn muốn xóa trạng thái bài viết này không?") == false) {
+                    return;
+                }
+                Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    boxed: true,
+                    zIndex: 99999
+                });
+                var nRow = $(this).parents('tr')[0];
+                var $id = $(nRow).attr('data-objectid');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.RouteUrl(ViewBag.CName+"_Delete")',
+                    dataType: 'json',
+                    data: { code: $id },
+                    success: function (result) {
+                        if (result.success == true) {
+                            showNoty('Đã xóa @ViewBag.CText thành công!', 'success', 'center', 5000);
+                            nRow.remove();
+                        }
+                        else {
+                            showNoty(result.message, 'error', 'center', 5000);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        showNoty('Đã xảy ra lỗi khi thực hiện yêu cầu của bạn. Vui lòng kiểm tra và thử lại!<br />Lỗi: ' + errorThrown, 'error', 'center', 5000);
+                    },
+                    complete: function (result) {
+                        Metronic.unblockUI();
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+
+
