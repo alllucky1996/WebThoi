@@ -1,0 +1,52 @@
+﻿
+@{ 
+	var kpi_level_2 = ViewData["kpi_level_2"] as Web.Handler.obj_kpi;
+	var kpi_lst = ViewData["sum"] as IEnumerable<Web.Handler.obj_kpi>;
+	int flag = int.Parse(ViewData["flag"].ToString());
+	Web.Handler.obj_kpi obj;
+	var kpi_2 = kpi_lst.Where(x => x.IdParent == kpi_level_2.ID);
+	int sum = kpi_lst.Count() - 3;
+	int row = 0;
+	foreach(var value in kpi_lst.Where(x => x.IdParent == kpi_level_2.ID))
+	{
+		foreach (var item in kpi_lst.Where(x => x.IdParent == value.ID))
+		{
+			row++;
+		}
+	}
+	int sum_row = row + (kpi_lst.Where(x => x.IdParent == kpi_level_2.ID).Count());
+	if (sum_row == 0)
+	{
+		sum_row += 1;
+	}
+	else {
+		sum_row += 1;
+	}
+}
+<tr class=xl21416220>
+	@if (flag == 1)
+	{
+		<td rowspan=@sum class=xl36116220 style='border-top:none'>
+			85%
+		</td>
+	}
+	<td rowspan=@sum_row class=xl33916220 style='border-top:none'>0%</td>
+	<td class=xl29716220 style='border-top:none;border-left:none'>&nbsp;</td>
+	<td class=xl29716220 style='border-top:none;border-left:none'>&nbsp;</td>
+	@*<td class=xl29716220 style='border-top:none;border-left:none'>&nbsp;</td>*@
+	<td class=xl29816220 style='border-top:none;border-left:none'>@kpi_level_2.Code</td>
+	<td colspan=8 class=xl29816220 style='border-left:none;'>
+		@kpi_level_2.Name
+	</td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'></td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'></td>
+	<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
+</tr>

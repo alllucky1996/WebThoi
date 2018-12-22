@@ -1,21 +1,21 @@
 ﻿
 @{
+	var count_id_parent = ViewData["count_kpi_parent"];
 	ViewBag.Title = "Index";
 	Layout = "~/Views/Shared/_PublicLayout.cshtml";
+
 }
 @Html.Partial("~/Views/Shared/_style_exel.cshtml")
 <div style="overflow-x:auto;">
 	<table border=0 cellpadding=0 cellspacing=0 width=1457 class=xl1871622; style='border-collapse:collapse;table-layout:fixed;width:1094pt'>
-		@Html.Partial("~/Views/KPI/_header_excel.cshtml")
+		@Html.Partial("~/Views/KPI/_header_excel.cshtml", new ViewDataDictionary() { { "user_name", @ViewData["user_name"] }, { "user_cap", @ViewData["user_cap"] },{ "user_donvi", @ViewData["user_dv"] } })
 		<tbody>
-				@for (int i = 0; i < 2; i++)
+			@foreach(var kpi_parent in ViewData["lst_kpi_parent"] as IEnumerable<Web.Handler.obj_kpi>)
 				{
-					@Html.Partial("~/Views/KPI/_body_excel.cshtml")
+					@Html.Partial("~/Views/KPI/_body_excel.cshtml", new ViewDataDictionary() { { "list_kpi", ViewData["lst_kpi"] }, { "kpi_parent", kpi_parent } })
 					@Html.Partial("~/Views/KPI/_score_KPI.cshtml")
 				}
 				@Html.Partial("~/Views/KPI/_sum_value_excel.cshtml")
 		</tbody>
 	</table>
 </div>
-@section scripts{
-}

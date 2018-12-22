@@ -1,63 +1,58 @@
-﻿@{
-	<tr>
-  <td class="xl26016220" style="border-top:none">&nbsp;</td>
-  <td class="xl26016220" style="border-top:none;border-left:none">&nbsp;</td>
-  <td class="xl29316220" style="border-top:none;border-left:none">&nbsp;</td>
-  <td class="xl29316220" style="border-top:none;border-left:none">&nbsp;</td>
-  <td class="xl29416220" style="border-top:none;border-left:none;">A</td>
-  <td colspan="8" class="xl34016220"style="border-left:none;">NHÓM
-	  CÁC CHỈ TIÊU THỰC HIỆN NHIỆM VỤ (Cấp1)</td>
-  <td class="xl29516220" style="border-top:none;border-left:none;">&nbsp;</td>
-  <td class="xl29516220" style="border-top:none;border-left:none;">&nbsp;</td>
-  <td class="xl29416220" style="border-top:none;border-left:none;">&nbsp;</td>
-  <td class="xl29416220" style="border-top:none;border-left:none;">&nbsp;</td>
-  <td class="xl34016220" style="border-top:none;border-left:none;">&nbsp;</td>
-  <td class="xl29616220" style="border-top:none;border-left:none;">
+﻿@{ 
+	var obj = ViewData["list_kpi"];
+	Web.Handler.obj_kpi kpi_parent = ViewData["kpi_parent"] as Web.Handler.obj_kpi;
+	Web.Handler.obj_kpi obj_kpi;
+	var list_kpi = new List<Web.Handler.obj_kpi>();
+	foreach (var value in obj as IEnumerable<Web.Handler.obj_kpi>)
+	{
+		obj_kpi = new Web.Handler.obj_kpi(value.ID, value.IdParent, value.Code, value.Name);
+		list_kpi.Add(obj_kpi);
+	}
+	int flag = 0;
+	int flag_child = 0;
+}
+<tr>
+	<td class="xl26016220" style="border-top:none">&nbsp;</td>
+	<td class="xl26016220" style="border-top:none;border-left:none">&nbsp;</td>
+	<td class="xl29316220" style="border-top:none;border-left:none">&nbsp;</td>
+	<td class="xl29316220" style="border-top:none;border-left:none">&nbsp;</td>
+	<td class="xl29416220" style="border-top:none;border-left:none;">@kpi_parent.Code</td>
+	<td colspan="8" class="xl34016220"style="border-left:none;">
+		@kpi_parent.Name
+	</td>
+	<td class="xl29516220" style="border-top:none;border-left:none;">&nbsp;</td>
+	<td class="xl29516220" style="border-top:none;border-left:none;">&nbsp;</td>
+	<td class="xl29416220" style="border-top:none;border-left:none;">&nbsp;</td>
+	<td class="xl29416220" style="border-top:none;border-left:none;">&nbsp;</td>
+	<td class="xl34016220" style="border-top:none;border-left:none;">&nbsp;</td>
+	<td class="xl29616220" style="border-top:none;border-left:none;">
 		<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-<span>&nbsp;</span>
 	</td>
-  <td class="xl29616220" style="border-top:none;border-left:none;">&nbsp;</td>
-  <td class="xl29616220" style="border-top:none;border-left:none;">&nbsp;</td>
-  <td class="xl29616220" style="border-top:none;border-left:none;">&nbsp;</td>
-  <td class="xl29616220" style="border-top:none;border-left:none;">
+	<td class="xl29616220" style="border-top:none;border-left:none;">&nbsp;</td>
+	<td class="xl29616220" style="border-top:none;border-left:none;">&nbsp;</td>
+	<td class="xl29616220" style="border-top:none;border-left:none;">&nbsp;</td>
+	<td class="xl29616220" style="border-top:none;border-left:none;">
 		<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>-<span>&nbsp; </span>
 	</td>
-  <td class="xl18716220"></td>
-  <td class="xl18716220"></td>
-  <td class="xl18716220"></td>
- </tr>
-	<tr class=xl21416220>
-		<td rowspan=5 class=xl36116220 style='border-top:none'>
-			85%
-		</td>
-		<td rowspan=5 class=xl33916220 style='border-top:none'>0%</td>
-		<td class=xl29716220 style='border-top:none;border-left:none'>&nbsp;</td>
-		<td class=xl29716220 style='border-top:none;border-left:none'>&nbsp;</td>
-		<td class=xl29816220 style='border-top:none;border-left:none'>A.1</td>
-		<td colspan=8 class=xl29816220 style='border-left:none;'>
-			NHÓM CÁC CHỈ TIÊU THỰC HIỆN NHIỆM VỤ (Cấp1)
-		</td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'></td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'>&nbsp;</td>
-		<td class=xl29816220 style='border-top:none;border-left:none;'></td>
-	</tr>
-
-	for (int i3 = 0; i3 < 2; i3++)
+	<td class="xl18716220"></td>
+	<td class="xl18716220"></td>
+	<td class="xl18716220"></td>
+</tr>
+@foreach(var kpi_level_2 in list_kpi.Where(x => x.IdParent == kpi_parent.ID))
+{
+	flag = flag + 1;
+	@Html.Partial("~/Views/KPI/kpi_level_2.cshtml", new ViewDataDictionary() { { "kpi_level_2", kpi_level_2 }, {"sum", list_kpi }, {"flag", flag} })
+	@*@Html.Partial("~/Views/KPI/_score_KPI.cshtml")*@
+	foreach (var kpi_level_3 in list_kpi.Where(x => x.IdParent == kpi_level_2.ID))
 	{
 		<tr class=xl21416220>
-			<td rowspan=2 class=xl33816220 style='border-top:none'>
+			<td rowspan=1 class=xl33816220 style='border-top:none'>
 				0%
 			</td>
 			<td class=xl33816220 style='border-top:none;border-left:none'>&nbsp;</td>
-			<td class=xl30216220 style='border-top:none;border-left:none'>F</td>
+			<td class=xl30216220 style='border-top:none;border-left:none'>@kpi_level_3.Code</td>
 			<td class=xl30316220 style='border-top:none;border-left:none'>
-				Viễn cảnh tài chính (Cấp3)
+				@kpi_level_3.Name
 			</td>
 			<td class=xl30316220 style='border-top:none;border-left:none'>&nbsp;</td>
 			<td class=xl30316220 style='border-top:none;border-left:none'>&nbsp;</td>
@@ -82,37 +77,39 @@
 			</td>
 		</tr>
 
-		for (int i4 = 0; i4 < 1; i4++)
+		foreach (var kpi_level_4 in list_kpi.Where(x => x.IdParent == kpi_level_3.ID))
 		{
-			<tr class=xl19616220>
-				<td height=32 class=xl33816220 style='border-top:none; border-left:none'>&nbsp;</td>
-				<td class=xl19216220 style='border-top:none;border-left:none'>&nbsp;</td>
-				<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-				<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-				<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-				<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-				<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-				<td class=xl24716220 style='border-top:none;border-left:none'>&nbsp;</td>
-				<td class=xl24716220 style='border-top:none;border-left:none'>&nbsp;</td>
-				<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-				<td class=xl19416220 style='border-top:none;border-left:none;'>
-					0%
-				</td>
-				<td class=xl30616220 style='border-top:none;border-left:none;'>&nbsp;</td>
-				<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
-				<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
-				<td class=xl19516220 style='border-top:none;border-left:none;'>
-					0
-				</td>
-				<td class=xl20116220 style='border-top:none;border-left:none;'></td>
-				<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
-				<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
-				<td class=xl19516220 style='border-top:none;border-left:none;'>
-					0
-				</td>
-				<td class=xl20116220 style='border-top:none;border-left:none;'>
-				</td>
-			</tr>
+		<tr class=xl19616220>
+			<td height=32 class=xl33816220 style='border-top:none; border-left:none'>&nbsp;</td>
+			<td class=xl19216220 style='border-top:none;border-left:none'>&nbsp;</td>
+			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
+			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
+			<td class=xl19316220 style='border-top:none;border-left:none'>abc;</td>
+			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
+			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
+			<td class=xl24716220 style='border-top:none;border-left:none'>&nbsp;</td>
+			<td class=xl24716220 style='border-top:none;border-left:none'>&nbsp;</td>
+			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
+			<td class=xl19416220 style='border-top:none;border-left:none;'>
+				0%
+			</td>
+			<td class=xl30616220 style='border-top:none;border-left:none;'>&nbsp;</td>
+			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
+			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
+			<td class=xl19516220 style='border-top:none;border-left:none;'>
+				0
+			</td>
+			<td class=xl20116220 style='border-top:none;border-left:none;'></td>
+			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
+			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
+			<td class=xl19516220 style='border-top:none;border-left:none;'>
+				0
+			</td>
+			<td class=xl20116220 style='border-top:none;border-left:none;'>
+
+			</td>
+			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
+		</tr>
 		}
 	}
 }

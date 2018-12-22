@@ -1,4 +1,5 @@
 ﻿using Common.CustomAttributes;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dung.Model
+namespace Entities.Models.SystemManage
 {
 	[DropDown(ValueField = "Id", TextField = "Name")]
-	public class national : Dung
+	public class national : Entity
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]

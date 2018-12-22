@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dung.Model
+namespace Entities.Models.SystemManage
 {
-	public class Weight : Dung
+	public class Weight : Entity
 	{
 		[Key]
 		public int id { get; set; }

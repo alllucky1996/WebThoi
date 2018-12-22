@@ -63,8 +63,12 @@
     <Compile Include="Enums\VaiTroDeTaiEnum.cs" />
     <Compile Include="Models\DanhMuc\Template.cs" />
     <Compile Include="Models\DanhMuc\Mail.cs" />
+    <Compile Include="Models\SystemManage\dmDonVis.cs" />
+    <Compile Include="Models\SystemManage\dmKPI.cs" />
     <Compile Include="Models\SystemManage\Excel.cs" />
     <Compile Include="Models\SystemManage\CapQuanLy.cs" />
+    <Compile Include="Models\SystemManage\KetQuaThucHien.cs" />
+    <Compile Include="Models\SystemManage\national.cs" />
     <Compile Include="Models\SystemManage\ThongBao.cs" />
     <Compile Include="Models\SystemManage\Account.cs" />
     <Compile Include="Models\SystemManage\AccountUngDung.cs" />
@@ -75,6 +79,9 @@
     <Compile Include="Models\SystemManage\Role.cs" />
     <Compile Include="Models\SystemManage\ModuleRole.cs" />
     <Compile Include="Models\SystemManage\SystemInformation.cs" />
+    <Compile Include="Models\SystemManage\unit.cs" />
+    <Compile Include="Models\SystemManage\User_KPI.cs" />
+    <Compile Include="Models\SystemManage\Weight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\AuditLogViewModel.cs" />

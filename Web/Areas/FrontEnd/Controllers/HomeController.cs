@@ -42,7 +42,7 @@ namespace Web.Areas.FrontEnd.Controllers
 				ViewBag.CText = CText;
 				if (flag == 0)
 				{
-					//flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
+					flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
 					flag++;
 				}
 				 
@@ -166,6 +166,8 @@ namespace Web.Areas.FrontEnd.Controllers
 					CreateDate = DateTime.Now,
 					ProfilePicture = "XXX",
 					DateOfBirth = d,
+					//IDCapQuanLy = 30,
+					//IdDonVi = 7,
 				}, 0);
 			}
 			catch (Exception ex)

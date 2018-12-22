@@ -1,5 +1,4 @@
 ﻿using Common.CustomAttributes;
-using Dung.Enums;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -9,12 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dung.Model
+namespace Entities.Models.SystemManage
 {
     //[Table("DonVi")]
     [DropDown(ValueField = "Id", TextField = "Name")]
-    public class dmDonVi : Dung
-    {
+    public class dmDonVi : Entity
+	{
         [Key]
         public long Id { get; set; }
         [Display(Name ="Mã")]

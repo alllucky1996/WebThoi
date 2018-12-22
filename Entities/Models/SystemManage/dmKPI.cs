@@ -1,5 +1,4 @@
 ﻿using Common.CustomAttributes;
-using Dung.Enums;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -9,12 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dung.Model
+namespace Entities.Models.SystemManage
 {
   //  [Table("dmKPI")]
   [DropDown(ValueField = "Id", TextField = "Name")]
-  public class dmKPI : Dung
-  {
+  public class dmKPI : Entity
+	{
     [Key]
     public int Id { get; set; }
     [Display(Name ="Mã")]
