@@ -47,7 +47,7 @@ namespace Web
                 kernel.Load(Assembly.GetExecutingAssembly(),
                     Assembly.Load("Interface"),
                     Assembly.Load("DataAccess"),
-                    Assembly.Load("Dung"),
+                    Assembly.Load("Entities"),
                     Assembly.Load("CompositionRoot"));
                 System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver = new Ninject.WebApi.DependencyResolver.NinjectDependencyResolver(kernel);
                 RegisterServices(kernel);
