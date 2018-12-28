@@ -241,6 +241,8 @@
     <Compile Include="Areas\Management\Controllers\DonVi2Controller.cs" />
     <Compile Include="Areas\Management\Controllers\AccountController.cs" />
     <Compile Include="Areas\Management\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Management\Controllers\ToController.cs" />
+    <Compile Include="Areas\Management\Controllers\PhongBanController.cs" />
     <Compile Include="Areas\Management\Controllers\DonViController.cs" />
     <Compile Include="Areas\Management\Controllers\FileManagerController.cs" />
     <Compile Include="Areas\Management\Controllers\HomeController.cs" />
@@ -922,6 +924,12 @@
     <Content Include="Areas\Management\Views\DonVi2\Create.cshtml" />
     <Content Include="Areas\Management\Views\DonVi2\Index.cshtml" />
     <Content Include="Areas\Management\Views\DonVi2\Read.cshtml" />
+    <Content Include="Areas\Management\Views\PhongBan\Create.cshtml" />
+    <Content Include="Areas\Management\Views\PhongBan\Index.cshtml" />
+    <Content Include="Areas\Management\Views\PhongBan\Update.cshtml" />
+    <Content Include="Areas\Management\Views\To\Create.cshtml" />
+    <Content Include="Areas\Management\Views\To\Index.cshtml" />
+    <Content Include="Areas\Management\Views\To\Update.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

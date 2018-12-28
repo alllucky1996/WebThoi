@@ -49,7 +49,7 @@
                             <th>STT</th>
                             @*<th>Mã</th>*@
                             <th style="width:40%">Tên @CText</th>
-                            <th>Địa chỉ</th>
+                            <th>Trực thuộc quản lý</th>
                             <th style="width:150px"> Thao tác</th>
                         </tr>
                     </thead>
@@ -64,8 +64,8 @@
                                     <td>@i</td>
                                     @*<td>@item.Code</td>*@
                                     <td>@item.Name</td>
-                                    @*<td>@(item.DonVi != null ? item.DonVi.Name : "")</td>*@
-                                    <td>@item.DiaChi</td>
+                                    <td>@(item.DonVi != null ? item.DonVi.Name : "")</td>
+                                    @*<td>@item.DiaChi</td>*@
                                     <td>
                                         @if (canUpdate)
                                         {
