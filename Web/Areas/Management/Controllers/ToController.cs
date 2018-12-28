@@ -16,16 +16,17 @@ using Web.Areas.Management.Helpers;
 namespace Web.Areas.Management.Controllers
 {
     /// <summary>
-    /// Đơn vị là các cty
+    /// Phòng ban là cấp 2 
+    /// Ngay bên dưới công ty
     /// </summary>
     [RouteArea("Management", AreaPrefix = "quan-ly")]
-    public class DonViController : BaseController
+    public class ToController : BaseController
     {
-        
-        public const string CName = "DonVi";
+
+        public const string CName = "To";
         public const ModuleEnum CModule = ModuleEnum.DonVi;
-        public const string CRoute = "don-vi";
-        public const string CText = "Đơn vị";
+        public const string CRoute = "to";
+        public const string CText = " tổ";
 
         public IGenericRepository<dmDonVi> GetRespository()
         {
@@ -48,21 +49,25 @@ namespace Web.Areas.Management.Controllers
         [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
         public async Task<ActionResult> Index(string DonVi)
         {
-            Expression<Func<dmDonVi, bool>> filter = o => o.IdCha == null;// || (o.IdCha != null && (o.DonVi.DonVi != null || o.DonVi.DonVi.DonVi != null))
-            //var listDonViCha = await GetRespository().GetAllAsync(filter);
-            //ViewBag.DonVi = new SelectList(listDonViCha, "Id", "Name");
+            // trên của tổ không phải bố tổ hay cha tổ mà là phong ban
+            Expression<Func<dmDonVi, bool>> filterCha = o => o.IdCha != null && o.DonVi.DonVi == null;
+            Expression<Func<dmDonVi, bool>> filterExpression;
+
+            var listDonViCha = await GetRespository().GetAllAsync(filterCha);
+            ViewBag.DonVi = new SelectList(listDonViCha, "Id", "Name");
             ViewBag.Title = "Danh mục" + CText;
             ViewBag.CName = CName;
             ViewBag.CText = CText;
-            //// điều kiện lọc ở dropdow
-            //Expression<Func<dmDonVi, bool>> filterExpression;
-            //if (!string.IsNullOrEmpty(DonVi))
-            //{
-            //    filterExpression = o => o.IdCha == long.Parse(DonVi);
-            //    var temp = await GetRespository().GetAllAsync(filterExpression);
-            //    return View(temp.OrderBy(o => o.Id));
-            //}
-            var list = await GetRespository().GetAllAsync(filter);
+            // điều kiện lọc ở dropdow
+
+            if (!string.IsNullOrEmpty(DonVi))
+            {
+                long a = long.Parse(DonVi);
+                filterExpression = o => o.IdCha == a;
+                var temp = await GetRespository().GetAllAsync(filterExpression);
+                return View(temp.OrderBy(o => o.Id));
+            }
+            var list = await GetRespository().GetAllAsync(o => o.IdCha != null && o.DonVi.DonVi != null && o.DonVi.DonVi.DonVi == null);
             return View(list.OrderBy(o => o.Id));
 
         }
@@ -135,13 +140,13 @@ namespace Web.Areas.Management.Controllers
         [ValidationPermission(Action = ActionEnum.Update, Module = CModule)]
         public async Task<ActionResult> Update(long ma)
         {
-            var editingItem = await GetRespository().ReadAsync(o=>o.Id== ma);
+            var editingItem = await GetRespository().ReadAsync(o => o.Id == ma);
             if (editingItem == null)
             {
                 TempData["Error"] = "Không tìm thấy " + CText;
                 return RedirectToRoute(CName + "_Index");
             }
-           
+
             ViewBag.IdCha = new SelectList(GetRespository().GetAll().ToList(), "Id", "Name", editingItem.IdCha);
             ViewBag.Title = "Sửa " + CText;
             ViewBag.CName = CName;
@@ -159,7 +164,7 @@ namespace Web.Areas.Management.Controllers
                 try
                 {
                     //Cập nhật trạng thái bài viết
-                    var updateItem = await GetRespository().ReadAsync(o=>o.Id==Id);
+                    var updateItem = await GetRespository().ReadAsync(o => o.Id == Id);
                     if (updateItem == null)
                     {
                         TempData["Error"] = "Không tìm thấy " + CText;
@@ -167,7 +172,7 @@ namespace Web.Areas.Management.Controllers
                     }
                     //Không cho sửa mã, nếu cho sửa phải kiểm tra trùng
                     //deleteItem.Ma = StringHelper.KillChars(model.Ma);
-                  //  updateItem.Code = StringHelper.KillChars(model.Code);
+                    //  updateItem.Code = StringHelper.KillChars(model.Code);
                     updateItem.Name = StringHelper.KillChars(model.Name);
                     updateItem.Description = StringHelper.KillChars(model.Description);
                     updateItem.DiaChi = StringHelper.KillChars(model.DiaChi);

@@ -38,10 +38,10 @@ namespace Web.Areas.Management.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("nhap-tai-khoan-moi", Name = "AccountCreate")]
-        public ActionResult Create()
+        public ActionResult Create(string IdDonVi)
         {
             var dsDonVi = _repository.GetRepository<dmDonVi>().GetAll(o => o.CapDV == 1).ToList();
-            ViewBag.IdDonVi = new SelectList(dsDonVi, "IdDV", "TenDV", "");
+            ViewBag.IdDonVi = new SelectList(dsDonVi, "Id", "Name", IdDonVi);
             return View();
         }
         /// <summary>

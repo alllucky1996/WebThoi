@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Nhập tài khoản mới";
     Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    string CName = ViewBag.CName == null ? "Account" : ViewBag.CName;
+    string CText = ViewBag.Ctext == null ? "Tài khoản" : ViewBag.Ctext;
+    string CRout = ViewBag.CRout == null ? "tai-khoan" : ViewBag.CRout;
 }
 <ul class="page-breadcrumb breadcrumb">
     <li>
@@ -10,7 +13,7 @@
         <i class="fa fa-angle-right"></i>
     </li>
     <li>
-        <a href="@Url.RouteUrl("AccountIndex")">Danh sách tài khoản</a>
+        <a href="@Url.RouteUrl("AccountIndex")">Danh sách @CText</a>
         <i class="fa fa-angle-right"></i>
     </li>
     <li class="active">
@@ -24,11 +27,11 @@
             <div class="portlet box grey-cascade">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-user"></i>Nhập tài khoản mới
+                        <i class="fa fa-user"></i>Nhập @CText mới
                     </div>
                 </div>
                 <div class="portlet-body form">
-                    @using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal form-bordered form-row-stripped", @enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("Create", CName, FormMethod.Post, new { @class = "form-horizontal form-bordered form-row-stripped", @enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="form-body">

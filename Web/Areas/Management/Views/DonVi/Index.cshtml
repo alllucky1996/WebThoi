@@ -2,9 +2,13 @@
 @model IEnumerable<Entities.Models.dmDonVi>
 @{
     Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
-    var canDelete = (bool)ViewBag.CanDelete;
-    var canCreate = (bool)ViewBag.CanCreate;
-    var canUpdate = (bool)ViewBag.CanUpdate;
+    ViewBag.Title = "Danh sách " + ViewBag.CText;
+    string CName = ViewBag.CName;
+    string CRoute = ViewBag.CRoute;
+    string CText = ViewBag.CText;
+    var canDelete = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Delete);
+    var canCreate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Create);
+    var canUpdate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Update);
 }
 <ul class="page-breadcrumb breadcrumb">
     <li>
@@ -22,7 +26,7 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-flag-o font-green-sharp bold"></i>
-                    <span class="caption-subject font-green-sharp bold ">Cập nhật @ViewBag.CText</span>
+                    <span class="caption-subject font-green-sharp bold ">Danh sách @ViewBag.CText</span>
                 </div>
                 @if (canCreate)
                 {
@@ -31,14 +35,21 @@
                     </div>
                 }
             </div>
+            @*<div class="actions">
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.DropDownList("DonVi", null, "---Chọn đơn vị---", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>*@
             <div class="portlet-body">
                 <table class="table table-striped table-hover table-bordered" id="datatable_none_ajax_source">
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Mã</th>
+                            @*<th>Mã</th>*@
                             <th style="width:40%">Tên đơn vị</th>
-                            <th>Đơn vị cha</th>
+                            <th>Địa chỉ</th>
                             <th style="width:150px"> Thao tác</th>
                         </tr>
                     </thead>
@@ -49,24 +60,25 @@
                             foreach (var item in Model.OrderBy(o => o.Id))
                             {
                                 i++;
-                                <tr data-objectid="@item.Id">
-                                    <td>@i</td>
-                                    <td>@item.Code</td>
-                                    <td>@item.Name</td>
-                                    <td>@(item.DonVi != null ? item.DonVi.Name : "")</td>
-                                    <td>
-                                        @if (canUpdate)
-                                        {
-                                            <a href="@Url.RouteUrl(ViewBag.CName+"_Update", new { ma = item.Id })" class="edit btn btn-xs blue"><i class="fa fa-edit"></i> Sửa</a>
-                                        }
-                                        @if (canDelete)
-                                        {
-                                            <a class="delete btn default btn-xs red-flamingo" href="javascript:;">
-                                                <i class="fa fa-trash-o"></i> Xóa
-                                            </a>
-                                        }
-                                    </td>
-                                </tr>
+                        <tr data-objectid="@item.Id">
+                            <td>@i</td>
+                            @*<td>@item.Code</td>*@
+                            <td>@item.Name</td>
+                            @*<td>@(item.DonVi != null ? item.DonVi.Name : "")</td>*@
+                            <td>@item.DiaChi</td>
+                            <td>
+                                @if (canUpdate)
+                                {
+                                    <a href="@Url.RouteUrl(ViewBag.CName+"_Update", new { ma = item.Id })" class="edit btn btn-xs blue"><i class="fa fa-edit"></i> Sửa</a>
+                                }
+                                @if (canDelete)
+                                {
+                                    <a class="delete btn default btn-xs red-flamingo" href="javascript:;">
+                                        <i class="fa fa-trash-o"></i> Xóa
+                                    </a>
+                                }
+                            </td>
+                        </tr>
                             }
                         }
                     </tbody>
@@ -102,7 +114,7 @@
                             [10, 20, 50, 100, 150, -1],
                             [10, 20, 50, 100, 150, "Tất cả"]//Ô chọn hiển thị số bản ghi mỗi trang
                         ],
-                        "pageLength": 10, // mặc định số bản ghi mỗi trang
+                        "pageLength": 73, // mặc định số bản ghi mỗi trang
                         "bSort": false,
                         "order": [
                             [2, "asc"]
@@ -155,7 +167,41 @@
                     }
                 });
             });
+             @*$('#DonVi').on('change', function () {
+          Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    boxed: true,
+                    zIndex: 99999
+                });
+        var $id = $(this).val();
+        alert($id);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.RouteUrl(ViewBag.CName+"_Index")',
+                dataType: 'HTML',
+                data: { DonVi: $id },
+                success: function (result) {
+                    if (result.success == true) {
+                        showNoty('chưa làm gì cả!', 'success', 'center', 5000);
+
+                    }
+                    else {
+                        showNoty(result.message, 'error', 'center', 5000);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    showNoty('Đã xảy ra lỗi khi thực hiện yêu cầu của bạn. Vui lòng kiểm tra và thử lại!<br />Lỗi: ' + errorThrown, 'error', 'center', 5000);
+                },
+                complete: function (result) {
+                    Metronic.unblockUI();
+                }
+            });
+          });*@
+
         });
+
     </script>
 }
 
