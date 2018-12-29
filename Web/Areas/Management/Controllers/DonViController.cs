@@ -2,9 +2,11 @@
 using Entities.Enums;
 using Entities.Models;
 using Entities.Models.SystemManage;
+using Entities.ViewModels;
 using Interface;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -21,11 +23,18 @@ namespace Web.Areas.Management.Controllers
     [RouteArea("Management", AreaPrefix = "quan-ly")]
     public class DonViController : BaseController
     {
-        
+
         public const string CName = "DonVi";
         public const ModuleEnum CModule = ModuleEnum.DonVi;
         public const string CRoute = "don-vi";
         public const string CText = "Đơn vị";
+        void BaseView()
+        {
+            ViewBag.Title = "Danh mục" + CText;
+            ViewBag.CName = CName;
+            ViewBag.CRoute = CRoute;
+            ViewBag.CText = CText;
+        }
 
         public IGenericRepository<dmDonVi> GetRespository()
         {
@@ -42,29 +51,16 @@ namespace Web.Areas.Management.Controllers
             //     return false;
             return true;
         }
-
+        #region ok
 
         [Route("danh-muc-" + CRoute, Name = CName + "_Index")]
         [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
-        public async Task<ActionResult> Index(string DonVi)
+        public async Task<ActionResult> Index()
         {
-            Expression<Func<dmDonVi, bool>> filter = o => o.IdCha == null;// || (o.IdCha != null && (o.DonVi.DonVi != null || o.DonVi.DonVi.DonVi != null))
-            //var listDonViCha = await GetRespository().GetAllAsync(filter);
-            //ViewBag.DonVi = new SelectList(listDonViCha, "Id", "Name");
-            ViewBag.Title = "Danh mục" + CText;
-            ViewBag.CName = CName;
-            ViewBag.CText = CText;
-            //// điều kiện lọc ở dropdow
-            //Expression<Func<dmDonVi, bool>> filterExpression;
-            //if (!string.IsNullOrEmpty(DonVi))
-            //{
-            //    filterExpression = o => o.IdCha == long.Parse(DonVi);
-            //    var temp = await GetRespository().GetAllAsync(filterExpression);
-            //    return View(temp.OrderBy(o => o.Id));
-            //}
-            var list = await GetRespository().GetAllAsync(filter);
-            return View(list.OrderBy(o => o.Id));
-
+            BaseView();
+                Expression<Func<dmDonVi, bool>> filter = o => o.IdCha == null;
+                var list = await GetRespository().GetAllAsync(filter);
+                return View(list.OrderBy(o => o.Id));
         }
 
         [Route("nhap" + CRoute, Name = CName + "_Create")]
@@ -135,13 +131,13 @@ namespace Web.Areas.Management.Controllers
         [ValidationPermission(Action = ActionEnum.Update, Module = CModule)]
         public async Task<ActionResult> Update(long ma)
         {
-            var editingItem = await GetRespository().ReadAsync(o=>o.Id== ma);
+            var editingItem = await GetRespository().ReadAsync(o => o.Id == ma);
             if (editingItem == null)
             {
                 TempData["Error"] = "Không tìm thấy " + CText;
                 return RedirectToRoute(CName + "_Index");
             }
-           
+
             ViewBag.IdCha = new SelectList(GetRespository().GetAll().ToList(), "Id", "Name", editingItem.IdCha);
             ViewBag.Title = "Sửa " + CText;
             ViewBag.CName = CName;
@@ -159,7 +155,7 @@ namespace Web.Areas.Management.Controllers
                 try
                 {
                     //Cập nhật trạng thái bài viết
-                    var updateItem = await GetRespository().ReadAsync(o=>o.Id==Id);
+                    var updateItem = await GetRespository().ReadAsync(o => o.Id == Id);
                     if (updateItem == null)
                     {
                         TempData["Error"] = "Không tìm thấy " + CText;
@@ -167,7 +163,7 @@ namespace Web.Areas.Management.Controllers
                     }
                     //Không cho sửa mã, nếu cho sửa phải kiểm tra trùng
                     //deleteItem.Ma = StringHelper.KillChars(model.Ma);
-                  //  updateItem.Code = StringHelper.KillChars(model.Code);
+                    //  updateItem.Code = StringHelper.KillChars(model.Code);
                     updateItem.Name = StringHelper.KillChars(model.Name);
                     updateItem.Description = StringHelper.KillChars(model.Description);
                     updateItem.DiaChi = StringHelper.KillChars(model.DiaChi);
@@ -230,5 +226,30 @@ namespace Web.Areas.Management.Controllers
                 return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        #endregion
+        #region tìm kiếm nâng cao
+        [Route("tim-kiem-" + CRoute, Name = CName + "_Search")]
+        [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
+        public async Task<ActionResult> Search(dmDonVi searchmodel)
+        {
+            BaseView();
+           
+            Expression<Func<dmDonVi, bool>> filter = o => (o.IdCha == null
+            &&( o.Code.Contains(searchmodel.Code)
+            || o.Description.Contains(searchmodel.Description)
+            || o.DiaChi.Contains(searchmodel.DiaChi)
+            || o.DienThoai.Contains(searchmodel.DienThoai)
+            || o.Email.Contains(searchmodel.Email)
+            || o.Name.Contains(searchmodel.Name)
+            )
+           );
+
+            var list = await GetRespository().GetAllAsync(filter);
+            return View(list);
+        }
+
+      
+
+        #endregion
     }
 }
