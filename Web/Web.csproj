@@ -930,6 +930,9 @@
     <Content Include="Areas\Management\Views\To\Create.cshtml" />
     <Content Include="Areas\Management\Views\To\Index.cshtml" />
     <Content Include="Areas\Management\Views\To\Update.cshtml" />
+    <Content Include="Areas\Management\Views\DonVi\SearchOLD.cshtml" />
+    <Content Include="Areas\Management\Views\DonVi\_AdvanceSearch.cshtml" />
+    <Content Include="Areas\Management\Views\DonVi\Search.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
