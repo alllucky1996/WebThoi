@@ -1,0 +1,86 @@
+﻿@{ 
+		 Web.Handler.obj_kpi kpi_level_4 = ViewData["kpi_level_4"] as Web.Handler.obj_kpi;
+		 var kpi_lst = ViewData["sum"] as List<Web.Handler.obj_kpi>;
+		 var kpi_5 = kpi_lst.Where(x => x.IdParent == kpi_level_4.ID).First();
+		 var kpi_6 = kpi_lst.Where(x => x.IdParent == kpi_5.ID).First();
+}
+
+<tr class=xl21416220 height=84 style='height:63.0pt'>
+     <td height=84 class=xl33816220 style='height:63.0pt;border-top:none;
+  border-left:none'>
+          15%
+     </td>
+     <td class=xl28916220 align=right style='border-top:none;border-left:none'>100%</td>
+     <td class=xl23216220 width=48 style='border-top:none;border-left:none;
+  width:36pt'>
+         @kpi_level_4.Code
+     </td>
+     <td class=xl23316220 width=0 style='border-top:none;border-left:none'>
+          @kpi_level_4.Name
+     </td>
+     <td class=xl22716220 width=0 style='border-top:none;border-left:none'>@kpi_5.Code</td>
+     <td class=xl18516220 width=0 style='border-top:none;border-left:none'>
+        @kpi_5.Name
+     </td>
+     <td class=xl33216220 width=67 style='border-top:none;border-left:none;
+  width:50pt'>
+          @kpi_6.Code
+     </td>
+     <td class=xl18516220 width=175 style='border-top:none;border-left:none;
+  width:131pt'>
+         @kpi_6.Name
+     </td>
+     <td class=xl19916220 width=48 style='border-top:none;border-left:none;
+  width:36pt'>
+          Số lượng sai sót
+     </td>
+     <td class=xl19916220 width=53 style='border-top:none;border-left:none;
+  width:40pt'>
+          0
+     </td>
+     <td class=xl34116220 width=60 style='border-top:none;border-left:none;
+  width:45pt'>
+          Tháng
+     </td>
+     <td class=xl21816220 width=67 style='border-top:none;border-left:none;
+  width:50pt'>
+          100%
+     </td>
+     <td class=xl31616220 width=67 style='border-top:none;border-left:none;
+  width:50pt'>
+          11.09%
+     </td>
+     <td class=xl19916220 width=48 style='border-top:none;border-left:none;
+  width:36pt'>
+          0
+     </td>
+     <td class=xl27516220 width=62 style='border-top:none;border-left:none;
+  width:47pt'>
+          10
+     </td>
+     <td class=xl19916220 width=55 style='border-top:none;border-left:none;
+  width:41pt'>
+          100
+     </td>
+     <td class=xl21916220 style='border-top:none;border-left:none'>
+          <span style='mso-spacerun:yes'></span>11.1
+     </td>
+     <td class=xl19916220 width=47 style='border-top:none;border-left:none;
+  width:35pt'>
+          0
+     </td>
+     <td class=xl27516220 width=55 style='border-top:none;border-left:none;
+  width:41pt'>
+          10
+     </td>
+     <td class=xl19916220 width=57 style='border-top:none;border-left:none;
+  width:43pt'>
+          100
+     </td>
+     <td class=xl21916220 style='border-top:none;border-left:none'>
+          <span style='mso-spacerun:yes'></span>11.1
+     </td>
+     <td class=xl21416220 align=right>3</td>
+     <td class=xl21416220>&nbsp;</td>
+     <td class=xl21416220>&nbsp;</td>
+</tr>

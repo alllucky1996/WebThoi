@@ -41,12 +41,11 @@
 @foreach(var kpi_level_2 in list_kpi.Where(x => x.IdParent == kpi_parent.ID))
 {
 	flag = flag + 1;
-	@Html.Partial("~/Views/KPI/kpi_level_2.cshtml", new ViewDataDictionary() { { "kpi_level_2", kpi_level_2 }, {"sum", list_kpi }, {"flag", flag} })
-	@*@Html.Partial("~/Views/KPI/_score_KPI.cshtml")*@
-	foreach (var kpi_level_3 in list_kpi.Where(x => x.IdParent == kpi_level_2.ID))
-	{
+	@Html.Partial("~/Views/KPI/kpi_level_2.cshtml", new ViewDataDictionary() { { "kpi_level_2", kpi_level_2 }, {"sum", list_kpi }, {"flag", flag}, {"KPI_parent", kpi_parent } })
+foreach (var kpi_level_3 in list_kpi.Where(x => x.IdParent == kpi_level_2.ID))
+{
 		<tr class=xl21416220>
-			<td rowspan=1 class=xl33816220 style='border-top:none'>
+			<td rowspan="1" class=xl33816220 style='border-top:none'>
 				0%
 			</td>
 			<td class=xl33816220 style='border-top:none;border-left:none'>&nbsp;</td>
@@ -77,39 +76,14 @@
 			</td>
 		</tr>
 
-		foreach (var kpi_level_4 in list_kpi.Where(x => x.IdParent == kpi_level_3.ID))
-		{
-		<tr class=xl19616220>
-			<td height=32 class=xl33816220 style='border-top:none; border-left:none'>&nbsp;</td>
-			<td class=xl19216220 style='border-top:none;border-left:none'>&nbsp;</td>
-			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-			<td class=xl19316220 style='border-top:none;border-left:none'>abc;</td>
-			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-			<td class=xl24716220 style='border-top:none;border-left:none'>&nbsp;</td>
-			<td class=xl24716220 style='border-top:none;border-left:none'>&nbsp;</td>
-			<td class=xl19316220 style='border-top:none;border-left:none'>&nbsp;</td>
-			<td class=xl19416220 style='border-top:none;border-left:none;'>
-				0%
-			</td>
-			<td class=xl30616220 style='border-top:none;border-left:none;'>&nbsp;</td>
-			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
-			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
-			<td class=xl19516220 style='border-top:none;border-left:none;'>
-				0
-			</td>
-			<td class=xl20116220 style='border-top:none;border-left:none;'></td>
-			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
-			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
-			<td class=xl19516220 style='border-top:none;border-left:none;'>
-				0
-			</td>
-			<td class=xl20116220 style='border-top:none;border-left:none;'>
-
-			</td>
-			<td class=xl28516220 style='border-top:none;border-left:none;'>&nbsp;</td>
-		</tr>
-		}
-	}
+					foreach (var kpi_level_4 in list_kpi.Where(x => x.IdParent == kpi_level_3.ID))
+					{
+							 if(list_kpi.Where(x => x.IdParent == kpi_level_4.ID).Count() >= 2) {
+										@Html.Partial("~/Views/KPI/kpi_level_4.cshtml", new ViewDataDictionary() { { "kpi_level_4", kpi_level_4 }, { "sum", list_kpi } })
+							 }
+							 else {
+										@Html.Partial("~/Views/KPI/kpi_level_4_1.cshtml", new ViewDataDictionary() { { "kpi_level_4", kpi_level_4 }, { "sum", list_kpi } })
+							 }
+					}
+		 }
 }

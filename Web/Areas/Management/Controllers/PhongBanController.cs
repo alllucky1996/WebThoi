@@ -22,16 +22,16 @@ namespace Web.Areas.Management.Controllers
         public const string CRoute = "phong-ban";
         public const string CText = "Phòng ban";
 
-        public IGenericRepository<dmDonVi> GetRespository()
+        public IGenericRepository<Entities.Models.dmDonVi> GetRespository()
         {
-            return _repository.GetRepository<dmDonVi>();
+            return _repository.GetRepository<Entities.Models.dmDonVi>();
         }
-        public static dmDonVi NewObject()
+        public static Entities.Models.dmDonVi NewObject()
         {
-            return new dmDonVi();
+            return new Entities.Models.dmDonVi();
         }
 
-        public bool CanDelete(dmDonVi deleteItem)
+        public bool CanDelete(Entities.Models.dmDonVi deleteItem)
         {
             //if (deleteItem.YeuCaus != null && deleteItem.YeuCaus.Any())
             //     return false;
@@ -66,7 +66,7 @@ namespace Web.Areas.Management.Controllers
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Create, Module = CModule)]
-        public async Task<ActionResult> Create(dmDonVi model)
+        public async Task<ActionResult> Create(Entities.Models.dmDonVi model)
         {
             if (ModelState.IsValid)
             {
@@ -135,7 +135,7 @@ namespace Web.Areas.Management.Controllers
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Update, Module = CModule)]
-        public async Task<ActionResult> Update(string ma, dmDonVi model)
+        public async Task<ActionResult> Update(string ma, Entities.Models.dmDonVi model)
         {
             if (ModelState.IsValid)
             {

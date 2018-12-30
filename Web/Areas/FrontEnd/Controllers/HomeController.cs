@@ -41,7 +41,7 @@ namespace Web.Areas.FrontEnd.Controllers
 				ViewBag.CText = CText;
 				if (flag == 0)
 				{
-					//flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
+					flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
 					flag++;
 				}
 				 
@@ -89,16 +89,16 @@ namespace Web.Areas.FrontEnd.Controllers
 			int rowCount = xlRange.Rows.Count;
 			int colCount = xlRange.Columns.Count;
 			//add parent don vi
-			var a = await read_parent_donvi(rowCount, xlRange);
+			//var a = await read_parent_donvi(rowCount, xlRange);
 
 			//add child don vi
-			var child_dv = await read_child_donvi(rowCount, xlRange);
+			//var child_dv = await read_child_donvi(rowCount, xlRange);
 
 			//Don vi to nhom
-			var child1_dv = await read_child1_donvi(rowCount, xlRange);
+			//var child1_dv = await read_child1_donvi(rowCount, xlRange);
 			
 			//add chuc danh
-			var ChucVu = await Read_chucVu(rowCount, xlRange);
+			//var ChucVu = await Read_chucVu(rowCount, xlRange);
 
 			// add national
 			//var national = await Read_national(rowCount, xlRange);
@@ -107,22 +107,16 @@ namespace Web.Areas.FrontEnd.Controllers
 			{
 				result = await _repository.GetRepository<Account>().CreateAsync(new Account()
 				{
-					code = 270800,
-					FullName = "Ma Thị Hồng Vân",
-					Sex = false,
-					Email = "XXX@gmail.com",
-					IsExpertsAccount = true,
-					IsManageAccount = true,
-					IsNormalAccount = true,
-					PhoneNumber = "0000000000",
-					Password = "123123",
-					Address = "XXX",
-					CreateDate = DateTime.Now,
-					ProfilePicture = "XXX",
-					DateOfBirth = d,
-					//IDCapQuanLy = 30,
-					//IdDonVi = 7,
-				}, 0);
+                    code = 1111,
+                    FullName = "Nguyễn Anh Dũng",
+                    Password = StringHelper.stringToSHA512("123456").ToLower(),
+                    Email = "itfa.ahihi@gmail.com",
+                    CreateDate = DateTime.Now,
+                    IsManageAccount = true,
+                    IsNormalAccount = false,
+                    PhoneNumber = "0978132474"
+
+                }, 0);
 			}
 			catch (Exception ex)
 			{

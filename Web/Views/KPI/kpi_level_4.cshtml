@@ -1,0 +1,134 @@
+﻿@{ 
+		 Web.Handler.obj_kpi kpi_level_4 = ViewData["kpi_level_4"] as Web.Handler.obj_kpi;
+		 var kpi_lst = ViewData["sum"] as List<Web.Handler.obj_kpi>;
+		 var kpi_level_5 = kpi_lst.Where(x => x.IdParent == kpi_level_4.ID).FirstOrDefault();
+		 var kpi_level_6 = kpi_lst.Where(x => x.IdParent == kpi_level_5.ID).FirstOrDefault();
+		 var kpi_level_5_1 = kpi_lst.Where(x => x.IdParent == kpi_level_4.ID);
+		 long idparent = 0;
+		 int sum = 0;
+		 idparent = long.Parse(kpi_level_4.ID);
+		 sum = Web.Controllers.KPIController.GetItemTree_1(idparent);
+}
+<tr class=xl21416220 height=126 style='height:94.5pt'>
+     <td rowspan=@sum class=xl33816220 style='border-top:none'>
+          17%
+     </td>
+     <td class=xl33816220 style='border-top:none;border-left:none'>60%</td>
+     <td rowspan=2 class=xl29116220 width=48 style='border-top:none;width:36pt'>@kpi_level_4.Code</td>
+     <td rowspan=2 class=xl34116220 width=0 style='border-top:none'>
+          @kpi_level_4.Name
+     </td>
+     <td class=xl23216220 width=0 style='border-top:none;border-left:none'>@kpi_level_5.Code</td>
+     <td class=xl18516220 width=0 style='border-top:none;border-left:none'>
+         @kpi_level_5.Name
+     </td>
+     <td class=xl33216220 style='border-top:none;border-left:none;'>
+          @kpi_level_6.Code
+     </td>
+     <td class=xl34116220 style='border-top:none;border-left:none;'>
+          @kpi_level_6.Name
+     </td>
+     <td class=xl19916220 style='border-top:none;border-left:none;'>
+          Số lượng sai sót
+     </td>
+     <td class=xl19916220 style='border-top:none;border-left:none;'>
+          0
+     </td>
+     <td class=xl34116220 style='border-top:none;border-left:none;'>
+          Tháng
+     </td>
+     <td class=xl21816220 style='border-top:none;border-left:none;'>
+          100%
+     </td>
+     <td class=xl31616220 style='border-top:none;border-left:none;'>
+          6.66%
+     </td>
+     <td class=xl19916220 style='border-top:none;border-left:none;'>
+          0
+     </td>
+     <td class=xl19816220 style='border-top:none;border-left:none;'>
+          10
+     </td>
+     <td class=xl19916220 style='border-top:none;border-left:none;'>
+          100
+     </td>
+     <td class=xl21916220 style='border-top:none;border-left:none'>
+          <span style='mso-spacerun:yes'></span>6.7
+     </td>
+     <td class=xl19916220 style='border-top:none;border-left:none;'>
+          0
+     </td>
+     <td class=xl19816220 style='border-top:none;border-left:none;'>
+          10
+     </td>
+     <td class=xl19916220 style='border-top:none;border-left:none;'>
+          100
+     </td>
+     <td class=xl21916220 style='border-top:none;border-left:none'>
+          <span style='mso-spacerun:yes'></span>6.7
+     </td>
+     <td class=xl21416220 align=right>6</td>
+     <td class=xl21416220>&nbsp;</td>
+     <td class=xl21416220>&nbsp;</td>
+</tr>
+
+@foreach (var item in kpi_level_5_1.Skip(1))
+{
+     <tr class=xl21416220>
+          <td class=xl33816220 style='border-top:none; border-left:none'>
+               40%
+          </td>
+          <td class=xl23216220 style='border-top:none;border-left:none'>@item.Code</td>
+          <td class=xl34116220 style='border-top:none;border-left:none'>
+              @item.Name
+          </td>
+          <td class=xl33216220 style='border-top:none;border-left:none;'>
+               @kpi_lst.Where(x => x.IdParent == item.ID).First().Code
+          </td>
+          <td class=xl34116220 style='border-top:none;border-left:none;'>
+              @kpi_lst.Where(x => x.IdParent == item.ID).First().Name
+          </td>
+          <td class=xl19916220 style='border-top:none;border-left:none;'>
+               Số lượng sai sót
+          </td>
+          <td class=xl19916220 style='border-top:none;border-left:none;'>
+               0
+          </td>
+          <td class=xl34116220 style='border-top:none;border-left:none;'>
+               Tháng
+          </td>
+          <td class=xl21816220 style='border-top:none;border-left:none;'>
+               100%
+          </td>
+          <td class=xl31616220 style='border-top:none;border-left:none;'>
+               4.44%
+          </td>
+          <td class=xl19916220 style='border-top:none;border-left:none;'>
+               0
+          </td>
+          <td class=xl19816220 style='border-top:none;border-left:none;'>
+               10
+          </td>
+          <td class=xl19916220 style='border-top:none;border-left:none;'>
+               100
+          </td>
+          <td class=xl21916220 style='border-top:none;border-left:none'>
+               <span style='mso-spacerun:yes'></span>4.4
+          </td>
+          <td class=xl19916220 style='border-top:none;border-left:none;'>
+               0
+          </td>
+          <td class=xl19816220 style='border-top:none;border-left:none;'>
+               10
+          </td>
+          <td class=xl19916220 style='border-top:none;border-left:none;'>
+               100
+          </td>
+          <td class=xl21916220 style='border-top:none;border-left:none'>
+               <span style='mso-spacerun:yes'></span>4.4
+          </td>
+          <td class=xl21416220 align=right>7</td>
+          <td class=xl21416220>&nbsp;</td>
+          <td class=xl21416220>&nbsp;</td>
+     </tr>
+}

@@ -24,6 +24,7 @@ namespace Web.Areas.Management.Controllers
         [ActionName("Index")]
         public ActionResult Login()
         {
+            var a = Init("dung");
             ViewBag.Error = TempData["Error"];
             ViewBag.Message = TempData["Message"];
             ViewBag.Success = TempData["Success"];
@@ -52,6 +53,7 @@ namespace Web.Areas.Management.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model)
         {
+             
             string errorStr = "";
             string msg = "";
             if (ModelState.IsValid)

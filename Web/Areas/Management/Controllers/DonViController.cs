@@ -1,4 +1,5 @@
 ﻿using Common.Helpers;
+using Dung.Model;
 using Entities.Enums;
 using Entities.Models;
 using Interface;
@@ -21,16 +22,16 @@ namespace Web.Areas.Management.Controllers
         public const string CRoute = "don-vi";
         public const string CText = "Đơn vị";
 
-        public IGenericRepository<dmDonVi> GetRespository()
+        public IGenericRepository<Dung.Model.dmDonVi> GetRespository()
         {
-            return _repository.GetRepository<dmDonVi>();
+            return _repository.GetRepository<Dung.Model.dmDonVi>();
         }
-        public static dmDonVi NewObject()
+        public static Dung.Model.dmDonVi NewObject()
         {
-            return new dmDonVi();
+            return new Dung.Model.dmDonVi();
         }
 
-        public bool CanDelete(dmDonVi deleteItem)
+        public bool CanDelete(Dung.Model.dmDonVi deleteItem)
         {
             //if (deleteItem.YeuCaus != null && deleteItem.YeuCaus.Any())
             //     return false;
@@ -65,7 +66,7 @@ namespace Web.Areas.Management.Controllers
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Create, Module = CModule)]
-        public async Task<ActionResult> Create(dmDonVi model)
+        public async Task<ActionResult> Create(Dung.Model.dmDonVi model)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +128,7 @@ namespace Web.Areas.Management.Controllers
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Update, Module = CModule)]
-        public async Task<ActionResult> Update(string ma, dmDonVi model)
+        public async Task<ActionResult> Update(string ma, Dung.Model.dmDonVi model)
         {
             if (ModelState.IsValid)
             {

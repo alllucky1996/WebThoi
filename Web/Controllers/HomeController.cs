@@ -1,14 +1,20 @@
-﻿using System.Web.Mvc;
+﻿using Common.Helpers;
+using Entities.Models.SystemManage;
+using Interface;
+using Microsoft.Office.Core;
+using System;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 namespace Web.Controllers
 {
     public class HomeController : BaseController
     {
+        public IRepository _repository = DependencyResolver.Current.GetService<IRepository>();
         [Route(Name = "FrontEndHomeIndex")]
         public ActionResult Index()
         {
             return View();
             //return RedirectToAction("Index", "Home", new { area = "FrontEnd" });
-            //return RedirectToRoute("Images_Index");
         }
 
         public ActionResult BieuMau()
@@ -24,7 +30,5 @@ namespace Web.Controllers
             //Khởi tạo danh mục Trạng thái bài viết
             return View(status);
         }
-
-        
     }
 }
