@@ -2,11 +2,9 @@
 using Entities.Enums;
 using Entities.Models;
 using Entities.Models.SystemManage;
-using Entities.ViewModels;
 using Interface;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -18,23 +16,17 @@ using Web.Areas.Management.Helpers;
 namespace Web.Areas.Management.Controllers
 {
     /// <summary>
-    /// Đơn vị là các cty
+    /// Phòng ban là cấp 2 
+    /// Ngay bên dưới công ty
     /// </summary>
     [RouteArea("Management", AreaPrefix = "quan-ly")]
-    public class DonViController : BaseController
+    public class ToController : BaseController
     {
 
-        public const string CName = "DonVi";
+        public const string CName = "To";
         public const ModuleEnum CModule = ModuleEnum.DonVi;
-        public const string CRoute = "don-vi";
-        public const string CText = "Đơn vị";
-        void BaseView()
-        {
-            ViewBag.Title = "Danh mục" + CText;
-            ViewBag.CName = CName;
-            ViewBag.CRoute = CRoute;
-            ViewBag.CText = CText;
-        }
+        public const string CRoute = "to";
+        public const string CText = " tổ";
 
         public IGenericRepository<dmDonVi> GetRespository()
         {
@@ -51,16 +43,33 @@ namespace Web.Areas.Management.Controllers
             //     return false;
             return true;
         }
-        #region ok
+
 
         [Route("danh-muc-" + CRoute, Name = CName + "_Index")]
         [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string DonVi)
         {
-            BaseView();
-                Expression<Func<dmDonVi, bool>> filter = o => o.IdCha == null;
-                var list = await GetRespository().GetAllAsync(filter);
-                return View(list.OrderBy(o => o.Id));
+            // trên của tổ không phải bố tổ hay cha tổ mà là phong ban
+            Expression<Func<dmDonVi, bool>> filterCha = o => o.IdCha != null && o.DonVi.DonVi == null;
+            Expression<Func<dmDonVi, bool>> filterExpression;
+
+            var listDonViCha = await GetRespository().GetAllAsync(filterCha);
+            ViewBag.DonVi = new SelectList(listDonViCha, "Id", "Name");
+            ViewBag.Title = "Danh mục" + CText;
+            ViewBag.CName = CName;
+            ViewBag.CText = CText;
+            // điều kiện lọc ở dropdow
+
+            if (!string.IsNullOrEmpty(DonVi))
+            {
+                long a = long.Parse(DonVi);
+                filterExpression = o => o.IdCha == a;
+                var temp = await GetRespository().GetAllAsync(filterExpression);
+                return View(temp.OrderBy(o => o.Id));
+            }
+            var list = await GetRespository().GetAllAsync(o => o.IdCha != null && o.DonVi.DonVi != null && o.DonVi.DonVi.DonVi == null);
+            return View(list.OrderBy(o => o.Id));
+
         }
 
         [Route("nhap" + CRoute, Name = CName + "_Create")]
@@ -226,30 +235,5 @@ namespace Web.Areas.Management.Controllers
                 return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-        #endregion
-        #region tìm kiếm nâng cao
-        [Route("tim-kiem-" + CRoute, Name = CName + "_Search")]
-        [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
-        public async Task<ActionResult> Search(dmDonVi searchmodel)
-        {
-            BaseView();
-           
-            Expression<Func<dmDonVi, bool>> filter = o => (o.IdCha == null
-            &&( o.Code.Contains(searchmodel.Code)
-            || o.Description.Contains(searchmodel.Description)
-            || o.DiaChi.Contains(searchmodel.DiaChi)
-            || o.DienThoai.Contains(searchmodel.DienThoai)
-            || o.Email.Contains(searchmodel.Email)
-            || o.Name.Contains(searchmodel.Name)
-            )
-           );
-
-            var list = await GetRespository().GetAllAsync(filter);
-            return View(list);
-        }
-
-      
-
-        #endregion
     }
 }

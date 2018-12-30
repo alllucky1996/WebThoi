@@ -1,11 +1,12 @@
 ﻿using Common.Helpers;
-using Dung.Model;
 using Entities.Enums;
 using Entities.Models;
+using Entities.Models.SystemManage;
 using Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -14,24 +15,29 @@ using Web.Areas.Management.Helpers;
 
 namespace Web.Areas.Management.Controllers
 {
+    /// <summary>
+    /// Phòng ban là cấp 2 
+    /// Ngay bên dưới công ty
+    /// </summary>
     [RouteArea("Management", AreaPrefix = "quan-ly")]
     public class PhongBanController : BaseController
     {
+        
         public const string CName = "PhongBan";
         public const ModuleEnum CModule = ModuleEnum.DonVi;
         public const string CRoute = "phong-ban";
-        public const string CText = "Phòng ban";
+        public const string CText = "phòng ban";
 
-        public IGenericRepository<Entities.Models.dmDonVi> GetRespository()
+        public IGenericRepository<dmDonVi> GetRespository()
         {
-            return _repository.GetRepository<Entities.Models.dmDonVi>();
+            return _repository.GetRepository<dmDonVi>();
         }
-        public static Entities.Models.dmDonVi NewObject()
+        public static dmDonVi NewObject()
         {
-            return new Entities.Models.dmDonVi();
+            return new dmDonVi();
         }
 
-        public bool CanDelete(Entities.Models.dmDonVi deleteItem)
+        public bool CanDelete(dmDonVi deleteItem)
         {
             //if (deleteItem.YeuCaus != null && deleteItem.YeuCaus.Any())
             //     return false;
@@ -41,39 +47,56 @@ namespace Web.Areas.Management.Controllers
 
         [Route("danh-muc-" + CRoute, Name = CName + "_Index")]
         [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string DonVi)
         {
-            var list = await GetRespository().GetAllAsync(o => o.IdCha != null);
-            ViewBag.Title = "Danh mục " + CText;
-            ViewBag.CanDelete = RoleHelper.CheckPermission(CModule, ActionEnum.Delete);
-            ViewBag.CanCreate = RoleHelper.CheckPermission(CModule, ActionEnum.Create);
-            ViewBag.CanUpdate = RoleHelper.CheckPermission(CModule, ActionEnum.Update);
+            // || o.DonVi.DonVi.DonVi != null
+            Expression<Func<dmDonVi, bool>> filterCha = o => o.IdCha == null;// o => (o.IdCha != null && (o.DonVi.DonVi != null));
+            Expression<Func<dmDonVi, bool>> filterExpression;
+
+            // cha của phòng ban là đơn vị
+            var listDonViCha = await GetRespository().GetAllAsync(filterCha);
+            ViewBag.DonVi = new SelectList(listDonViCha, "Id", "Name");
+            ViewBag.Title = "Danh mục" + CText;
             ViewBag.CName = CName;
             ViewBag.CText = CText;
+            // điều kiện lọc ở dropdow
+            
+            if (!string.IsNullOrEmpty(DonVi))
+            {
+                long a = long.Parse(DonVi);
+                filterExpression = o => o.IdCha == a;
+                var temp = await GetRespository().GetAllAsync(filterExpression);
+                return View(temp.OrderBy(o => o.Id));
+            }
+            var list = await GetRespository().GetAllAsync(o => o.IdCha != null && o.DonVi.DonVi == null);
             return View(list.OrderBy(o => o.Id));
+
         }
 
         [Route("nhap" + CRoute, Name = CName + "_Create")]
         [ValidationPermission(Action = ActionEnum.Create, Module = CModule)]
-        public ActionResult Create()
+        public ActionResult Create(string IdDonVi)
         {
             ViewBag.Title = "Thêm mới " + CText;
             ViewBag.CName = CName;
             ViewBag.CText = CText;
+            var dsDonVi = GetRespository().GetAll().ToList();
+            // lọc tiếp theo người 
+            ViewBag.IdCha = new SelectList(dsDonVi, "Id", "Name", IdDonVi);
             return View();
         }
         [Route("nhap" + CRoute)]
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Create, Module = CModule)]
-        public async Task<ActionResult> Create(Entities.Models.dmDonVi model)
+        public async Task<ActionResult> Create(dmDonVi model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //Kiểm tra trùng mã
                     string ma = StringHelper.KillChars(model.Code);
+                    //Kiểm tra trùng mã
                     var any = await GetRespository().AnyAsync(o => o.Code == ma);
                     if (any)
                     {
@@ -84,6 +107,11 @@ namespace Web.Areas.Management.Controllers
                     var newItem = NewObject();
                     newItem.Code = StringHelper.KillChars(model.Code);
                     newItem.Name = StringHelper.KillChars(model.Name);
+                    newItem.Description = StringHelper.KillChars(model.Description);
+                    newItem.DiaChi = StringHelper.KillChars(model.DiaChi);
+                    newItem.DienThoai = StringHelper.KillChars(model.DienThoai);
+                    newItem.Email = StringHelper.KillChars(model.Email);
+                    newItem.IdCha = model.IdCha;
                     newItem.CapDV = model.CapDV;
                     int result = await GetRespository().CreateAsync(newItem, AccountId);
                     if (result > 0)
@@ -109,23 +137,18 @@ namespace Web.Areas.Management.Controllers
                 return View(model);
             }
         }
-
-        
-        /// <summary>
-        /// bên dưới chưa sửa
-        /// </summary>
-        /// <param name="ma"></param>
-        /// <returns></returns>
         [Route("cap-nhat-" + CRoute + "/{ma}", Name = CName + "_Update")]
         [ValidationPermission(Action = ActionEnum.Update, Module = CModule)]
-        public async Task<ActionResult> Update(string ma)
+        public async Task<ActionResult> Update(long ma)
         {
-            var editingItem = await GetRespository().ReadByKeyAsync(ma);
+            var editingItem = await GetRespository().ReadAsync(o=>o.Id== ma);
             if (editingItem == null)
             {
                 TempData["Error"] = "Không tìm thấy " + CText;
                 return RedirectToRoute(CName + "_Index");
             }
+           
+            ViewBag.IdCha = new SelectList(GetRespository().GetAll().ToList(), "Id", "Name", editingItem.IdCha);
             ViewBag.Title = "Sửa " + CText;
             ViewBag.CName = CName;
             ViewBag.CText = CText;
@@ -135,14 +158,14 @@ namespace Web.Areas.Management.Controllers
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Update, Module = CModule)]
-        public async Task<ActionResult> Update(string ma, Entities.Models.dmDonVi model)
+        public async Task<ActionResult> Update(long Id, dmDonVi model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     //Cập nhật trạng thái bài viết
-                    var updateItem = await GetRespository().ReadByKeyAsync(ma);
+                    var updateItem = await GetRespository().ReadAsync(o=>o.Id==Id);
                     if (updateItem == null)
                     {
                         TempData["Error"] = "Không tìm thấy " + CText;
@@ -150,10 +173,14 @@ namespace Web.Areas.Management.Controllers
                     }
                     //Không cho sửa mã, nếu cho sửa phải kiểm tra trùng
                     //deleteItem.Ma = StringHelper.KillChars(model.Ma);
-                    var newItem = NewObject();
-                    newItem.Code = StringHelper.KillChars(model.Code);
-                    newItem.Name = StringHelper.KillChars(model.Name);
-                    newItem.CapDV = model.CapDV;
+                  //  updateItem.Code = StringHelper.KillChars(model.Code);
+                    updateItem.Name = StringHelper.KillChars(model.Name);
+                    updateItem.Description = StringHelper.KillChars(model.Description);
+                    updateItem.DiaChi = StringHelper.KillChars(model.DiaChi);
+                    updateItem.DienThoai = StringHelper.KillChars(model.DienThoai);
+                    updateItem.Email = StringHelper.KillChars(model.Email);
+                    updateItem.IdCha = model.IdCha;
+                    updateItem.CapDV = model.CapDV;
                     int result = await GetRespository().UpdateAsync(updateItem, AccountId);
                     if (result > 0)
                     {
@@ -181,11 +208,11 @@ namespace Web.Areas.Management.Controllers
         [Route("Xoa-" + CRoute + "/{code?}", Name = CName + "_Delete")]
         [HttpPost]
         [ValidationPermission(Action = ActionEnum.Delete, Module = CModule)]
-        public async Task<JsonResult> Delete(string code)
+        public async Task<JsonResult> Delete(long code)
         {
             try
             {
-                var deleteItem = await GetRespository().ReadByKeyAsync(code);
+                var deleteItem = await GetRespository().ReadAsync(code);
                 if (deleteItem != null)
                 {
                     if (!CanDelete(deleteItem)) return Json(new { success = false, message = CText + " đang được sử dụng!" });

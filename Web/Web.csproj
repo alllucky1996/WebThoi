@@ -241,11 +241,12 @@
     <Compile Include="Areas\Management\Controllers\DonVi2Controller.cs" />
     <Compile Include="Areas\Management\Controllers\AccountController.cs" />
     <Compile Include="Areas\Management\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Management\Controllers\ToController.cs" />
+    <Compile Include="Areas\Management\Controllers\PhongBanController.cs" />
     <Compile Include="Areas\Management\Controllers\DonViController.cs" />
     <Compile Include="Areas\Management\Controllers\FileManagerController.cs" />
     <Compile Include="Areas\Management\Controllers\HomeController.cs" />
     <Compile Include="Areas\Management\Controllers\LoginController.cs" />
-    <Compile Include="Areas\Management\Controllers\PhongBanController.cs" />
     <Compile Include="Areas\Management\Controllers\RegisterController.cs" />
     <Compile Include="Areas\Management\Controllers\RoleController.cs" />
     <Compile Include="Areas\Management\Controllers\SharedController.cs" />
@@ -923,19 +924,15 @@
     <Content Include="Areas\Management\Views\DonVi2\Create.cshtml" />
     <Content Include="Areas\Management\Views\DonVi2\Index.cshtml" />
     <Content Include="Areas\Management\Views\DonVi2\Read.cshtml" />
-    <Content Include="Areas\Management\Views\NhatKy\Index.cshtml" />
-    <Content Include="Areas\Management\Views\NhatKy\ListData.cshtml" />
     <Content Include="Areas\Management\Views\PhongBan\Create.cshtml" />
     <Content Include="Areas\Management\Views\PhongBan\Index.cshtml" />
     <Content Include="Areas\Management\Views\PhongBan\Update.cshtml" />
-    <Content Include="Areas\Management\Views\Role\Index.cshtml" />
-    <Content Include="Areas\Management\Views\Role\ModuleRole.cshtml" />
-    <Content Include="Areas\Management\Views\Print\Print.cshtml" />
-    <Content Include="Areas\Management\Views\Print\_PrintPreview.cshtml" />
-    <Content Include="Areas\Management\Views\KPI\Index.cshtml" />
-    <Content Include="Areas\Management\Views\TimKiem\Index.cshtml" />
-    <Content Include="Areas\Management\Views\TimKiem\IndexSV.cshtml" />
-    <Content Include="Areas\Management\Views\TimKiem\ListData.cshtml" />
+    <Content Include="Areas\Management\Views\To\Create.cshtml" />
+    <Content Include="Areas\Management\Views\To\Index.cshtml" />
+    <Content Include="Areas\Management\Views\To\Update.cshtml" />
+    <Content Include="Areas\Management\Views\DonVi\SearchOLD.cshtml" />
+    <Content Include="Areas\Management\Views\DonVi\_AdvanceSearch.cshtml" />
+    <Content Include="Areas\Management\Views\DonVi\Search.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -10387,8 +10384,6 @@
     <Content Include="Views\KPI\_score_KPI.cshtml" />
     <Content Include="Views\KPI\_sum_value_excel.cshtml" />
     <Content Include="Views\KPI\kpi_level_2.cshtml" />
-    <Content Include="Views\KPI\kpi_level_4.cshtml" />
-    <Content Include="Views\KPI\kpi_level_4_1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -10398,10 +10393,6 @@
     <ProjectReference Include="..\Entities\CoreEntities.csproj">
       <Project>{e0448b4d-6a1a-465b-ae71-7a0d7e53c0ca}</Project>
       <Name>CoreEntities</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\Camnguyen\Desktop\KPI\WebThoi\Dung\Dung.csproj">
-      <Project>{07ea3afe-bfb8-45a9-8cb2-caeb8ffb0e96}</Project>
-      <Name>Dung</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

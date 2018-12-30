@@ -24,31 +24,32 @@
     <div class="col-md-12">
         <div class="portlet light">
             <div class="portlet-title">
-                <div class="row">
-                    <div class="caption col-md-4">
-                        <i class="fa fa-flag-o font-green-sharp bold"></i>
-                        <span class="caption-subject font-green-sharp bold ">Cập nhật @ViewBag.CText</span>
-                    </div>
-                    <div class="caption col-md-4">
-                       <section>
-                           cho một commobx ở đây
-                       </section>
-                    </div>
-                    @if (canCreate)
-                    {
-                        <div class="actions col-md-4">
-                            <a href="@Url.RouteUrl(ViewBag.CName+"_Create")" class="btn btn-sm green"><i class="fa fa-plus"></i> Thêm @ViewBag.CText</a>
-                        </div>
-                    }
+                <div class="caption">
+                    <i class="fa fa-flag-o font-green-sharp bold"></i>
+                    <span class="caption-subject font-green-sharp bold ">Danh sách @ViewBag.CText</span>
                 </div>
+                @if (canCreate)
+                {
+                    <div class="actions">
+                        <a href="@Url.RouteUrl(ViewBag.CName+"_Create")" class="btn btn-sm green"><i class="fa fa-plus"></i> Thêm @ViewBag.CText</a>
+                    </div>
+                }
             </div>
+            <div class="actions">
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.DropDownList("DonVi", null, "---Chọn đơn vị---", new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
             <div class="portlet-body">
                 <table class="table table-striped table-hover table-bordered" id="datatable_none_ajax_source">
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Mã</th>
-                            <th style="width:40%">Tên đơn vị</th>
+                            @*<th>Mã</th>*@
+                            <th style="width:40%">Tên @CText</th>
+                            <th>Địa chỉ</th>
                             <th style="width:150px"> Thao tác</th>
                         </tr>
                     </thead>
@@ -61,9 +62,10 @@
                                 i++;
                                 <tr data-objectid="@item.Id">
                                     <td>@i</td>
-                                    <td>@item.Id</td>
+                                    @*<td>@item.Code</td>*@
                                     <td>@item.Name</td>
-                                    
+                                    @*<td>@(item.DonVi != null ? item.DonVi.Name : "")</td>*@
+                                    <td>@item.DiaChi</td>
                                     <td>
                                         @if (canUpdate)
                                         {
@@ -128,6 +130,7 @@
         }();
         jQuery(document).ready(function () {
             DanhSach.init();
+           
             $('.delete').on('click', function (e) {
                 e.preventDefault();
                 if (confirm("Bạn có chắc chắn muốn xóa trạng thái bài viết này không?") == false) {
@@ -164,6 +167,17 @@
                         Metronic.unblockUI();
                     }
                 });
+            });
+             
+
+        });
+
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+            $('#DonVi').on('change', function () {
+                var idDonVi ="?DonVi="+ $(this).val();
+                window.location = '@Url.RouteUrl(ViewBag.CName + "_Index")' + idDonVi;
             });
         });
     </script>

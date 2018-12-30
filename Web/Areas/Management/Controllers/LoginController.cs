@@ -195,25 +195,7 @@ namespace Web.Areas.Management.Controllers
                 Delete = 1
             };
             await _repository.GetRepository<ModuleRole>().CreateAsync(si, 1);
-
-
-
-
-            // đơn vị
-            await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { CapDV = 1, Code = "CTy", DiaChi = "Yên bái", Name = "Công ty" }, 0);
-            // don vi cap 2
-            await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { CapDV = 2, Code = "DTPLYenBai", DiaChi = "Yên bái", Name = "DLTP Yên Bái", Description="Điện lực thành phố yên bái"}, 0);
-            await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { CapDV = 2, Code = "DLYenBinh", DiaChi = "Yên bái", Name = "DL Yên Bình", Description="Điện lực Yên Bình" }, 0);
-            await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { CapDV = 2, Code = "DLTranYen", DiaChi = "Yên bái", Name = "DL Trấn Yên", Description = "Điện lực Trấn Yên" }, 0);
-            await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { CapDV = 2, Code = "DLVanYen", DiaChi = "Yên bái", Name = "DL Văn Yên", Description = "Điện lực Văn Yên" }, 0);
-            await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { CapDV = 2, Code = "DLLucYen", DiaChi = "Yên bái", Name = "DL Lục Yên", Description = "Điện lực Lục Yên" }, 0);
-            await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { CapDV = 2, Code = "DLNghiaLo", DiaChi = "Yên bái", Name = "DL Nghĩa Lộ", Description = "Điện lực Nghĩa Lộ" }, 0);
-            // vd đơn vị cấp 3
-            var _nghiaLo = await _repository.GetRepository<dmDonVi>().ReadAsync(o => o.Code == "DLNghiaLo");
-            await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { CapDV = 3, Code = "DoiMuCangChai", DiaChi = "Trạm Mù Cang Chải", Name = "Trạm mù cang chải",
-                Description = "Đội: QLVH ĐD & Trạm Mù Cang Chải", IdCha = _nghiaLo.Id}, 0);
-
-
+            
             return RedirectToAction("Index", "Login");
         }
        
