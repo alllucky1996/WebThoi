@@ -27,6 +27,13 @@ namespace Web.Areas.Management.Controllers
         public const ModuleEnum CModule = ModuleEnum.DonVi;
         public const string CRoute = "phong-ban";
         public const string CText = "phòng ban";
+        void BaseView()
+        {
+            ViewBag.Title = "Danh mục" + CText;
+            ViewBag.CName = CName;
+            ViewBag.CRoute = CRoute;
+            ViewBag.CText = CText;
+        }
 
         public IGenericRepository<dmDonVi> GetRespository()
         {
@@ -236,5 +243,43 @@ namespace Web.Areas.Management.Controllers
                 return Json(new { success = false, message = "Lỗi: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+
+        #region tìm kiếm nâng cao
+        [Route("tim-kiem-" + CRoute, Name = CName + "_Search")]
+        [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
+        public async Task<ActionResult> Search(dmDonVi searchmodel, string DonVi)
+        {
+            BaseView();
+            Expression<Func<dmDonVi, bool>> filterCha = o => o.IdCha == null;// o => (o.IdCha != null && (o.DonVi.DonVi != null));
+            Expression<Func<dmDonVi, bool>> filterExpression;
+            var listDonViCha = await GetRespository().GetAllAsync(filterCha);
+            ViewBag.DonVi = new SelectList(listDonViCha, "Id", "Name");
+            if (!string.IsNullOrEmpty(DonVi))
+            {
+                long a = long.Parse(DonVi);
+                filterExpression = o => (o.IdCha == a && (
+                o.Code.Contains(searchmodel.Code)
+                 || o.Description.Contains(searchmodel.Description)
+                 || o.DiaChi.Contains(searchmodel.DiaChi)
+                 || o.DienThoai.Contains(searchmodel.DienThoai)
+                 || o.Email.Contains(searchmodel.Email)
+                 || o.Name.Contains(searchmodel.Name)
+                ));
+                var temp = await GetRespository().GetAllAsync(filterExpression);
+                return View(temp.OrderBy(o => o.Id));
+            }
+            filterExpression = o => o.IdCha != null && o.DonVi.DonVi == null && (
+                o.Code.Contains(searchmodel.Code)
+                 || o.Description.Contains(searchmodel.Description)
+                 || o.DiaChi.Contains(searchmodel.DiaChi)
+                 || o.DienThoai.Contains(searchmodel.DienThoai)
+                 || o.Email.Contains(searchmodel.Email)
+                 || o.Name.Contains(searchmodel.Name)
+                );
+            var list = await GetRespository().GetAllAsync(filterExpression);
+            return View(list.OrderBy(o => o.Id));
+        }
+        #endregion
     }
 }

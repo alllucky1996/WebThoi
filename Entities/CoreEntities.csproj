@@ -87,7 +87,7 @@
     <Compile Include="ViewModels\AuditLogViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />
     <Compile Include="ViewModels\CheckableTable.cs" />
-    <Compile Include="ViewModels\SearchDonViModel.cs" />
+    <Compile Include="ViewModels\SearchModel.cs" />
     <Compile Include="ViewModels\HomeModel.cs" />
     <Compile Include="ViewModels\FILE.cs" />
     <Compile Include="ViewModels\FOLDER.cs" />

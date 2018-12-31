@@ -78,6 +78,10 @@ namespace Entities.Models
         //        return 1;
         //    }
         //}
+        [NotMapped]
+        public string PhongBan { get { return DonVi == null ? "" : DonVi.Name; } }
+        [NotMapped]
+        public string Cty { get { return DonVi.DonVi == null ? "" : DonVi.DonVi.Name; } }
         public string Describe()
         {
             return "{id: " + Id + "}";
