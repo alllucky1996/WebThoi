@@ -36,16 +36,16 @@ namespace Web.Areas.Management.Controllers
             ViewBag.CText = CText;
         }
 
-        public IGenericRepository<dmDonVi> GetRespository()
+        public IGenericRepository<DM_DonVi> GetRespository()
         {
-            return _repository.GetRepository<dmDonVi>();
+            return _repository.GetRepository<DM_DonVi>();
         }
-        public static dmDonVi NewObject()
+        public static DM_DonVi NewObject()
         {
-            return new dmDonVi();
+            return new DM_DonVi();
         }
 
-        public bool CanDelete(dmDonVi deleteItem)
+        public bool CanDelete(DM_DonVi deleteItem)
         {
             //if (deleteItem.YeuCaus != null && deleteItem.YeuCaus.Any())
             //     return false;
@@ -58,7 +58,7 @@ namespace Web.Areas.Management.Controllers
         public async Task<ActionResult> Index()
         {
             BaseView();
-                Expression<Func<dmDonVi, bool>> filter = o => o.IdCha == null;
+                Expression<Func<DM_DonVi, bool>> filter = o => o.IdCha == null;
                 var list = await GetRespository().GetAllAsync(filter);
                 return View(list.OrderBy(o => o.Id));
         }
@@ -79,7 +79,7 @@ namespace Web.Areas.Management.Controllers
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Create, Module = CModule)]
-        public async Task<ActionResult> Create(dmDonVi model)
+        public async Task<ActionResult> Create(DM_DonVi model)
         {
             if (ModelState.IsValid)
             {
@@ -148,7 +148,7 @@ namespace Web.Areas.Management.Controllers
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Update, Module = CModule)]
-        public async Task<ActionResult> Update(long Id, dmDonVi model)
+        public async Task<ActionResult> Update(long Id, DM_DonVi model)
         {
             if (ModelState.IsValid)
             {
@@ -230,11 +230,11 @@ namespace Web.Areas.Management.Controllers
         #region tìm kiếm nâng cao
         [Route("tim-kiem-" + CRoute, Name = CName + "_Search")]
         [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
-        public async Task<ActionResult> Search(dmDonVi searchmodel)
+        public async Task<ActionResult> Search(DM_DonVi searchmodel)
         {
             BaseView();
            
-            Expression<Func<dmDonVi, bool>> filter = o => (o.IdCha == null
+            Expression<Func<DM_DonVi, bool>> filter = o => (o.IdCha == null
             &&( o.Code.Contains(searchmodel.Code)
             || o.Description.Contains(searchmodel.Description)
             || o.DiaChi.Contains(searchmodel.DiaChi)

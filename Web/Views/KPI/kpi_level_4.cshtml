@@ -4,13 +4,15 @@
 		 var kpi_level_5 = kpi_lst.Where(x => x.IdParent == kpi_level_4.ID).FirstOrDefault();
 		 var kpi_level_6 = kpi_lst.Where(x => x.IdParent == kpi_level_5.ID).FirstOrDefault();
 		 var kpi_level_5_1 = kpi_lst.Where(x => x.IdParent == kpi_level_4.ID);
+		 float sum_kpi = Web.Controllers.KPIController.sum_kpi(long.Parse(kpi_level_6.ID));
 		 long idparent = 0;
 		 int sum = 0;
 		 idparent = long.Parse(kpi_level_4.ID);
 		 sum = Web.Controllers.KPIController.GetItemTree_1(idparent);
+		 Web.Controllers.KPIController.sum = 1;
 }
 <tr class=xl21416220 height=126 style='height:94.5pt'>
-     <td rowspan=@sum class=xl33816220 style='border-top:none'>
+     <td rowspan=@sum class=xl33816220 style='border-top:none' id="TS_a3">
           17%
      </td>
      <td class=xl33816220 style='border-top:none;border-left:none'>60%</td>
@@ -41,7 +43,7 @@
           100%
      </td>
      <td class=xl31616220 style='border-top:none;border-left:none;'>
-          6.66%
+          @sum_kpi
      </td>
      <td class=xl19916220 style='border-top:none;border-left:none;'>
           0
@@ -76,7 +78,7 @@
 {
      <tr class=xl21416220>
           <td class=xl33816220 style='border-top:none; border-left:none'>
-               40%
+             @item.Weight %
           </td>
           <td class=xl23216220 style='border-top:none;border-left:none'>@item.Code</td>
           <td class=xl34116220 style='border-top:none;border-left:none'>
@@ -101,7 +103,7 @@
                100%
           </td>
           <td class=xl31616220 style='border-top:none;border-left:none;'>
-               4.44%
+               @Web.Controllers.KPIController.sum_kpi(long.Parse(item.ID))
           </td>
           <td class=xl19916220 style='border-top:none;border-left:none;'>
                0

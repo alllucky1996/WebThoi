@@ -22,9 +22,9 @@ namespace Web.Areas.Management.Controllers
         public const string CText = "Tìm kiếm";
         public const ModuleEnum CModule = ModuleEnum.TimKiem;
 
-        public IGenericRepository<dmDonVi> GetRespository()
+        public IGenericRepository<DM_DonVi> GetRespository()
         {
-            return _repository.GetRepository<dmDonVi>();
+            return _repository.GetRepository<DM_DonVi>();
         }
 
         #region Thống kê theo đối tượng
@@ -32,7 +32,7 @@ namespace Web.Areas.Management.Controllers
         [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
         public async Task<ActionResult> Index()
         {
-            List<dmDonVi> dv = _repository.GetRepository<dmDonVi>().GetAll(
+            List<DM_DonVi> dv = _repository.GetRepository<DM_DonVi>().GetAll(
                 o =>
                 o.CapDV == 1 &&
                 (LaCapCty
@@ -51,7 +51,7 @@ namespace Web.Areas.Management.Controllers
         [ValidationPermission(Action = ActionEnum.Read, Module = CModule)]
         public async Task<ActionResult> IndexSV()
         {
-            List<dmDonVi> dv = _repository.GetRepository<dmDonVi>().GetAll(
+            List<DM_DonVi> dv = _repository.GetRepository<DM_DonVi>().GetAll(
                 o =>
                 o.CapDV == 1 &&
                 (LaCapCty

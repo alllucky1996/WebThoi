@@ -1,15 +1,15 @@
 ﻿@{ 
-	var obj = ViewData["list_kpi"];
-	Web.Handler.obj_kpi kpi_parent = ViewData["kpi_parent"] as Web.Handler.obj_kpi;
-	Web.Handler.obj_kpi obj_kpi;
-	var list_kpi = new List<Web.Handler.obj_kpi>();
-	foreach (var value in obj as IEnumerable<Web.Handler.obj_kpi>)
-	{
-		obj_kpi = new Web.Handler.obj_kpi(value.ID, value.IdParent, value.Code, value.Name);
-		list_kpi.Add(obj_kpi);
-	}
-	int flag = 0;
-	int flag_child = 0;
+		 var obj = ViewData["list_kpi"];
+		 Web.Handler.obj_kpi kpi_parent = ViewData["kpi_parent"] as Web.Handler.obj_kpi;
+		 Web.Handler.obj_kpi obj_kpi;
+		 var list_kpi = new List<Web.Handler.obj_kpi>();
+		 foreach (var value in obj as IEnumerable<Web.Handler.obj_kpi>)
+		 {
+					obj_kpi = new Web.Handler.obj_kpi(value.ID, value.IdParent, value.Code, value.Name, value.Weight);
+					list_kpi.Add(obj_kpi);
+		 }
+		 int flag = 0;
+		 int flag_child = 0;
 }
 <tr>
 	<td class="xl26016220" style="border-top:none">&nbsp;</td>
@@ -46,7 +46,7 @@ foreach (var kpi_level_3 in list_kpi.Where(x => x.IdParent == kpi_level_2.ID))
 {
 		<tr class=xl21416220>
 			<td rowspan="1" class=xl33816220 style='border-top:none'>
-				0%
+				@kpi_level_3.Weight %
 			</td>
 			<td class=xl33816220 style='border-top:none;border-left:none'>&nbsp;</td>
 			<td class=xl30216220 style='border-top:none;border-left:none'>@kpi_level_3.Code</td>

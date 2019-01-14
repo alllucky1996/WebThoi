@@ -88,7 +88,7 @@ namespace Entities.Models.SystemManage
 
 		public long? IdDonVi { get; set; }
 		[ForeignKey("IdDonVi")]
-		public virtual dmDonVi DonVi { get; set; }
+		public virtual DM_DonVi DonVi { get; set; }
 
 		public Boolean? is_deleted { get; set; }
 

@@ -21,14 +21,15 @@ namespace Entities.Models.SystemManage
 		public DateTime? updated_at { get; set; }
 
 		public Boolean? is_delete { get; set; }
-		public string Describe()
-		{
-			throw new NotImplementedException();
-		}
 
 		public Weight()
 		{
 			created_at = DateTime.Now;
 		}
-	}
+
+					public string Describe()
+					{
+							 return "{ Weight: \"" + id;
+					}
+		 }
 }

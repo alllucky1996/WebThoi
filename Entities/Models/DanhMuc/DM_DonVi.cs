@@ -12,7 +12,7 @@ namespace Entities.Models
 {
     //[Table("DonVi")]
     [DropDown(ValueField = "Id", TextField = "Name")]
-    public class dmDonVi : Entity
+    public class DM_DonVi : Entity
     {
         [Key]
         public long Id { get; set; }
@@ -44,8 +44,8 @@ namespace Entities.Models
         [Display(Name = "Đơn vị quản lý trực tiếp")]
         public long? IdCha { get; set; }
         [ForeignKey("IdCha")]
-        public virtual dmDonVi DonVi { get; set; }
-        public dmDonVi()
+        public virtual DM_DonVi DonVi { get; set; }
+        public DM_DonVi()
         {
             CreateDate = DateTime.Now;
         }

@@ -28,16 +28,16 @@ namespace Web.Areas.Management.Controllers
         public const string CRoute = "phong-ban";
         public const string CText = "phòng ban";
 
-        public IGenericRepository<dmDonVi> GetRespository()
+        public IGenericRepository<DM_DonVi> GetRespository()
         {
-            return _repository.GetRepository<dmDonVi>();
+            return _repository.GetRepository<DM_DonVi>();
         }
-        public static dmDonVi NewObject()
+        public static DM_DonVi NewObject()
         {
-            return new dmDonVi();
+            return new DM_DonVi();
         }
 
-        public bool CanDelete(dmDonVi deleteItem)
+        public bool CanDelete(DM_DonVi deleteItem)
         {
             //if (deleteItem.YeuCaus != null && deleteItem.YeuCaus.Any())
             //     return false;
@@ -50,8 +50,8 @@ namespace Web.Areas.Management.Controllers
         public async Task<ActionResult> Index(string DonVi)
         {
             // || o.DonVi.DonVi.DonVi != null
-            Expression<Func<dmDonVi, bool>> filterCha = o => o.IdCha == null;// o => (o.IdCha != null && (o.DonVi.DonVi != null));
-            Expression<Func<dmDonVi, bool>> filterExpression;
+            Expression<Func<DM_DonVi, bool>> filterCha = o => o.IdCha == null;// o => (o.IdCha != null && (o.DonVi.DonVi != null));
+            Expression<Func<DM_DonVi, bool>> filterExpression;
 
             // cha của phòng ban là đơn vị
             var listDonViCha = await GetRespository().GetAllAsync(filterCha);
@@ -89,7 +89,7 @@ namespace Web.Areas.Management.Controllers
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Create, Module = CModule)]
-        public async Task<ActionResult> Create(dmDonVi model)
+        public async Task<ActionResult> Create(DM_DonVi model)
         {
             if (ModelState.IsValid)
             {
@@ -158,7 +158,7 @@ namespace Web.Areas.Management.Controllers
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [ValidationPermission(Action = ActionEnum.Update, Module = CModule)]
-        public async Task<ActionResult> Update(long Id, dmDonVi model)
+        public async Task<ActionResult> Update(long Id, DM_DonVi model)
         {
             if (ModelState.IsValid)
             {

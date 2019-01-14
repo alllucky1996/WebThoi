@@ -30,11 +30,11 @@
 <tr class=xl21416220>
 	@if (flag == 1)
 	{
-		<td rowspan=@sum class=xl36116220 style='border-top:none'>
-			85%
+		<td rowspan=@sum class=xl36116220 style='border-top:none' id="TS_a1">
+			@kpi_lst.Where(x => x.ID == kpi_level_2.IdParent).First().Weight %
 		</td>
 	}
-	<td rowspan=@sum_row class=xl33916220 style='border-top:none'>15%</td>
+	<td rowspan=@sum_row class=xl33916220 style='border-top:none' id="TS_a2">@kpi_level_2.Weight %</td>
 	<td class=xl29716220 style='border-top:none;border-left:none'>&nbsp;</td>
 	<td class=xl29716220 style='border-top:none;border-left:none'>&nbsp;</td>
 	@*<td class=xl29716220 style='border-top:none;border-left:none'>&nbsp;</td>*@

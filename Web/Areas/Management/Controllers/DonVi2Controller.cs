@@ -50,7 +50,7 @@ namespace Web.Areas.Management.Controllers
         [Route("nhap-"+CRoute, Name = CName+"Create")]
         public ActionResult Create()
         {
-            var dsDonVi = _repository.GetRepository<dmDonVi>().GetAll(o => o.CapDV == 1).ToList();
+            var dsDonVi = _repository.GetRepository<DM_DonVi>().GetAll(o => o.CapDV == 1).ToList();
             ViewBag.IdDonVi = new SelectList(dsDonVi, "IdDV", "TenDV", "");
             return View();
         }
@@ -138,7 +138,7 @@ namespace Web.Areas.Management.Controllers
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Nhập tài khoản mới không thành công! Vui lòng kiểm tra và thử lại!");
-                        var dsDonVi = _repository.GetRepository<dmDonVi>().GetAll(o => o.CapDV == 1).ToList();
+                        var dsDonVi = _repository.GetRepository<DM_DonVi>().GetAll(o => o.CapDV == 1).ToList();
                         ViewBag.IdDonVi = new SelectList(dsDonVi, "IdDV", "TenDV", "");
                         return View(model);
                     }
@@ -147,7 +147,7 @@ namespace Web.Areas.Management.Controllers
             else
             {
                 ModelState.AddModelError(string.Empty, "Vui lòng nhập chính xác các thông tin!");
-                var dsDonVi = _repository.GetRepository<dmDonVi>().GetAll(o => o.CapDV == 1).ToList();
+                var dsDonVi = _repository.GetRepository<DM_DonVi>().GetAll(o => o.CapDV == 1).ToList();
                 ViewBag.IdDonVi = new SelectList(dsDonVi, "IdDV", "TenDV", "");
                 return View(model);
             }
@@ -167,7 +167,7 @@ namespace Web.Areas.Management.Controllers
             ViewBag.AccountRoles = await _repository.GetRepository<AccountRole>().GetAllAsync(o => o.AccountId == id);
             ViewBag.AccountUngDungs = await _repository.GetRepository<AccountUngDung>().GetAllAsync(o => o.AccountId == id);
 
-            var dsDonVi = _repository.GetRepository<dmDonVi>().GetAll(o => o.CapDV == 1).ToList();
+            var dsDonVi = _repository.GetRepository<DM_DonVi>().GetAll(o => o.CapDV == 1).ToList();
             ViewBag.IdDonVi = new SelectList(dsDonVi, "Id", "Name", "");
 
             Account account = await _repository.GetRepository<Account>().ReadAsync(id);
@@ -409,7 +409,7 @@ namespace Web.Areas.Management.Controllers
                 Take = take,
                 OrderDirection = orderDir
             };
-            var lists = _repository.GetRepository<dmDonVi>().GetAll(ref paging, orderKey, o => (
+            var lists = _repository.GetRepository<DM_DonVi>().GetAll(ref paging, orderKey, o => (
                key == null ||
                key == "" ||
                o.Code.Contains(key) ||

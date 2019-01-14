@@ -10384,6 +10384,8 @@
     <Content Include="Views\KPI\_score_KPI.cshtml" />
     <Content Include="Views\KPI\_sum_value_excel.cshtml" />
     <Content Include="Views\KPI\kpi_level_2.cshtml" />
+    <Content Include="Views\KPI\kpi_level_4.cshtml" />
+    <Content Include="Views\KPI\kpi_level_4_1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
