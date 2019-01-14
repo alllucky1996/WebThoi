@@ -260,7 +260,7 @@ namespace Web.Areas.FrontEnd.Controllers
 			int index = 0;
 			foreach (var value in lstdonvi)
 			{
-				result = await _repository.GetRepository<national>().CreateAsync(new national() { Name = value }, 0);
+				result = await _repository.GetRepository<National>().CreateAsync(new National() { Name = value }, 0);
 				Debug.WriteLine(value + "=======" + index);
 				index++;
 			}

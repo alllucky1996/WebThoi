@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Entities.Models.SystemManage
 {
 	[DropDown(ValueField = "Id", TextField = "Name")]
-	public class national : Entity
+	public class National : Entity
 	{
 		[Key]
 		public int Id { get; set; }
@@ -31,6 +31,11 @@ namespace Entities.Models.SystemManage
 		public string Describe()
 		{
 			throw new NotImplementedException();
+		}
+
+		public National() 
+		{
+				Created_at = DateTime.Now;
 		}
 	}
 }

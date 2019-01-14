@@ -84,7 +84,7 @@ namespace Entities.Models.SystemManage
 
 		public int? IdNational { get; set; }
 		[ForeignKey("IdNational")]
-		public virtual national National { get; set; }
+		public virtual National National { get; set; }
 
 		public long? IdDonVi { get; set; }
 		[ForeignKey("IdDonVi")]
