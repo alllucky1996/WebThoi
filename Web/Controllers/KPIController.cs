@@ -36,7 +36,7 @@ namespace Web.Controllers
 	    var Kpi = (
 		    from ac in _repository.GetRepository<Account>().GetAll()
 		    join uk in _repository.GetRepository<User_KPI>().GetAll() on ac.Id equals uk.IdUser
-		    join kpi in _repository.GetRepository<dmKPI>().GetAll() on uk.IdKPI equals kpi.Id
+		    join kpi in _repository.GetRepository<DM_KPI>().GetAll() on uk.IdKPI equals kpi.Id
 				//join u in _repository.GetRepository<unit>().GetAll() on kpi.IdUnit equals u.Id
 				join w in _repository.GetRepository<Weight>().GetAll() on uk.IdWeight equals w.id
 				where ac.Id == account_id
@@ -70,7 +70,7 @@ namespace Web.Controllers
 		public static int flag = 0;
     public static int GetItemTree(long id)
     {
-        var gr = _repository.GetRepository<dmKPI>().GetAll().Where(x => x.IdCha == id);
+        var gr = _repository.GetRepository<DM_KPI>().GetAll().Where(x => x.IdCha == id);
         foreach (var item in gr)
         {
 						Debug.WriteLine(item.Id + item.Name);
@@ -83,7 +83,7 @@ namespace Web.Controllers
 
 		 public static int GetItemTree_1(long id)
 		 {
-					var gr = _repository.GetRepository<dmKPI>().GetAll().Where(x => x.IdCha == id);
+					var gr = _repository.GetRepository<DM_KPI>().GetAll().Where(x => x.IdCha == id);
 					foreach (var item in gr)
 					{
 										GetItemTree_1(item.Id);
@@ -95,11 +95,11 @@ namespace Web.Controllers
 
 		 public static int get_all_chau(long id) {
 							 int row = 0;
-							 foreach (var value in _repository.GetRepository<dmKPI>().GetAll().Where(x => x.IdCha == id))
+							 foreach (var value in _repository.GetRepository<DM_KPI>().GetAll().Where(x => x.IdCha == id))
 							 {
-										foreach (var item in _repository.GetRepository<dmKPI>().GetAll().Where(x => x.IdCha == value.Id))
+										foreach (var item in _repository.GetRepository<DM_KPI>().GetAll().Where(x => x.IdCha == value.Id))
 										{
-												 foreach (var item_1 in _repository.GetRepository<dmKPI>().GetAll().Where(x => x.IdCha == item.Id))
+												 foreach (var item_1 in _repository.GetRepository<DM_KPI>().GetAll().Where(x => x.IdCha == item.Id))
 												 {
 															row++;
 												 }
@@ -111,7 +111,7 @@ namespace Web.Controllers
 		 public static float sum_kpi(long? id_children) 
 		 {
 					var gr = (from uk in _repository.GetRepository<User_KPI>().GetAll()
-										join kpi in _repository.GetRepository<dmKPI>().GetAll() on uk.IdKPI equals kpi.Id
+										join kpi in _repository.GetRepository<DM_KPI>().GetAll() on uk.IdKPI equals kpi.Id
 										join w in _repository.GetRepository<Weight>().GetAll() on uk.IdWeight equals w.id
 										where (kpi.Id == id_children)
 										select new { 

@@ -12,7 +12,7 @@ namespace Entities.Models.SystemManage
 {
   //  [Table("dmKPI")]
   [DropDown(ValueField = "Id", TextField = "Name")]
-  public class dmKPI : Entity
+  public class DM_KPI : Entity
 	{
     [Key]
     public long Id { get; set; }
@@ -28,13 +28,13 @@ namespace Entities.Models.SystemManage
 
     public long? IdCha { get; set; }
     [ForeignKey("IdCha")]
-    public virtual dmKPI DmKPI { get; set; }
+    public virtual DM_KPI DmKPI { get; set; }
 
 		public int? IdUnit { get; set; }
 		[ForeignKey("IdUnit")]
 		public virtual unit Unit { get; set; }
 
-		public dmKPI()
+		public DM_KPI()
     {
       CreateDate = DateTime.Now;
 			IsDeleted = false;

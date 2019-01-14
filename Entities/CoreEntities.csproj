@@ -63,7 +63,7 @@
     <Compile Include="Models\DanhMuc\Template.cs" />
     <Compile Include="Models\DanhMuc\Mail.cs" />
     <Compile Include="Models\DanhMuc\DM_DonVi.cs" />
-    <Compile Include="Models\SystemManage\dmKPI.cs" />
+    <Compile Include="Models\SystemManage\DM_KPI.cs" />
     <Compile Include="Models\SystemManage\Excel.cs" />
     <Compile Include="Models\SystemManage\CapQuanLy.cs" />
     <Compile Include="Models\SystemManage\KetQuaThucHien.cs" />

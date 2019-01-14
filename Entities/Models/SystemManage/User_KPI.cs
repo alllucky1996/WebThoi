@@ -16,7 +16,7 @@ namespace Entities.Models.SystemManage
 		public long ID { get; set; }
 		public long? IdKPI { get; set; }
 		[ForeignKey("IdKPI")]
-		public virtual dmKPI KPIs { get; set; }
+		public virtual DM_KPI KPIs { get; set; }
 
 		public long? IdUser { get; set; }
 		[ForeignKey("IdUser")]
