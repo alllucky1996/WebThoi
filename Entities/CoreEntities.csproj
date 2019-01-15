@@ -63,6 +63,7 @@
     <Compile Include="Models\DanhMuc\Template.cs" />
     <Compile Include="Models\DanhMuc\Mail.cs" />
     <Compile Include="Models\DanhMuc\DM_DonVi.cs" />
+    <Compile Include="Models\SystemManage\Account_User.cs" />
     <Compile Include="Models\SystemManage\DM_KPI.cs" />
     <Compile Include="Models\SystemManage\Excel.cs" />
     <Compile Include="Models\SystemManage\CapQuanLy.cs" />
@@ -78,7 +79,7 @@
     <Compile Include="Models\SystemManage\Role.cs" />
     <Compile Include="Models\SystemManage\ModuleRole.cs" />
     <Compile Include="Models\SystemManage\SystemInformation.cs" />
-    <Compile Include="Models\SystemManage\unit.cs" />
+    <Compile Include="Models\SystemManage\Unit.cs" />
     <Compile Include="Models\SystemManage\User_KPI.cs" />
     <Compile Include="Models\SystemManage\Weight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

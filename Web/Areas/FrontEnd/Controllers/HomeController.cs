@@ -41,8 +41,8 @@ namespace Web.Areas.FrontEnd.Controllers
 				ViewBag.CText = CText;
 				if (flag == 0)
 				{
-					flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
-					flag++;
+					//flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
+					//flag++;
 				}
 				 
 				return View();
