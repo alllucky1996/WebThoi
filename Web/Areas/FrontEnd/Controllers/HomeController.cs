@@ -153,7 +153,7 @@ namespace Web.Areas.FrontEnd.Controllers
 			var name_parent = lstDonVi.First();
 			foreach (var value in lstDonVi)
 			{
-				result = await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { Name = value, DienThoai = "xxxxxx", Email = "xxxxxx@gmail.com", DiaChi = name_parent }, 0);
+				result = await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { Name = value, DienThoai = "xxxxxx" }, 0);
 				Debug.WriteLine(value);
 			}
 			return result;
@@ -180,7 +180,7 @@ namespace Web.Areas.FrontEnd.Controllers
 			foreach (var value in lst_child1)
 			{
 				var id_par = list.Where(o => o.Name.Equals(value.Child));
-				result = await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { Name = value.Parent, DienThoai = "xxxxxx", Email = "xxxxxx@gmail.com", DiaChi = value.Child, IdCha = id_par.First().Id }, 0);
+				result = await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { Name = value.Parent, DienThoai = "xxxxxx", IdCha = id_par.First().Id }, 0);
 				Debug.WriteLine(value.Parent);
 			}
 
@@ -210,7 +210,7 @@ namespace Web.Areas.FrontEnd.Controllers
 				if (!string.IsNullOrEmpty(value.Parent))
 				{
 					var id_par = list.Where(o => o.Name.Equals(value.Child));
-					result = await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { Name = value.Parent, DienThoai = "xxxxxx", Email = "xxxxxx@gmail.com", DiaChi = value.Child, IdCha = id_par.First().Id }, 0);
+					result = await _repository.GetRepository<dmDonVi>().CreateAsync(new dmDonVi() { Name = value.Parent, DienThoai = "xxxxxx",IdCha = id_par.First().Id }, 0);
 					Debug.WriteLine(value.Parent);
 				}
 			}
