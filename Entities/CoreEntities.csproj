@@ -67,7 +67,7 @@
     <Compile Include="Models\SystemManage\Excel.cs" />
     <Compile Include="Models\SystemManage\CapQuanLy.cs" />
     <Compile Include="Models\SystemManage\KetQuaThucHien.cs" />
-    <Compile Include="Models\SystemManage\national.cs" />
+    <Compile Include="Models\SystemManage\National.cs" />
     <Compile Include="Models\SystemManage\ThongBao.cs" />
     <Compile Include="Models\SystemManage\Account.cs" />
     <Compile Include="Models\SystemManage\AccountUngDung.cs" />
