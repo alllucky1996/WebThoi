@@ -92,10 +92,6 @@ namespace Entities.Models.SystemManage
 
 		public Boolean? is_deleted { get; set; }
 
-		public int Acc_User { set; get; }
-		[ForeignKey("Acc_User")]
-		public virtual Account_User Account_User { set; get; }
-
 		public string Describe()
     {
         return "{ AccountId : \"" + Id + "\", Name : \"" + FullName + "\", { Email : \"" + Email + "\" }";
