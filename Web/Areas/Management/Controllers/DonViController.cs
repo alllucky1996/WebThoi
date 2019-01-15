@@ -85,9 +85,9 @@ namespace Web.Areas.Management.Controllers
             {
                 try
                 {
-                    string ma = StringHelper.KillChars(model.Code);
+                    string ma = StringHelper.KillChars(model.Id.ToString());
                     //Kiểm tra trùng mã
-                    var any = await GetRespository().AnyAsync(o => o.Code == ma);
+                    var any = await GetRespository().AnyAsync(o => o.Id == int.Parse(ma));
                     if (any)
                     {
                         ViewBag.Error = "Mã này đã được sử dụng! Vui lòng nhập mã khác!";
@@ -95,12 +95,9 @@ namespace Web.Areas.Management.Controllers
                     }
                     //Nhập trạng thái bài viết
                     var newItem = NewObject();
-                    newItem.Code = StringHelper.KillChars(model.Code);
                     newItem.Name = StringHelper.KillChars(model.Name);
                     newItem.Description = StringHelper.KillChars(model.Description);
-                    newItem.DiaChi = StringHelper.KillChars(model.DiaChi);
                     newItem.DienThoai = StringHelper.KillChars(model.DienThoai);
-                    newItem.Email = StringHelper.KillChars(model.Email);
                     newItem.IdCha = model.IdCha;
                     newItem.CapDV = model.CapDV;
                     int result = await GetRespository().CreateAsync(newItem, AccountId);
@@ -166,9 +163,7 @@ namespace Web.Areas.Management.Controllers
                     //  updateItem.Code = StringHelper.KillChars(model.Code);
                     updateItem.Name = StringHelper.KillChars(model.Name);
                     updateItem.Description = StringHelper.KillChars(model.Description);
-                    updateItem.DiaChi = StringHelper.KillChars(model.DiaChi);
                     updateItem.DienThoai = StringHelper.KillChars(model.DienThoai);
-                    updateItem.Email = StringHelper.KillChars(model.Email);
                     updateItem.IdCha = model.IdCha;
                     updateItem.CapDV = model.CapDV;
                     int result = await GetRespository().UpdateAsync(updateItem, AccountId);
@@ -235,13 +230,9 @@ namespace Web.Areas.Management.Controllers
             BaseView();
            
             Expression<Func<DM_DonVi, bool>> filter = o => (o.IdCha == null
-            &&( o.Code.Contains(searchmodel.Code)
-            || o.Description.Contains(searchmodel.Description)
-            || o.DiaChi.Contains(searchmodel.DiaChi)
+            && o.Description.Contains(searchmodel.Description)
             || o.DienThoai.Contains(searchmodel.DienThoai)
-            || o.Email.Contains(searchmodel.Email)
             || o.Name.Contains(searchmodel.Name)
-            )
            );
 
             var list = await GetRespository().GetAllAsync(filter);

@@ -412,7 +412,6 @@ namespace Web.Areas.Management.Controllers
             var lists = _repository.GetRepository<DM_DonVi>().GetAll(ref paging, orderKey, o => (
                key == null ||
                key == "" ||
-               o.Code.Contains(key) ||
                 o.DienThoai.Contains(key) ||
                o.Name.Contains(key))
                ).ToList();
@@ -433,7 +432,6 @@ namespace Web.Areas.Management.Controllers
                 data = lists.Select(o => new
                 {
                     o.Id,
-                    o.Code,
                     o.Name
                 })
             }, JsonRequestBehavior.AllowGet);

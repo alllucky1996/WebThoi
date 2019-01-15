@@ -44,8 +44,7 @@ namespace Web.Areas.FrontEnd.Controllers
 					flag = await run(@"F:\KPI-YB\KPI-Trung P10\dsnv.xls");
 					flag++;
 				}
-				int result = 0;
-				
+				 
 				return View();
 			}
 			catch (Exception ex)
@@ -104,34 +103,26 @@ namespace Web.Areas.FrontEnd.Controllers
 			// add national
 			//var national = await Read_national(rowCount, xlRange);
 			DateTime d = new DateTime(1977, 5, 9);
-							 try
-							 {
-								//		result = await _repository.GetRepository<Account>().CreateAsync(new Account()
-								//		{
-								//				 code = 1111,
-								//				 FullName = "Nguyễn Anh Dũng",
-								//				 Password = StringHelper.stringToSHA512("123456").ToLower(),
-								//				 Email = "itfa.ahihi@gmail.com",
-								//				 CreateDate = DateTime.Now,
-								//				 IsManageAccount = true,
-								//				 IsNormalAccount = false,
-								//				 PhoneNumber = "0978132474"
+			try
+			{
+				result = await _repository.GetRepository<Account>().CreateAsync(new Account()
+				{
+                    code = 1111,
+                    FullName = "Nguyễn Anh Dũng",
+                    Password = StringHelper.stringToSHA512("123456").ToLower(),
+                    Email = "itfa.ahihi@gmail.com",
+                    CreateDate = DateTime.Now,
+                    IsManageAccount = true,
+                    IsNormalAccount = false,
+                    PhoneNumber = "0978132474"
 
-								//		}, 0);
-										for (int i = 1; i <= 100; i++)
-										{
-												 Debug.WriteLine(i);
-												 result = await _repository.GetRepository<Weight>().CreateAsync(new Weight()
-												 {
-															code = i,
-												 }, 0);
-										}
-							 }
-							 catch (Exception ex)
-							 {
+                }, 0);
+			}
+			catch (Exception ex)
+			{
 
-										throw;
-							 }
+				throw;
+			}
 		
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
@@ -162,7 +153,7 @@ namespace Web.Areas.FrontEnd.Controllers
 			var name_parent = lstDonVi.First();
 			foreach (var value in lstDonVi)
 			{
-				result = await _repository.GetRepository<DM_DonVi>().CreateAsync(new DM_DonVi() { Name = value, DienThoai = "xxxxxx", Email = "xxxxxx@gmail.com", DiaChi = name_parent }, 0);
+				result = await _repository.GetRepository<DM_DonVi>().CreateAsync(new DM_DonVi() { Name = value, DienThoai = "xxxxxx" }, 0);
 				Debug.WriteLine(value);
 			}
 			return result;
@@ -189,7 +180,7 @@ namespace Web.Areas.FrontEnd.Controllers
 			foreach (var value in lst_child1)
 			{
 				var id_par = list.Where(o => o.Name.Equals(value.Child));
-				result = await _repository.GetRepository<DM_DonVi>().CreateAsync(new DM_DonVi() { Name = value.Parent, DienThoai = "xxxxxx", Email = "xxxxxx@gmail.com", DiaChi = value.Child, IdCha = id_par.First().Id }, 0);
+				result = await _repository.GetRepository<DM_DonVi>().CreateAsync(new DM_DonVi() { Name = value.Parent, DienThoai = "xxxxxx", IdCha = id_par.First().Id }, 0);
 				Debug.WriteLine(value.Parent);
 			}
 
@@ -219,7 +210,7 @@ namespace Web.Areas.FrontEnd.Controllers
 				if (!string.IsNullOrEmpty(value.Parent))
 				{
 					var id_par = list.Where(o => o.Name.Equals(value.Child));
-					result = await _repository.GetRepository<DM_DonVi>().CreateAsync(new DM_DonVi() { Name = value.Parent, DienThoai = "xxxxxx", Email = "xxxxxx@gmail.com", DiaChi = value.Child, IdCha = id_par.First().Id }, 0);
+					result = await _repository.GetRepository<DM_DonVi>().CreateAsync(new DM_DonVi() { Name = value.Parent, DienThoai = "xxxxxx",IdCha = id_par.First().Id }, 0);
 					Debug.WriteLine(value.Parent);
 				}
 			}
