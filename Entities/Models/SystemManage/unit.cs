@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Models.SystemManage
 {
-	public class unit : Entity
+	public class Unit : Entity
 	{
 		[Key]
 		public int Id { get; set; }
@@ -29,6 +29,11 @@ namespace Entities.Models.SystemManage
 		public string Describe()
 		{
 			throw new NotImplementedException();
+		}
+
+		public Unit() 
+		{
+			Created_at = DateTime.Now;
 		}
 	}
 }

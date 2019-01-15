@@ -32,7 +32,7 @@ namespace Entities.Models.SystemManage
 
 		public int? IdUnit { get; set; }
 		[ForeignKey("IdUnit")]
-		public virtual unit Unit { get; set; }
+		public virtual Unit Unit { get; set; }
 
 		public DM_KPI()
     {
