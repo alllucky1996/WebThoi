@@ -1,0 +1,238 @@
+﻿@using Entities.Enums;
+@model IEnumerable<Entities.Models.SystemManage.CapQuanLy>
+@{
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    ViewBag.Title = "Danh sách " + ViewBag.CText;
+    string CName = ViewBag.CName;
+    string CRoute = ViewBag.CRoute;
+    string CText = ViewBag.CText;
+    var canDelete = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Delete);
+    var canCreate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Create);
+    var canUpdate = RoleHelper.CheckPermission(ModuleEnum.Account, ActionEnum.Update);
+}
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        @ViewBag.Title
+    </li>
+</ul>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-flag-o font-green-sharp bold"></i>
+                    <span class="caption-subject font-green-sharp bold ">Danh sách @ViewBag.CText</span>
+                </div>
+                @if (canCreate)
+                {
+                    <div class="actions">
+                        <a href="@Url.RouteUrl(ViewBag.CName+"_Create")" class="btn btn-sm green"><i class="fa fa-plus"></i> Thêm @ViewBag.CText</a>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="actions">
+                        <div class="col-md-8">
+                            @Html.DropDownList("IdDonVi", null, "---Chọn đơn vị---", new { @class = "form-control" })
+                        </div>
+                        <a class="btn btn-sm green ShowSearch" id="ShowSearch"><i class="fa fa-search"></i> Tìm kiếm nâng cao</a>
+
+                    </div>
+                    <div id="searchAdvance" class="portlet-form form-actions" style="display: none; ">
+                        @using (Html.BeginForm("Search", CName, FormMethod.Post, new { @class = "form-horizontal form-bordered form-row-stripped portlet box margin-top-15" }))
+                        {
+                            <div class="row portlet-body " style="margin:auto;">
+                                <div class="col-md-12 margin-top-15">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Mã @CText</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" id="Code" name="Code" placeholder="Mã @CText..." />
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Tên @CText</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" id="Name" name="Name" placeholder="Tên @CText ..." />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Mô tả</label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" id="Description" name="Description" placeholder="Tên @CText ..." />
+                                        </div>
+                                    </div>
+                                </div>
+                               
+
+
+                            </div>
+                            <div class="">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button type="submit" class="btn green"><i class="fa fa-search-minus"></i> Tìm kiếm </button>
+                                        <a class="btn default ShowSearch">Hủy bỏ</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <table class="table table-striped table-hover table-bordered" id="datatable_none_ajax_source">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã</th>
+                            <th style="width:40%">Tên @CText</th>
+                            <th>Đơn vị</th>
+                            <th style="width:150px"> Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            int i = 0;
+                            foreach (var item in Model.OrderBy(o => o.Id))
+                            {
+                                i++;
+                                <tr data-objectid="@item.Id">
+                                    <td>@i</td>
+                                    <td>@item.Code</td>
+                                    <td>@item.Name</td>
+                                    <td>@(item.DonVi != null ? item.DonVi.Name : "")</td>
+                                 
+                                    <td>
+                                        @if (canUpdate)
+                                        {
+                                            <a href="@Url.RouteUrl(ViewBag.CName+"_Update", new { Id = item.Id })" class="edit btn btn-xs blue"><i class="fa fa-edit"></i> Sửa</a>
+                                        }
+                                        @if (canDelete)
+                                        {
+                                            <a class="delete btn default btn-xs red-flamingo" href="javascript:;">
+                                                <i class="fa fa-trash-o"></i> Xóa
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Styles{
+    @Styles.Render("~/css/metronic/datatable")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/datatable")
+    @Scripts.Render("~/js/metronic/datatable-none-ajax-source")
+}
+@section Scripts2 {
+    <script type="text/javascript">
+        var DanhSach= function () {
+            var handleDanhSach = function () {
+                var grid = new DatatableNoneAjaxSource();
+                grid.init({
+                    src: $("#datatable_none_ajax_source"),
+                    onSuccess: function (grid) {
+                        // hành động khi tải xong dữ liệu
+                    },
+                    onError: function (grid) {
+                        // hành động khi tải dữ liệu bị lỗi
+                    },
+                    loadingMessage: 'Đang tải dữ liệu...',
+                    dataTable: {
+                        "lengthMenu": [
+                            [10, 20, 50, 100, 150, -1],
+                            [10, 20, 50, 100, 150, "Tất cả"]//Ô chọn hiển thị số bản ghi mỗi trang
+                        ],
+                        "pageLength": 10, // mặc định số bản ghi mỗi trang
+                        "bSort": false,
+                        "order": [
+                            [2, "asc"]
+                        ]
+                    }
+                });
+            }
+            return {
+                init: function () {
+                    handleDanhSach();
+                }
+            };
+        }();
+        jQuery(document).ready(function () {
+            DanhSach.init();
+            $('.ShowSearch').on('click', function () {
+                var tt = $('#searchAdvance').css("display");
+                if (tt === 'none') {
+                    $('#searchAdvance').css("display", "block");
+                }
+                else $('#searchAdvance').css("display", "none");
+            });
+            $('.delete').on('click', function (e) {
+                e.preventDefault();
+                if (confirm("Bạn có chắc chắn muốn xóa trạng thái bài viết này không?") == false) {
+                    return;
+                }
+                Metronic.blockUI({
+                    message: 'Vui lòng đợi!',
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    boxed: true,
+                    zIndex: 99999
+                });
+                var nRow = $(this).parents('tr')[0];
+                var $id = $(nRow).attr('data-objectid');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.RouteUrl(ViewBag.CName+"_Delete")',
+                    dataType: 'json',
+                    data: { code: $id },
+                    success: function (result) {
+                        if (result.success == true) {
+                            showNoty('Đã xóa @ViewBag.CText thành công!', 'success', 'center', 5000);
+                            nRow.remove();
+                        }
+                        else {
+                            showNoty(result.message, 'error', 'center', 5000);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        showNoty('Đã xảy ra lỗi khi thực hiện yêu cầu của bạn. Vui lòng kiểm tra và thử lại!<br />Lỗi: ' + errorThrown, 'error', 'center', 5000);
+                    },
+                    complete: function (result) {
+                        Metronic.unblockUI();
+                    }
+                });
+            });
+             
+
+        });
+
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+            $('#DonVi').on('change', function () {
+                var idDonVi ="?DonVi="+ $(this).val();
+                window.location = '@Url.RouteUrl(ViewBag.CName + "_Index")' + idDonVi;
+            });
+        });
+    </script>
+}
+
+
+
+

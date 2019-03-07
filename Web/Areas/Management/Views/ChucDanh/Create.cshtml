@@ -1,0 +1,117 @@
+﻿@model Entities.Models.dmDonVi
+@{
+    Layout = "~/Areas/Management/Views/Shared/_ManagementLayout.cshtml";
+    string CName = ViewBag.CName;
+    string CRoute = ViewBag.CRoute;
+    string CText = ViewBag.CText;
+}
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <i class="fa fa-home"></i>
+        <a href="@Url.RouteUrl("ManagementHome")">Trang chủ</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+        <a href="@Url.RouteUrl(ViewBag.CName+"_Index")">Danh sách @ViewBag.CText</a>
+        <i class="fa fa-angle-right"></i>
+    </li>
+    <li class="active">
+        @ViewBag.Title
+    </li>
+</ul>
+@*Bắt đầu nội dung tùy chỉnh*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="tab-pane" id="tab_6">
+            <div class="portlet box grey-cascade">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-slack"></i>Nhập thông tin
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    @using (Html.BeginForm("Create", CName, FormMethod.Post, new { @class = "form-horizontal form-bordered form-row-stripped" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-body">
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger">
+                                    <button data-close="alert" class="close"></button>
+                                    @Html.ValidationSummary(true)
+                                </div>
+                            }
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.IdCha, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.DropDownList("IdCha", null, "---Chọn đơn vị---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.IdCha)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Code, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Code)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Name)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DiaChi, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DiaChi)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Email, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DienThoai, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(model => model.DienThoai, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DienThoai)
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" class="btn green"><i class="fa fa-check"></i> Ghi nhận</button>
+                                    <a href="@Url.RouteUrl(ViewBag.CName+"_Index")" class="btn default">Hủy bỏ</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/css/metronic/colorpicker")
+}
+@section Scripts {
+    @Scripts.Render("~/js/metronic/jqueryval")
+    @Scripts.Render("~/js/metronic/colorpicker")
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            $('#Ma').focus();
+            $('.colorpicker-default').colorpicker({
+                format: 'hex'
+            });
+        });
+    </script>
+}

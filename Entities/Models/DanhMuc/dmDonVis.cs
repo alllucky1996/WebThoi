@@ -1,5 +1,6 @@
 ﻿using Common.CustomAttributes;
 using Entities.Models;
+using Entities.Models.SystemManage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -87,5 +88,6 @@ namespace Entities.Models
             return "{id: " + Id + "}";
 
         }
+       
     }
 }

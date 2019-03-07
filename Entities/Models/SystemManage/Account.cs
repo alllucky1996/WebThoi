@@ -18,13 +18,16 @@ namespace Entities.Models.SystemManage
         public long Id { get; set; }
         [Required]
         [Display(Name = "Mã nhân viên")]
-        public int code { get; set; }
+        public int Code { get; set; }
+        [Required(ErrorMessage ="Tên đăng nhập không được để trống")]
+        [StringLength(50, ErrorMessage = "Tên đăng nhập không được vượt quá 50 ký tự!")]
+        [Display(Name = "Tên đăng nhập")]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập họ và tên!")]
         [Display(Name = "Họ và tên")]
         [StringLength(50, ErrorMessage = "Họ và tên không được vượt quá 50 ký tự!")]
         public string FullName { get; set; }
-
 
         [RegularExpression(@"^([\w\!\#$\%\&\'*\+\-\/\=\?\^`{\|\}\~]+\.)*[\w\!\#$\%\&\'‌​*\+\-\/\=\?\^`{\|\}\~]+@((((([a-zA-Z0-9]{1}[a-zA-Z0-9\-]{0,62}[a-zA-Z0-9]{1})|[‌​a-zA-Z])\.)+[a-zA-Z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$", ErrorMessage = "Địa chỉ E-mail không hợp lệ!")]
         [Display(Name = "Địa chỉ E-mail!")]
@@ -77,11 +80,13 @@ namespace Entities.Models.SystemManage
         /// Cấp quản lý
         /// </summary>
         /// 
+        // chức danh
         [Display(Name = "Cấp quản lý")]
         public int? IDCapQuanLy { get; set; }
         [ForeignKey("IDCapQuanLy")]
         public virtual CapQuanLy CapQuanLy { get; set; }
-
+       
+        // quốc gia
         public int? IdNational { get; set; }
         [ForeignKey("IdNational")]
         public virtual national National { get; set; }
@@ -90,7 +95,7 @@ namespace Entities.Models.SystemManage
         [ForeignKey("IdDonVi")]
         public virtual dmDonVi DonVi { get; set; }
 
-        public Boolean? is_deleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public string Describe()
         {
@@ -100,7 +105,7 @@ namespace Entities.Models.SystemManage
         public Account()
         {
             CreateDate = DateTime.Now;
-            is_deleted = false;
+            IsDeleted = false;
         }
     }
 }

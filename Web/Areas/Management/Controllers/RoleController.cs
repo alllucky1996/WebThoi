@@ -34,13 +34,9 @@ namespace Web.Areas.Management.Controllers
                     model.Description = StringHelper.KillChars(model.Description);
                     int result = await _repository.GetRepository<Role>().CreateAsync(model, AccountId);
                     if (result > 0)
-                    {
                         return Json(new { success = true, id = model.Id }, JsonRequestBehavior.AllowGet);
-                    }
                     else
-                    {
                         return Json(new { success = false, message = "Không nhập được nhóm quyền!" }, JsonRequestBehavior.AllowGet);
-                    }
                 }
                 catch (Exception ex)
                 {

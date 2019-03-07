@@ -240,6 +240,7 @@
     <Compile Include="Areas\FrontEnd\FrontEndAreaRegistration.cs" />
     <Compile Include="Areas\Management\Controllers\AccountController.cs" />
     <Compile Include="Areas\Management\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Management\Controllers\ChucDanhController.cs" />
     <Compile Include="Areas\Management\Controllers\ToController.cs" />
     <Compile Include="Areas\Management\Controllers\PhongBanController.cs" />
     <Compile Include="Areas\Management\Controllers\DonViController.cs" />
@@ -929,6 +930,10 @@
     <Content Include="Areas\Management\Views\DonVi\Search.cshtml" />
     <Content Include="Areas\Management\Views\PhongBan\Search.cshtml" />
     <Content Include="Areas\Management\Views\To\Search.cshtml" />
+    <Content Include="Areas\Management\Views\ChucDanh\Create.cshtml" />
+    <Content Include="Areas\Management\Views\ChucDanh\Index.cshtml" />
+    <Content Include="Areas\Management\Views\ChucDanh\Search.cshtml" />
+    <Content Include="Areas\Management\Views\ChucDanh\Update.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

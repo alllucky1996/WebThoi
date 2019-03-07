@@ -12,6 +12,7 @@ using Common.Paging;
 using Entities.Models.SystemManage;
 using Web.Areas.Management.Filters;
 using Entities.Models;
+using System.Collections.Generic;
 
 namespace Web.Areas.Management.Controllers
 {
@@ -38,10 +39,28 @@ namespace Web.Areas.Management.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("nhap-tai-khoan-moi", Name = "AccountCreate")]
-        public ActionResult Create(string IdDonVi)
+        public async Task<ActionResult> Create(string IdDonVi)
         {
-            var dsDonVi = _repository.GetRepository<dmDonVi>().GetAll(o => o.CapDV == 1).ToList();
-            ViewBag.IdDonVi = new SelectList(dsDonVi, "Id", "Name", IdDonVi);
+
+            // chức vụ
+            var dsCapQuanLy = await _repository.GetRepository<CapQuanLy>().GetAllAsync();
+            ViewBag.IdCapQuanLy = new SelectList(dsCapQuanLy, "Id", "Name");
+            // đơn vị nếu null có 3 lựa chọn 
+            if (string.IsNullOrEmpty(IdDonVi))
+            {
+                var dsDonVi = await _repository.GetRepository<dmDonVi>().GetAllAsync(o => o.IdCha == null);
+                var dsPhongBan = await _repository.GetRepository<dmDonVi>().GetAllAsync(o => o.IdCha != null && o.DonVi.DonVi == null);
+                var dsTo = await _repository.GetRepository<dmDonVi>().GetAllAsync(o => o.IdCha != null && o.DonVi.DonVi != null && o.DonVi.DonVi.DonVi == null);
+               
+                ViewBag.IdDonVi = new SelectList(dsDonVi, "Id", "Name", IdDonVi);
+                ViewBag.IdPhongBan = new SelectList(dsPhongBan, "Id", "Name", IdDonVi);
+                ViewBag.IdTo = new SelectList(dsTo, "Id", "Name", IdDonVi);
+                
+                ViewBag.ExitIdDonVi = false;
+                return View();
+            }
+            ViewBag.IsExitIdDonVi = true;
+            ViewBag.IdDonVi = IdDonVi;
             return View();
         }
         /// <summary>
@@ -92,7 +111,7 @@ namespace Web.Areas.Management.Controllers
 
                 //Kiểm tra trùng email
                 bool exists = await _repository.GetRepository<Account>().AnyAsync(o => o.Email == email);
-
+                
                 if (exists)
                 {
                     ModelState.AddModelError(string.Empty, "Địa chỉ email đã tồn tại!");
@@ -101,7 +120,7 @@ namespace Web.Areas.Management.Controllers
                 }
                 else
                 {
-                    string password = StringHelper.StringToMd5(StringHelper.KillChars(model.Password)).ToLower();
+                    string password = StringHelper.stringToSHA512(StringHelper.KillChars(model.Password)).ToLower();
                     Account account = new Account();
                     //account.IsManageAccount = false;
                     //account.IsNormalAccount = false;

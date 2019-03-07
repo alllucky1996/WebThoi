@@ -107,7 +107,7 @@ namespace Web.Areas.FrontEnd.Controllers
 			{
 				result = await _repository.GetRepository<Account>().CreateAsync(new Account()
 				{
-					code = 270800,
+					Code = 270800,
 					FullName = "Ma Thị Hồng Vân",
 					Sex = false,
 					Email = "XXX@gmail.com",

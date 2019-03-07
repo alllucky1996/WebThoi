@@ -42,6 +42,16 @@
                                     @Html.ValidationSummary(true)
                                 </div>
                             }
+                                <div alt="Đơn vị/phòng ban/tổ">
+                                    @*<div class="form-group">
+                                        @Html.LabelFor(model => model.IdDonVi, new { @class = "col-md-3 control-label" })
+                                        <div class="col-md-9">
+                                            @Html.DropDownList("IdDonVi", null, "---Chọn đơn vị---", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.IdDonVi)
+                                        </div>
+                                    </div>*@
+
+                                </div>
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Email, new { @class = "col-md-3 control-label" })
@@ -65,24 +75,6 @@
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.IdDonVi, new { @class = "col-md-3 control-label" })
-                                <div class="col-md-9">
-                                    @Html.DropDownList("IdDonVi", null, "---Chọn đơn vị---", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.IdDonVi)
-                                </div>
-                            </div>
-
-                           
-
-                            @*<div class="form-group">
-                                @Html.LabelFor(model => model.Code, new { @class = "col-md-3 control-label" })
-                                <div class="col-md-9">
-                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Code)
-                                </div>
-                            </div>*@
-                            
-                            <div class="form-group">
                                 @Html.LabelFor(model => model.Password, new { @class = "col-md-3 control-label" })
                                 <div class="col-md-9">
                                     <div class="input-group">
@@ -105,22 +97,11 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.CapQuanLy, new { @class = "col-md-3 control-label" })
                                 <div class="col-md-9">
-                                    <select class="form-control" data-val="true" id="CapQuanLy" name="CapQuanLy">
-                                        <option value="ĐHQG">Cấp ĐHQG</option>
-                                        <option value="ĐV">Cấp đơn vị</option>
-                                        <option value="K" selected>Không</option>
-                                    </select>
+                                    @Html.DropDownList("IdCapQuanLy", null, "---Chọn chức vụ---", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.IdCapQuanLy)
                                 </div>
                             </div>
 
-
-                            @*<div class="form-group">
-                                @Html.LabelFor(model => model.IsExpertsAccount, new { @class = "col-md-3 control-label" })
-                                <div class="radio-list">
-                                    <label class="radio-inline"><input type="radio" name="IsExpertsAccount" value="true" /> Là chuyên gia</label>
-                                    <label class="radio-inline"><input type="radio" name="IsExpertsAccount" value="false" checked="checked" /> Không là chuyên gia</label>
-                                </div>
-                            </div>*@
                             <div class="form-group last">
                                 @Html.LabelFor(model => model.ProfilePicture, new { @class = "col-md-3 control-label" })
                                 @Html.HiddenFor(model => model.ProfilePicture)
